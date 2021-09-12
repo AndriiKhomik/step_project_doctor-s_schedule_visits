@@ -1,3 +1,16 @@
+#
+.DS_Store
+ds_store
+thumbs.db
+
+# Ignore IDE specific files
+.idea/
+.vscode/
+*.sw*
+
+# Ignore technical project files
+package-lock.json
+
 # Logs
 logs
 *.log
