@@ -48,7 +48,3 @@ export const deleteVisitById = async (id) => {
   }
   return await res.json()
 };
-<<<<<<< HEAD
-
-=======
->>>>>>> ba685a3a8019031385d34eb6ce3ddc782834ee91
