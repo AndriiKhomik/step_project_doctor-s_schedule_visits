@@ -4,7 +4,7 @@ class Element {
   }
   createElement(tagName, classNames = [], text = '') {
     const element = document.createElement(tagName);
-    if (text) { element.textContent = text; }
+    element.textContent = text;
     element.classList.add(...classNames);
     return element
   }
@@ -16,12 +16,10 @@ class Element {
 
   createContainer() {
     this.containerEl = this.createElement('div', ['container']);
-    console.log(this.containerEl)
     document.querySelector('#root').append(this.containerEl);
     return this.containerEl
   }
 }
-
 
 new Element();
 
