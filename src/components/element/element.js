@@ -22,6 +22,7 @@ class Element {
   }
 }
 
+
 new Element();
 
 export default Element
