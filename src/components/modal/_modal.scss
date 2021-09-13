@@ -1,0 +1,9 @@
+@import "~bootstrap/scss/bootstrap";
+
+.card-modal {
+    display: block;
+}
+
+.card-modal__backdrop {
+    opacity: 0.5;
+}
