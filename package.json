@@ -41,7 +41,9 @@
     "webpack-dev-server": "^3.11.2",
     "webpack-merge": "^5.8.0"
   },
-  "dependencies": {},
+  "dependencies": {
+    "bootstrap": "^5.1.1"
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/AndriiKhomik/step_project_doctor-s_schedule_visits.git"
