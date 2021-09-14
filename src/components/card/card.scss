@@ -36,11 +36,15 @@
     position: absolute;
     top: 12px;
     right: 10px;
+    padding: 5px;
 }
 .card__delete-icon {
     color: red;
     font-size: 40px;
-    line-height: 0;
+    line-height: 18px;
+    display: block;
+    width: 25px;
+    height: 25px;
 }
 
 .card__info {
