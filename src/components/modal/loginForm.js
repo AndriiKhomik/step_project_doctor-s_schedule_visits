@@ -3,8 +3,9 @@ class LoginForm extends Modal {
   constructor(title) {
     super(title)
   }
+
   renderBody() {
-    const html = `<form class = "card-login-form">
+    const html = `<form class ="card-login-form">
      ${this.renderEmailInput()}
      ${this.renderPasswordInput()}       
       </form>`
@@ -27,6 +28,7 @@ class LoginForm extends Modal {
     </svg>`
     return emailSvg
   }
+
   renderPasswordInput() {
     const html = `<div class="mb-3">
     ${this.renderPasswordSvg()}
@@ -49,11 +51,5 @@ class LoginForm extends Modal {
     return html
   }
 }
-
-const modal = new LoginForm("Welcome")
-const btn = document.getElementById("test-btn")
-btn.addEventListener("click", () => {
-  modal.show()
-})
 
 export default LoginForm

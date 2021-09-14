@@ -1,10 +1,9 @@
-import Element from '../element/element.js'
-
+import Element from '../element/element'
 class Modal extends Element {
     constructor(title) {
         super()
         this.title = title
-        this.modalContainer = this.createElement("div", ["card-modal", "modal", "fade", "show"], "Test ststqhdiw")
+        this.modalContainer = this.createElement("div", ["card-modal", "modal", "fade", "show"])
         this.modalBackdrop = this.createElement("div", ['card-modal__backdrop', 'modal-backdrop'])
     }
     render() {

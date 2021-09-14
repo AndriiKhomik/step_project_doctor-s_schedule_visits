@@ -1,9 +1,39 @@
-@import "~bootstrap/scss/bootstrap";
+.modal-header {
+    text-align: center;
+}
 
 .card-modal {
     display: block;
 }
-
 .card-modal__backdrop {
     opacity: 0.5;
+}
+
+.visit-modal .modal-dialog {
+    max-width: 700px;
+}
+
+.visit-modal .modal-content {
+    padding-left: 35px;
+    padding-right: 35px;
+}
+.visit-select {
+    margin-bottom: 20px;
+}
+.visit-form {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    grid-gap: 15px;
+    column-gap: 15px;
+    align-items: center;
+    justify-content: center;
+    font-size: 14px;
+}
+
+.visit-form input {
+    padding: 10px 5px;
+}
+
+.visit-form-select {
+    font-size: 14px;
 }
