@@ -1,0 +1,48 @@
+.card__field {
+    background-color: lightblue;
+    min-height: 500px;
+    width: 90%;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, 250px);
+    align-items: start;
+    justify-content: center;
+    column-gap: 20px;
+    row-gap: 20px;
+    padding: 40px 10px;
+}
+
+.card__img {
+    height: 100px;
+    width: 100px;
+    display: block;
+    margin: 0 auto;
+    margin-bottom: 20px;
+    margin-top: 16px;
+}
+
+.card__text {
+    margin-bottom: 5px;
+}
+.card__item {
+    position: relative;
+}
+
+.card__show-more-btn {
+    margin-right: 10px;
+}
+
+.card__delete-btn {
+    position: absolute;
+    top: 12px;
+    right: 10px;
+}
+.card__delete-icon {
+    color: red;
+    font-size: 40px;
+    line-height: 0;
+}
+
+.card__info {
+    margin-bottom: 20px;
+}
