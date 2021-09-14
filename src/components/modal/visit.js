@@ -1,5 +1,4 @@
 import Modal from "./modal";
-
 class Visit extends Modal {
     constructor(title) {
         super(title)
@@ -44,11 +43,13 @@ class Visit extends Modal {
     renderAdditionalFields() {
         return ""
     }
+
     renderBtn() {
         const html = `<button type="submit" class="btn btn-primary mx-auto">Create card</button>`
         return html
     }
     addSelectListener() {
+        console.log();
         this.modalContainer.addEventListener("change", (e) => {
             if (e.target === this.modalContainer.querySelector(".visit-select")) {
                 switch (e.target.value) {
