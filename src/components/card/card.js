@@ -1,6 +1,6 @@
 import Element from '../element/element'
 import cardImg from './cardImg.png'
-import { getData, updateData, deleteVisitById } from "../api/api";
+import { deleteVisitById } from "../api/api";
 
 class Card extends Element {
     constructor() {
