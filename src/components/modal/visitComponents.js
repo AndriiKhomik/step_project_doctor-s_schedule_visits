@@ -4,16 +4,30 @@ class VisitDentist extends Visit {
     constructor(title) {
         super(title)
     }
+    renderFields() {
+        const html = `<form id="visit-form" class="visit-form">
+        ${super.rendeInputFields()}
+        ${this.renderAdditionalFields()}
+        </form>`
+        return html
+    }
+
     renderAdditionalFields() {
         const html = `<label for="last-visit" class="form-label"> Date of last visit: </label>
            <input required type="datetime-local" name="last-visit"/>`
         return html
     }
 }
-
 class VisitCardiologist extends Visit {
     constructor() {
         super()
+    }
+    renderFields() {
+        const html = `<form id="visit-form" class="visit-form">
+        ${super.rendeInputFields()}
+        ${this.renderAdditionalFields()}
+        </form>`
+        return html
     }
     renderAdditionalFields() {
         const html = `<label for="pressure" class="form-label"
@@ -37,6 +51,13 @@ class VisitTherapist extends Visit {
     constructor() {
         super()
     }
+    renderFields() {
+        const html = `<form id="visit-form" class="visit-form">
+        ${super.rendeInputFields()}
+        ${this.renderAdditionalFields()}
+        </form>`
+        return html
+    }
     renderAdditionalFields() {
         const html = `<label for="age" class="form-label"
         >Age:
@@ -46,13 +67,4 @@ class VisitTherapist extends Visit {
     }
 }
 
-
-const modal = new VisitDentist("Create visit")
-const btn = document.getElementById("test-btn")
-btn.addEventListener("click", () => {
-    modal.show()
-})
-
-export default {
-    VisitDentist, VisitCardiologist, VisitTherapist
-}
+export { VisitDentist, VisitCardiologist, VisitTherapist }

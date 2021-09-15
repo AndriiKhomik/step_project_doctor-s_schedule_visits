@@ -5,9 +5,10 @@ class Modal extends Element {
         this.title = title
         this.modalContainer = this.createElement("div", ["card-modal", "modal", "fade", "show"])
         this.modalBackdrop = this.createElement("div", ['card-modal__backdrop', 'modal-backdrop'])
+        this.onModalClick = this.onModalClick.bind(this)
     }
-    render() {
-        const html = `<div class="modal-dialog modal-dialog-centered">
+    createMarkup() {
+        this.html = `<div class="modal-dialog modal-dialog-centered">
               <div class="modal-content">
                 <div class="modal-header">
                   <h5 class="modal-title">${this.title}</h5>
@@ -21,9 +22,13 @@ class Modal extends Element {
                 </div>
               </div>
           </div>`
+        return this.html
+
+    }
+    render() {
         document.body.classList.add("modal-open")
-        this.modalContainer.insertAdjacentHTML('beforeend', html)
-        return document.getElementById("root").prepend(this.modalContainer, this.modalBackdrop)
+        this.modalContainer.insertAdjacentHTML('beforeend', this.createMarkup())
+        document.getElementById("root").prepend(this.modalContainer, this.modalBackdrop)
     }
     renderBody() {
         return ''
@@ -33,21 +38,26 @@ class Modal extends Element {
     }
 
     show() {
-        this.addCloseListener()
         this.render()
+        this.addCloseListener()
     }
+
     hide() {
         document.body.classList.remove("modal-open")
         this.modalContainer.innerHTML = ''
         this.modalContainer.remove()
         this.modalBackdrop.remove()
+        this.removeCloseListener()
     }
     addCloseListener() {
-        this.modalContainer.addEventListener("click", (e) => {
-            if (e.target === this.modalContainer || e.target === this.modalContainer.querySelector(".btn-close")) {
-                this.hide()
-            }
-        })
+        this.modalContainer.addEventListener("click", this.onModalClick)
+    }
+    removeCloseListener() {
+        this.modalContainer.removeEventListener("click", this.onModalClick)
+    }
+    onModalClick(e) {
+        if (e.target === this.modalContainer || e.target === this.modalContainer.querySelector(".btn-close"))
+            this.hide()
     }
 }
 

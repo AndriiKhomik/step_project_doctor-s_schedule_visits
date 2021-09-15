@@ -1,23 +1,6 @@
-import Modal from "./modal";
-class Visit extends Modal {
-    constructor(title) {
-        super(title)
-    }
-    renderBody() {
-        const html = `<select required class="form-select visit-select">
-            <option disabled selected>Choose doctor</option>
-            <option value="therapist">Therapist</option>
-            <option value="cardiologist">Cardiologist</option>
-            <option value="dentist">Dentist</option>
-        </select>`
-        this.modalContainer.classList.add("visit-modal")
-        this.addSelectListener()
-        return html
-    }
-
+class Visit {
     rendeInputFields() {
-        const html = `<form id="visit-form" class="visit-form">
-        <label for="fullName" class="form-label"
+        const html = `<label for="fullName" class="form-label"
         >Enter your name:
     </label>
     <input required type="text" name="fullName"/>
@@ -35,40 +18,10 @@ class Visit extends Modal {
             <option value="urgent">Urgent</option>
         </select>
         <label for="date-visit" class="form-label"> Date of visit: </label>
-       <input required type="datetime-local" name="date-visit"
-        ${this.renderAdditionalFields()}
-    </form>`
+       <input required type="datetime-local" name="date-visit"`
         return html
-    }
-    renderAdditionalFields() {
-        return ""
     }
 
-    renderBtn() {
-        const html = `<button type="submit" class="btn btn-primary mx-auto">Create card</button>`
-        return html
-    }
-    addSelectListener() {
-        console.log();
-        this.modalContainer.addEventListener("change", (e) => {
-            if (e.target === this.modalContainer.querySelector(".visit-select")) {
-                switch (e.target.value) {
-                    case "therapist":
-                        console.log("therapist");
-                        break;
-                    case "cardiologist":
-                        console.log("cardiologist");
-                        break;
-                    case "dentist":
-                        console.log("dentist");
-                        break;
-                    default:
-                        break;
-                }
-            }
-        })
-    }
 }
-
 
 export default Visit
