@@ -6,43 +6,52 @@ class VisitModal extends Modal {
         super(title)
         this.visit = null
         this.onSelectChange = this.onSelectChange.bind(this)
+        this.onCreateBtnClick = this.onCreateBtnClick.bind(this)
     }
     renderBody() {
         this.modalContainer.classList.add("visit-modal")
         const html = `<select required class="form-select visit-select">
             <option disabled selected>Choose doctor</option>
-            <option value="therapist">Therapist</option>
-            <option value="cardiologist">Cardiologist</option>
-            <option value="dentist">Dentist</option>
+            <option value="Therapist">Therapist</option>
+            <option value="Cardiologist">Cardiologist</option>
+            <option value="Dentist">Dentist</option>
         </select>`
         return html
     }
 
     renderBtn() {
-        const html = `<button type="submit" class="btn btn-primary mx-auto">Create card</button>`
+        const html = `<button type="submit" 
+        id="card-create-btn" class="btn btn-primary mx-auto visit-btn--hidden">
+        Create card</button>`
         return html
     }
 
     show() {
         super.show()
-        this.addSelectListener()
+        this.addListeners()
     }
 
     hide() {
         super.hide()
-        this.removeSelectListener()
+        this.removeListeners()
     }
 
-    addSelectListener() {
-        this.modalContainer.addEventListener("change", this.onSelectChange)
+    addListeners() {
+        this.selector = this.modalContainer.querySelector(".visit-select")
+        this.btn = this.modalContainer.querySelector("#card-create-btn")
+        this.selector.addEventListener("change", this.onSelectChange)
+        this.btn.addEventListener("click", this.onCreateBtnClick)
     }
 
-    removeSelectListener() {
-        this.modalContainer.removeEventListener("change", this.onSelectChange)
+    removeListeners() {
+        this.selector.removeEventListener("change", this.onSelectChange)
+        this.btn.removeEventListener("click", this.onCreateBtnClick)
     }
 
-    addVisitForm(targetEl) {
-        targetEl.insertAdjacentHTML('afterend', this.visit.renderFields())
+    addVisitForm() {
+        this.selector.insertAdjacentHTML('afterend', this.visit.renderFields())
+        this.btn.classList.remove("visit-btn--hidden")
+        // this.btn.disabled = true
     }
 
     removeVisitForm() {
@@ -52,28 +61,37 @@ class VisitModal extends Modal {
         }
     }
 
-    selectVisitForm(targetEl) {
-        if (targetEl === this.modalContainer.querySelector(".visit-select")) {
-            switch (targetEl.value) {
-                case "therapist":
-                    this.visit = new VisitTherapist()
-                    break;
-                case "cardiologist":
-                    this.visit = new VisitCardiologist()
-                    break;
-                case "dentist":
-                    this.visit = new VisitDentist()
-                    break;
-                default:
-                    break;
-            }
+    selectVisitForm() {
+        switch (this.selector.value.toLowerCase()) {
+            case "therapist":
+                this.visit = new VisitTherapist()
+                break;
+            case "cardiologist":
+                this.visit = new VisitCardiologist()
+                break;
+            case "dentist":
+                this.visit = new VisitDentist()
+                break;
+            default:
+                break;
         }
     }
 
     onSelectChange(e) {
         this.removeVisitForm()
-        this.selectVisitForm(e.target)
-        this.addVisitForm(e.target)
+        this.selectVisitForm()
+        this.addVisitForm()
+    }
+
+    onCreateBtnClick(e) {
+        e.preventDefault()
+        this.options = this.visit.getValue()
+        this.options["Doctor:"] = this.selector.value
+        // if (Object.values(this.options).some(value => value !== '')) {
+        //     this.btn.disabled = false
+        // }
+        this.hide()
+        console.log(this.options);
     }
 }
 const modal = new VisitModal("Create visit")
