@@ -1,6 +1,5 @@
 class Element {
   constructor() {
-    this.createContainer()
   }
   createElement(tagName, classNames = [], text = '') {
     const element = document.createElement(tagName);
@@ -12,12 +11,6 @@ class Element {
   addAttribute(element, attributeName, attributeValue) {
     element.setAttribute(attributeName, attributeValue);
     return element
-  }
-
-  createContainer() {
-    this.containerEl = this.createElement('div', ['container']);
-    document.querySelector('#root').append(this.containerEl);
-    return this.containerEl
   }
 }
 
