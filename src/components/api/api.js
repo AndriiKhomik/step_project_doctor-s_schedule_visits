@@ -8,27 +8,20 @@ export const getData = async () => {
       'Authorization': `Bearer ${_token}`
     }
   });
-    if (!res.ok) {
-      throw new Error(`Could not fetch ${_apiBase}`)
-    }
-    return await res.json()
+  if (!res.ok) {
+    throw new Error(`Could not fetch ${_apiBase}`)
+  }
+  return await res.json()
 };
 
-export const updateData = async (id) => {
-  const res = await fetch(`${_apiBase}/cards/${id}`, {
+export const addVisit = async (obj) => {
+  const res = await fetch(`${_apiBase}/cards`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
       'Authorization': `Bearer ${_token}`
     },
-    body: JSON.stringify({
-      title: this.title, //'Визит к кардиологу',
-      description: this.description, //'Плановый визит',
-      doctor: this.doctor,  //'Cardiologist',
-      bp: this.bp,  //'24',
-      age: this.age,  //23,
-      weight: this.weight  //70
-    })
+    body: JSON.stringify(obj)
   });
   if (!res.ok) {
     throw new Error(`Could not fetch ${_apiBase}`)
@@ -46,5 +39,19 @@ export const deleteVisitById = async (id) => {
   if (!res.ok) {
     throw new Error(`Could not fetch ${_apiBase}`)
   }
-  return await res.json()
+};
+
+export const updateVisit = async (obj, id) => {
+  const res = await fetch(`${_apiBase}/cards/${id}`, {
+    method: 'PUT',
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${_token}`
+    },
+    body: JSON.stringify(obj)
+  });
+  if (!res.ok) {
+    throw new Error(`Could not fetch ${_apiBase}`)
+  }
+  return await res.json();
 };
