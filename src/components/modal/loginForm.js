@@ -51,5 +51,8 @@ class LoginForm extends Modal {
     return html
   }
 }
+//-----move to header-----
+// this.loginform = new LoginForm("Welcome")
+// this.loginBtn.addEventListener("click", () => loginform.show())
 
 export default LoginForm

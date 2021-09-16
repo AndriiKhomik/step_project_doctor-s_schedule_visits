@@ -1,12 +1,14 @@
 import Modal from "./modal";
-import { VisitDentist, VisitCardiologist, VisitTherapist } from './visitComponents.js'
-
+import { VisitDentist, VisitCardiologist, VisitTherapist } from './visitComponents.js';
+import Card from '../card/card.js';
+import { addVisit } from '../api/api.js'
 class VisitModal extends Modal {
     constructor(title) {
         super(title)
         this.visit = null
         this.onSelectChange = this.onSelectChange.bind(this)
         this.onCreateBtnClick = this.onCreateBtnClick.bind(this)
+        this.card = new Card()
     }
     renderBody() {
         this.modalContainer.classList.add("visit-modal")
@@ -51,7 +53,6 @@ class VisitModal extends Modal {
     addVisitForm() {
         this.selector.insertAdjacentHTML('afterend', this.visit.renderFields())
         this.btn.classList.remove("visit-btn--hidden")
-        // this.btn.disabled = true
     }
 
     removeVisitForm() {
@@ -83,15 +84,17 @@ class VisitModal extends Modal {
         this.addVisitForm()
     }
 
-    onCreateBtnClick(e) {
-        e.preventDefault()
+    setVisitDoc() {
         this.options = this.visit.getValue()
         this.options["Doctor:"] = this.selector.value
-        // if (Object.values(this.options).some(value => value !== '')) {
-        //     this.btn.disabled = false
-        // }
+    }
+
+    async onCreateBtnClick(e) {
+        e.preventDefault()
+        this.setVisitDoc()
+        const result = await addVisit(this.options)
+        this.card.renderCard(result)
         this.hide()
-        console.log(this.options);
     }
 }
 const modal = new VisitModal("Create visit")

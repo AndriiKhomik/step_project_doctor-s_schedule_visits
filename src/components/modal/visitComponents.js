@@ -1,8 +1,8 @@
 import Visit from "./visit";
 
 class VisitDentist extends Visit {
-    constructor(title) {
-        super(title)
+    constructor() {
+        super()
     }
     renderFields() {
         const html = `<form id="visit-form" class="visit-form">

@@ -1,7 +1,4 @@
 class Visit {
-    constructor() {
-
-    }
     rendeInputFields() {
         const html = `<label for="fullName" class="form-label">Enter your name:</label>
         <input required type="text" name="fullName" id="fullName"/>
@@ -36,7 +33,7 @@ class Visit {
             const key = this.form.querySelector(`label[for= "${input.name}"]`)
             options[key.textContent] = input.value
         });
-        this.changeOptionsKey(options, 'Enter your name:', 'Full name:')
+        this.changeOptionsKey(options, 'Enter your name:', 'full name:')
         options["Pressure:"] = pressureValue
         return options
     }

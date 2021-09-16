@@ -94,4 +94,4 @@ function createCardContainer() {
 }
 
 
-
+export default Card
