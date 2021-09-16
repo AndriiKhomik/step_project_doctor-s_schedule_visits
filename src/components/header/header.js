@@ -2,6 +2,7 @@ import Element from '../element/element';
 import logo from './logo.png';
 import Visit from "../modal/visit";
 import VisitModal from "../modal/visitModal";
+import LoginForm from "../modal/loginForm";
 
 export default class Header extends Element {
   constructor() {
@@ -17,6 +18,8 @@ export default class Header extends Element {
 
       if (event.target.textContent === 'Login') {
 
+        const loginForm = new LoginForm('Hello');
+        loginForm.show();
         // after successfully authorization
         this.loginBtn.innerText = 'Logout';
         this.addVisitBnt.classList.remove('hide');
@@ -31,17 +34,16 @@ export default class Header extends Element {
     })
   }
 
-  greetingText() {
-    this.greeting = this.createElement('h3', ['title', 'hide'], 'Welcome ${user}');
-    this.header.append(this.greeting)
-  }
-
   addVisit() {
     this.addVisitBnt.addEventListener('click', () => {
-      console.log('click')
       const modal = new VisitModal("Create visit");
       modal.show();
     })
+  }
+
+  greetingText() {
+    this.greeting = this.createElement('h3', ['title', 'hide'], 'Welcome ${user}');
+    this.header.append(this.greeting)
   }
 
   render() {
