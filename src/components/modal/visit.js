@@ -1,3 +1,5 @@
+import LoginForm from "./loginForm";
+
 class Visit {
     rendeInputFields() {
         const html = `<label for="fullName" class="form-label">Enter your name:</label>
@@ -34,6 +36,7 @@ class Visit {
             options[key.textContent] = input.value
         });
         this.changeOptionsKey(options, 'Enter your name:', 'full name:')
+
         options["Pressure:"] = pressureValue
         return options
     }

@@ -8,7 +8,6 @@ class VisitModal extends Modal {
         this.visit = null
         this.onSelectChange = this.onSelectChange.bind(this)
         this.onCreateBtnClick = this.onCreateBtnClick.bind(this)
-        this.card = new Card()
     }
     renderBody() {
         this.modalContainer.classList.add("visit-modal")
@@ -91,6 +90,7 @@ class VisitModal extends Modal {
 
     async onCreateBtnClick(e) {
         e.preventDefault()
+        this.card = new Card()
         this.setVisitDoc()
         const result = await addVisit(this.options)
         // this.options.id = result.id запрос возвращает все поля вместе с id в renderCard передаю результат
