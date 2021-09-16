@@ -1,11 +1,14 @@
 import Element from '../element/element';
 import logo from './logo.png';
+import Visit from "../modal/visit";
+import VisitModal from "../modal/visitModal";
 
 export default class Header extends Element {
   constructor() {
     super();
     this.render();
     this.authorization();
+    this.addVisit();
   }
 
   authorization() {
@@ -33,9 +36,17 @@ export default class Header extends Element {
     this.header.append(this.greeting)
   }
 
+  addVisit() {
+    this.addVisitBnt.addEventListener('click', () => {
+      console.log('click')
+      const modal = new VisitModal("Create visit");
+      modal.show();
+    })
+  }
+
   render() {
     this.header = this.createElement('header', ['header']);
-    document.querySelector('#root').append(this.header);
+    document.querySelector('#root').prepend(this.header);
     this.header.insertAdjacentHTML('afterbegin',
       `
               <a href="https://med.sumdu.edu.ua/en/" target="_blank">
@@ -47,7 +58,6 @@ export default class Header extends Element {
     this.addVisitBnt = this.createElement('button', ['btn', 'btn-success', 'add-visit-btn', 'hide'], 'Add new visit');
     btnContainer.append(this.addVisitBnt);
     this.loginBtn = this.createElement('button', ['btn', 'btn-secondary', 'login-btn'], 'Login');
-    // this.loginBtn.insertAdjacentHTML('beforeend', `<ion-icon name="log-in-outline"></ion-icon>`)
     btnContainer.append(this.loginBtn);
   }
 }
