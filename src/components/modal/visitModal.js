@@ -93,6 +93,7 @@ class VisitModal extends Modal {
         e.preventDefault()
         this.setVisitDoc()
         const result = await addVisit(this.options)
+        // this.options.id = result.id запрос возвращает все поля вместе с id в renderCard передаю результат
         this.card.renderCard(result)
         this.hide()
     }
