@@ -1,11 +1,14 @@
 import Element from '../element/element';
 import logo from './logo.png';
+import Visit from "../modal/visit";
+import VisitModal from "../modal/visitModal";
 
 export default class Header extends Element {
   constructor() {
     super();
     this.render();
     this.authorization();
+    this.addVisit();
   }
 
   authorization() {
@@ -31,6 +34,14 @@ export default class Header extends Element {
   greetingText() {
     this.greeting = this.createElement('h3', ['title', 'hide'], 'Welcome ${user}');
     this.header.append(this.greeting)
+  }
+
+  addVisit() {
+    this.addVisitBnt.addEventListener('click', () => {
+      console.log('click')
+      const modal = new VisitModal("Create visit");
+      modal.show();
+    })
   }
 
   render() {
