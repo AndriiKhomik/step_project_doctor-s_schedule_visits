@@ -42,7 +42,8 @@
     "webpack-merge": "^5.8.0"
   },
   "dependencies": {
-    "bootstrap": "^5.1.1"
+    "bootstrap": "^5.1.1",
+    "sortablejs": "^1.14.0"
   },
   "repository": {
     "type": "git",

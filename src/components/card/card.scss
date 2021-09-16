@@ -12,6 +12,8 @@
   justify-content: center;
   column-gap: 20px;
   row-gap: 20px;
+  margin: 0;
+  padding-left: 0;
 }
 .card__img {
   height: 140px;
@@ -74,10 +76,17 @@
   margin-bottom: 20px;
 }
 
-.hovered {
-  background-color: rgb(95, 162, 184);
+.card__title {
+  font-weight: 500;
+  color: hsl(201deg, 100%, 30%);
 }
 
-.hide {
-  display: none;
+.card__value {
+}
+.sortable-chosen {
+  border: 2px solid pink;
+  opacity: 0.6;
+}
+.sortable-ghost {
+  opacity: 0;
 }

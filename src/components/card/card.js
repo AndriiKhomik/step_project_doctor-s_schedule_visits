@@ -1,5 +1,6 @@
 import Element from '../element/element'
-// import cardImg from './cardImg.png'
+import Sortable from 'sortablejs';
+
 import cardiologist from './cardiologist.jpeg'
 import dentist from './dentist.jpeg'
 import therapist from './therapist.jpeg'
@@ -21,13 +22,12 @@ class Card extends Element {
     const doctor = cardObj['Doctor:'].toLowerCase();
     console.log(this.cardData);
     this.cardEl.classList.add(`card__item--${this.cardData['Pressure:'].toLowerCase()}`);
-    this.cardEl.draggable = true;
     this.cardEl.innerHTML = `
-        <img class="card__img card-img-top" draggable="false" src=${this.doctorsPhoto[doctor]} alt="Card image">
+        <img class="card__img card-img-top" src=${this.doctorsPhoto[doctor]} alt="Card image">
         <div class="card-body">
           <div class="card__info">
-            <p class=" card__text card-text">Full name: ${cardObj['full name:']}</p>
-            <p class=" card__text card-text">Doctor: ${cardObj["Doctor:"]}</p>
+            <p class="card__text card-text"><span class="card__title">Full name:</span><span class="card__value"> ${cardObj['full name:']}</span></p>
+            <p class="card__text card-text"><span class="card__title">Doctor:</span><span class="card__value"> ${cardObj['Doctor:']}</span></p>
           </div>
         </div>`;
 
@@ -63,7 +63,9 @@ class Card extends Element {
     console.log(id);
 
     Object.keys(restObj).forEach(prop => {
-      const cardDataEl = this.createElement('p', ['card__text', 'card-text'], `${prop} ${obj[prop]}`);
+      const cardDataEl = this.createElement('p', ['card__text', 'card-text']);
+      // const cardDataInnerText = this.createElement('span',[])
+      cardDataEl.insertAdjacentHTML('beforeend', `<span class="card__title">${prop}</span><span class="card__value"> ${obj[prop]}</span>`)
       parentEl.append(cardDataEl);
     })
   }
@@ -82,48 +84,16 @@ class Card extends Element {
       // here will call async modal editing card method, which  makes PATCH request and 
       // returns object with new data  
       // const newData =  await modal.method; 
-      const newData = { 'full name': 'Dan', doctor: 'Logoped', age: 5, temerature: 36, id: 3 };
+      // const newData = { 'full name': 'Dan', doctor: 'Logoped', age: 5, temerature: 36, id: 3 };
       this.cardInfoEl.innerHTML = '';
       this.renderCardInfo(newData, this.cardInfoEl);
     })
   }
 
   dragAndDropCard() {
-
-    this.cardContainer.addEventListener('dragover', (e) => {
-      // console.log('over');
-    });
-
-    this.cardContainer.addEventListener('dragenter', (e) => {
-      this.cardContainer.classList.add('hovered')
-    });
-
-    this.cardContainer.addEventListener('dragleave', (e) => {
-      console.log('leave');
-    });
-
-    this.cardContainer.addEventListener('dragdrop', (e) => {
-      console.log('leave');
-    });
-
-    this.cardEl.addEventListener('dragStart', (e) => {
-      setTimeout(() => {
-        e.target.classList.add('hide');
-      }, 0)
-    });
-
-    this.cardEl.addEventListener('dragEnd', (e) => {
-      // e.target.classList.remove('hide');
-
-      e.target.classList.remove('hide');
-
-    });
-
-    this.cardEl.addEventListener('dragover', (e) => {
-      e.preventDefault();
-
-    });
-
+    new Sortable(this.cardContainer, {
+      animation: 450
+    })
   }
 
 }
