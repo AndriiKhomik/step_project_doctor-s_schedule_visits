@@ -1,5 +1,8 @@
 import Element from '../element/element'
-import cardImg from './cardImg.png'
+// import cardImg from './cardImg.png'
+import cardiologist from './cardiologist.jpeg'
+import dentist from './dentist.jpeg'
+import therapist from './therapist.jpeg'
 import { deleteVisitById } from "../api/api";
 
 class Card extends Element {
@@ -9,13 +12,18 @@ class Card extends Element {
     this.editBtn = this.createElement('button', ['card__edit-btn', 'btn', 'btn-primary'], 'Edit');
     this.deleteBtn = this.createElement('button', ['btn', 'close', 'card__delete-btn']);
     this.cardEl = this.createElement('li', ['card__item', 'card']);
-    this.cardContainer = document.querySelector('.card__field');
+    this.cardContainer = document.querySelector('.card__list');
+    this.doctorsPhoto = { cardiologist, dentist, therapist }
   }
 
   renderCard(cardObj) {
     this.cardData = cardObj;
+    const doctor = cardObj['Doctor:'].toLowerCase();
+    console.log(this.cardData);
+    this.cardEl.classList.add(`card__item--${this.cardData['Pressure:'].toLowerCase()}`);
+    this.cardEl.draggable = true;
     this.cardEl.innerHTML = `
-        <img class="card__img card-img-top" src=${cardImg} alt="Card image">
+        <img class="card__img card-img-top" draggable="false" src=${this.doctorsPhoto[doctor]} alt="Card image">
         <div class="card-body">
           <div class="card__info">
             <p class=" card__text card-text">Full name: ${cardObj['full name:']}</p>
@@ -32,6 +40,7 @@ class Card extends Element {
     this.showMoreData();
     this.removeCard();
     this.editCard();
+    this.dragAndDropCard();
   }
 
   removeCard() {
@@ -42,7 +51,7 @@ class Card extends Element {
   }
 
   renderExtraData(cardObj, parentEl) {
-    // добавить деструктуризацию по нецельному ключу
+    //these properties aren't needed in the method
     delete cardObj['full name:'];
     delete cardObj['Doctor:'];
     this.renderCardInfo(cardObj, parentEl);
@@ -73,10 +82,48 @@ class Card extends Element {
       // here will call async modal editing card method, which  makes PATCH request and 
       // returns object with new data  
       // const newData =  await modal.method; 
-      // const newData = { 'full name': 'Dan', doctor: 'Logoped', age: 5, temerature: 36, id: 3 };
+      const newData = { 'full name': 'Dan', doctor: 'Logoped', age: 5, temerature: 36, id: 3 };
       this.cardInfoEl.innerHTML = '';
       this.renderCardInfo(newData, this.cardInfoEl);
     })
+  }
+
+  dragAndDropCard() {
+
+    this.cardContainer.addEventListener('dragover', (e) => {
+      // console.log('over');
+    });
+
+    this.cardContainer.addEventListener('dragenter', (e) => {
+      this.cardContainer.classList.add('hovered')
+    });
+
+    this.cardContainer.addEventListener('dragleave', (e) => {
+      console.log('leave');
+    });
+
+    this.cardContainer.addEventListener('dragdrop', (e) => {
+      console.log('leave');
+    });
+
+    this.cardEl.addEventListener('dragStart', (e) => {
+      setTimeout(() => {
+        e.target.classList.add('hide');
+      }, 0)
+    });
+
+    this.cardEl.addEventListener('dragEnd', (e) => {
+      // e.target.classList.remove('hide');
+
+      e.target.classList.remove('hide');
+
+    });
+
+    this.cardEl.addEventListener('dragover', (e) => {
+      e.preventDefault();
+
+    });
+
   }
 
 }
@@ -85,10 +132,9 @@ class Card extends Element {
 createCardContainer();
 
 function createCardContainer() {
-  const cardContainer = document.createElement('div');
-  cardContainer.classList.add('card__field')
   const root = document.querySelector('#root');
-  root.append(cardContainer);
+  root.insertAdjacentHTML('beforeend',
+    '<div class="card__field"><ul class="card__list"></ul></div>')
 }
 
 
