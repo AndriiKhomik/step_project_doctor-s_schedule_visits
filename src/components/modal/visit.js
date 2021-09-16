@@ -40,7 +40,7 @@ class Visit {
             options[key.textContent] = input.value
         });
 
-        this.changeOptionsKey(options, 'Enter your name:', 'Full name:')
+        this.changeOptionsKey(options, 'Enter your name:', 'full name:')
         options["Pressure:"] = pressureValue
         return options
     }

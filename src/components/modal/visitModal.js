@@ -96,6 +96,7 @@ class VisitModal extends Modal {
         this.count++
         if (this.count > 0) {
             this.btn.disabled = true
+            this.count = 0
         }
         //to post fetch
         const result = await addVisit(this.options)
