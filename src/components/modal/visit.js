@@ -32,19 +32,26 @@ class Visit {
         const pressureValue = this.form.querySelector(".visit-form-select").value
         const inputs = this.form.querySelectorAll('input')
         inputs.forEach(input => {
+            //to remove empty not required input fields from obj
+            if (!input.hasAttribute("required")) {
+                if (input.value === "") return
+            }
             const key = this.form.querySelector(`label[for= "${input.name}"]`)
             options[key.textContent] = input.value
         });
-        this.changeOptionsKey(options, 'Enter your name:', 'full name:')
 
+        this.changeOptionsKey(options, 'Enter your name:', 'Full name:')
         options["Pressure:"] = pressureValue
         return options
     }
 
     changeOptionsKey(obj, oldKey, newKey) {
-        Object.defineProperty(obj, newKey,
-            Object.getOwnPropertyDescriptor(obj, oldKey));
-        delete obj[oldKey];
+        if (obj[oldKey]) {
+            Object.defineProperty(obj, newKey,
+                Object.getOwnPropertyDescriptor(obj, oldKey));
+            delete obj[oldKey];
+        }
+
     }
 }
 

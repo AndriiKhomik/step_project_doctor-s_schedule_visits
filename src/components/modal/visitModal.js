@@ -8,6 +8,7 @@ class VisitModal extends Modal {
         this.visit = null
         this.onSelectChange = this.onSelectChange.bind(this)
         this.onCreateBtnClick = this.onCreateBtnClick.bind(this)
+        this.count = 0
     }
     renderBody() {
         this.modalContainer.classList.add("visit-modal")
@@ -83,25 +84,27 @@ class VisitModal extends Modal {
         this.addVisitForm()
     }
 
-    setVisitDoc() {
-        this.options = this.visit.getValue()
-        this.options["Doctor:"] = this.selector.value
-    }
 
     async onCreateBtnClick(e) {
         e.preventDefault()
-        this.card = new Card()
-        this.setVisitDoc()
+        this.options = this.visit.getValue()
+        // to check empty required input fields
+        if (Object.values(this.options).some(v => v === '')) return
+        //to create card value 'doctor'
+        this.options["Doctor:"] = this.selector.value
+        //to prevent creating additional same card on double click
+        this.count++
+        if (this.count > 0) {
+            this.btn.disabled = true
+        }
+        //to post fetch
         const result = await addVisit(this.options)
-        // this.options.id = result.id запрос возвращает все поля вместе с id в renderCard передаю результат
+        //to create card
+        this.card = new Card()
         this.card.renderCard(result)
+        //to remove modal
         this.hide()
     }
 }
-const modal = new VisitModal("Create visit")
-const btn = document.getElementById("test-btn")
-btn.addEventListener("click", () => {
-    modal.show()
-})
 
 export default VisitModal
