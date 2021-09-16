@@ -30,6 +30,8 @@ export default class Header extends Element {
         this.loginBtn.innerText = 'Login';
         this.addVisitBnt.classList.add('hide');
         this.greeting.classList.add('hide');
+
+        // document.querySelector('.card__field').innerText = '';
       }
     })
   }

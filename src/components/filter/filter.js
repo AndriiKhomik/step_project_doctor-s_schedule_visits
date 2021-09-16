@@ -8,11 +8,11 @@ export default class Filter extends Element {
 
   renderInput() {
     this.filter.insertAdjacentHTML('afterbegin', `
-      <div class="input-group mb-3">
+      <div class="input-group ">
         <div class="input-group-prepend">
 <!--          <span class="input-group-text" id="basic-addon1">@</span>-->
         </div>
-        <input type="text" class="form-control" placeholder="Type to search visit" aria-label="Username" aria-describedby="basic-addon1">
+        <input type="text" class="form-control filter__item" placeholder="Type to search visit" aria-label="Username" aria-describedby="basic-addon1">
       </div>
     `)
   }
@@ -38,14 +38,19 @@ export default class Filter extends Element {
     `)
   }
 
+  renderSearchButton() {
+    this.filter.insertAdjacentHTML('beforeend', `
+      <button class="btn btn-light search-btn" type="submit">Search</button>
+    `)
+  }
+
   render() {
-    this.filter = this.createElement('div', ['filter']);
+    this.filter = this.createElement('form', ['filter']);
     document.querySelector('.card__field').prepend(this.filter);
     this.renderInput();
     this.renderIsDoneSelect();
     this.renderPrioritySelect();
-    const searchButton = this.createElement('button', ['btn', 'btn-primary', 'search-btn'], 'Search');
-    this.filter.append(searchButton)
+    this.renderSearchButton()
   }
 }
 
