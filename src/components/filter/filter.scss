@@ -1,0 +1,11 @@
+.filter {
+    grid-column: 1/4;
+    display: flex;
+    width: 100%;
+}
+
+.form-select__filter,
+.search-btn {
+    height: 38px;
+    margin-left: 4px;
+}
