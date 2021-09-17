@@ -8,7 +8,6 @@ class VisitModal extends Modal {
         this.visit = null
         this.onSelectChange = this.onSelectChange.bind(this)
         this.onCreateBtnClick = this.onCreateBtnClick.bind(this)
-        this.count = 0
     }
     renderBody() {
         this.modalContainer.classList.add("visit-modal")
@@ -47,7 +46,6 @@ class VisitModal extends Modal {
 
     removeListeners() {
         this.selector.removeEventListener("change", this.onSelectChange)
-        this.btn.removeEventListener("click", this.onCreateBtnClick)
     }
 
     addVisitForm() {
@@ -84,7 +82,6 @@ class VisitModal extends Modal {
         this.addVisitForm()
     }
 
-
     async onCreateBtnClick(e) {
         e.preventDefault()
         this.options = this.visit.getValue()
@@ -93,11 +90,7 @@ class VisitModal extends Modal {
         //to create card value 'doctor'
         this.options["Doctor:"] = this.selector.value
         //to prevent creating additional same card on double click
-        this.count++
-        if (this.count > 0) {
-            this.btn.disabled = true
-            this.count = 0
-        }
+        this.btn.removeEventListener("click", this.onCreateBtnClick)
         //to post fetch
         const result = await addVisit(this.options)
         //to create card
