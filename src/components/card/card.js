@@ -9,19 +9,24 @@ import { deleteVisitById } from "../api/api";
 class Card extends Element {
   constructor() {
     super();
-    this.showMoreBtn = this.createElement('button', ['card__show-more-btn', 'btn', 'btn-primary'], 'Show more');
+    this.showMoreBtn = this.createElement('button', ['card__show-more-btn', 'btn', 'btn-primary', 'card__show-more-btn--closed'], 'Show more');
     this.editBtn = this.createElement('button', ['card__edit-btn', 'btn', 'btn-primary'], 'Edit');
     this.deleteBtn = this.createElement('button', ['btn', 'close', 'card__delete-btn']);
     this.cardEl = this.createElement('li', ['card__item', 'card']);
     this.cardContainer = document.querySelector('.card__list');
-    this.doctorsPhoto = { cardiologist, dentist, therapist }
+    this.doctorsPhoto = { cardiologist, dentist, therapist };
+    this.shortData = {};
   }
 
   renderCard(cardObj) {
-    this.cardData = cardObj;
+    this.fullData = cardObj;
+
+    // short info for show less btn
+    this.shortData['Full name:'] = cardObj['full name:'];
+    this.shortData['Doctor:'] = cardObj['Doctor:'];
+
     const doctor = cardObj['Doctor:'].toLowerCase();
-    console.log(this.cardData);
-    this.cardEl.classList.add(`card__item--${this.cardData['Pressure:'].toLowerCase()}`);
+    this.cardEl.classList.add(`card__item--${this.fullData['Pressure:'].toLowerCase()}`);
     this.cardEl.innerHTML = `
         <img class="card__img card-img-top" src=${this.doctorsPhoto[doctor]} alt="Card image">
         <div class="card-body">
@@ -45,26 +50,23 @@ class Card extends Element {
 
   removeCard() {
     this.deleteBtn.addEventListener('click', async (e) => {
-      await deleteVisitById(this.cardData.id);
+      await deleteVisitById(this.fullData.id);
       e.target.closest('.card__item').remove();
     })
   }
 
   renderExtraData(cardObj, parentEl) {
-    //these properties aren't needed in the method
-    delete cardObj['full name:'];
-    delete cardObj['Doctor:'];
-    this.renderCardInfo(cardObj, parentEl);
+    const { ['full name:']: fullname, ['Doctor:']: doctor, ...restData } = cardObj;
+
+    this.renderCardInfo(restData, parentEl);
     return;
   }
 
   renderCardInfo(obj, parentEl) {
     const { id, ...restObj } = obj;
-    console.log(id);
 
     Object.keys(restObj).forEach(prop => {
       const cardDataEl = this.createElement('p', ['card__text', 'card-text']);
-      // const cardDataInnerText = this.createElement('span',[])
       cardDataEl.insertAdjacentHTML('beforeend', `<span class="card__title">${prop}</span><span class="card__value"> ${obj[prop]}</span>`)
       parentEl.append(cardDataEl);
     })
@@ -73,9 +75,18 @@ class Card extends Element {
   showMoreData() {
     this.cardInfoEl = this.cardEl.querySelector('.card__info');
 
-    this.showMoreBtn.addEventListener('click', () => {
-      this.renderExtraData(this.cardData, this.cardInfoEl);
-      this.showMoreBtn.remove();
+    this.showMoreBtn.addEventListener('click', (e) => {
+      e.target.classList.toggle('card__show-more-btn--closed');
+
+      if (e.target.classList.contains('card__show-more-btn--closed')) {
+        this.cardInfoEl.innerText = "";
+        this.renderCardInfo(this.shortData, this.cardInfoEl);
+        e.target.innerText = 'Show more';
+      } else {
+        this.renderExtraData(this.fullData, this.cardInfoEl);
+        e.target.innerText = 'Show less';
+      }
+
     })
   }
 
