@@ -28,21 +28,22 @@ export default class Header extends Element {
         this.loginBtn.innerText = 'Login';
         this.addVisitBnt.classList.add('hide');
         this.greeting.classList.add('hide');
+
+        // document.querySelector('.card__field').innerText = '';
       }
+    })
+  }
+
+  addVisit() {
+    this.addVisitBnt.addEventListener('click', () => {
+      const modal = new VisitModal("Create visit");
+      modal.show();
     })
   }
 
   greetingText() {
     this.greeting = this.createElement('h3', ['title', 'hide'], 'Welcome ${user}');
     this.header.append(this.greeting)
-  }
-
-  addVisit() {
-    this.addVisitBnt.addEventListener('click', () => {
-      console.log('click')
-      const modal = new VisitModal("Create visit");
-      modal.show();
-    })
   }
 
   render() {
