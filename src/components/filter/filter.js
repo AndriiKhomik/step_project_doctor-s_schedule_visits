@@ -4,6 +4,7 @@ export default class Filter extends Element {
   constructor() {
     super();
     this.render();
+    this.filterItems();
   }
 
   renderInput() {
@@ -50,7 +51,37 @@ export default class Filter extends Element {
     this.renderInput();
     this.renderIsDoneSelect();
     this.renderPrioritySelect();
-    this.renderSearchButton()
+    this.renderSearchButton();
+    this.filterByInput();
+  }
+
+  filterItems() {
+    const input = document.querySelector('.filter__item');
+    const filteredItems = document.querySelectorAll('.card__text');
+    const searchBtn = document.querySelector('.search-btn');
+    searchBtn.addEventListener('click', event => {
+      event.preventDefault();
+
+      filteredItems.forEach(item => {
+        // console.log(item.textContent)
+        if (input.value.contains('ris')) {
+          console.log('works')
+        }
+        // console.log(item.textContent.toLowerCase())
+      })
+    })
+  }
+
+  filterByInput() {
+
+  }
+
+  filterByIsDoneSelector() {
+
+  }
+
+  filterByPrioritySelector() {
+
   }
 }
 
