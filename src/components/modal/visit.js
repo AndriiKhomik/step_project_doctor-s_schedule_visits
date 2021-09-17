@@ -51,7 +51,6 @@ class Visit {
                 Object.getOwnPropertyDescriptor(obj, oldKey));
             delete obj[oldKey];
         }
-
     }
 }
 

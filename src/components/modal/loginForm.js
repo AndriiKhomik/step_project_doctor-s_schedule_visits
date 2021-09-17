@@ -2,10 +2,11 @@ import Modal from "./modal";
 class LoginForm extends Modal {
   constructor(title) {
     super(title)
+    this.onSubmitBtnClick = this.onSubmitBtnClick.bind(this)
   }
 
   renderBody() {
-    const html = `<form class ="card-login-form">
+    const html = `<form class ="card-login-form" id="card-login-form">
      ${this.renderEmailInput()}
      ${this.renderPasswordInput()}       
       </form>`
@@ -15,9 +16,9 @@ class LoginForm extends Modal {
   renderEmailInput() {
     const html = `<div class="mb-3">
     ${this.renderEmailSvg()}
-    <label for="inputEmail" class="form-label">Email address</label>
-    <input name="inputEmail" type="email" class="form-control" id="inputEmail" aria-describedby="emailHelp">
-    <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div>
+    <label for="email" class="form-label">Email address</label>
+    <input name="email" type="email" class="form-control" id="email">
+    <div required id="emailHelp" class="form-text">We'll never share your email with anyone else.</div>
   </div>`
     return html
   }
@@ -33,7 +34,7 @@ class LoginForm extends Modal {
     const html = `<div class="mb-3">
     ${this.renderPasswordSvg()}
     <label for="inputPassword" class="form-label">Password</label>
-    <input name="inputPassword" type="password" class="form-control" id="inputPassword">
+    <input required name="inputPassword" type="password" class="form-control" id="inputPassword">
   </div>`
     return html
   }
@@ -47,8 +48,37 @@ class LoginForm extends Modal {
   }
 
   renderBtn() {
-    const html = `<button type="submit" class="btn btn-primary d-grid gap-2 col-6 mx-auto">Submit</button>`
+    const html = `<button type="submit" id="login-submit-btn" class="btn btn-primary d-grid gap-2 col-6 mx-auto">
+    Submit</button>`
     return html
+  }
+  show() {
+    super.show()
+    this.addListeners()
+  }
+
+  hide() {
+    super.hide()
+    this.removeListeners()
+  }
+
+  addListeners() {
+    this.btn = document.getElementById("#login-submit-btn")
+    this.btn.addEventListener("click", this.onSubmitBtnClick)
+  }
+
+  removeListeners() {
+    this.btn.removeEventListener("click", this.onSubmitBtnClick)
+  }
+
+  onSubmitBtnClick() {
+
+  }
+
+  getValue() {
+    this.form = document.getElementById("card-login-form");
+    // this.email = this.form.elements.email
+
   }
 }
 //-----move to header-----
