@@ -9,7 +9,7 @@ import { deleteVisitById } from "../api/api";
 class Card extends Element {
   constructor() {
     super();
-    this.showMoreBtn = this.createElement('button', ['card__show-more-btn', 'btn', 'btn-primary'], 'Show more');
+    this.showMoreBtn = this.createElement('button', ['card__show-more-btn', 'btn', 'btn-primary', 'card__show-more-btn--closed'], 'Show more');
     this.editBtn = this.createElement('button', ['card__edit-btn', 'btn', 'btn-primary'], 'Edit');
     this.deleteBtn = this.createElement('button', ['btn', 'close', 'card__delete-btn']);
     this.cardEl = this.createElement('li', ['card__item', 'card']);
@@ -75,9 +75,18 @@ class Card extends Element {
   showMoreData() {
     this.cardInfoEl = this.cardEl.querySelector('.card__info');
 
-    this.showMoreBtn.addEventListener('click', () => {
-      this.renderExtraData(this.fullData, this.cardInfoEl);
-      this.showMoreBtn.remove();
+    this.showMoreBtn.addEventListener('click', (e) => {
+      e.target.classList.toggle('card__show-more-btn--closed');
+
+      if (e.target.classList.contains('card__show-more-btn--closed')) {
+        this.cardInfoEl.innerText = "";
+        this.renderCardInfo(this.shortData, this.cardInfoEl);
+        e.target.innerText = 'Show more';
+      } else {
+        this.renderExtraData(this.fullData, this.cardInfoEl);
+        e.target.innerText = 'Show less';
+      }
+
     })
   }
 
