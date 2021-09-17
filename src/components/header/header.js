@@ -1,7 +1,8 @@
 import Element from '../element/element';
 import logo from './logo.png';
-import Visit from "../modal/visit";
+// import Visit from "../modal/visit";
 import VisitModal from "../modal/visitModal";
+import LoginForm from '../modal/loginForm'
 
 export default class Header extends Element {
   constructor() {
@@ -14,9 +15,9 @@ export default class Header extends Element {
   authorization() {
     this.loginBtn.addEventListener('click', event => {
       event.preventDefault();
-
       if (event.target.textContent === 'Login') {
-
+        this.loginform = new LoginForm("Welcome")
+        this.loginform.show()
         // after successfully authorization
         this.loginBtn.innerText = 'Logout';
         this.addVisitBnt.classList.remove('hide');

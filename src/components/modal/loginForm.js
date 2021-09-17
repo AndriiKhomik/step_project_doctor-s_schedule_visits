@@ -3,6 +3,7 @@ class LoginForm extends Modal {
   constructor(title) {
     super(title)
     this.onSubmitBtnClick = this.onSubmitBtnClick.bind(this)
+    this.options = {}
   }
 
   renderBody() {
@@ -33,8 +34,8 @@ class LoginForm extends Modal {
   renderPasswordInput() {
     const html = `<div class="mb-3">
     ${this.renderPasswordSvg()}
-    <label for="inputPassword" class="form-label">Password</label>
-    <input required name="inputPassword" type="password" class="form-control" id="inputPassword">
+    <label for="password" class="form-label">Password</label>
+    <input required name="password" type="password" class="form-control" id="password">
   </div>`
     return html
   }
@@ -57,32 +58,28 @@ class LoginForm extends Modal {
     this.addListeners()
   }
 
-  hide() {
-    super.hide()
-    this.removeListeners()
-  }
-
   addListeners() {
-    this.btn = document.getElementById("#login-submit-btn")
+    this.btn = document.getElementById("login-submit-btn")
     this.btn.addEventListener("click", this.onSubmitBtnClick)
   }
 
-  removeListeners() {
+  onSubmitBtnClick(e) {
+    e.preventDefault()
+    this.getValue()
+    if (Object.values(this.options).some(v => v === '')) return
     this.btn.removeEventListener("click", this.onSubmitBtnClick)
-  }
-
-  onSubmitBtnClick() {
-
+    this.hide()
   }
 
   getValue() {
     this.form = document.getElementById("card-login-form");
-    // this.email = this.form.elements.email
-
+    const inputs = this.form.querySelectorAll('input')
+    inputs.forEach(input => {
+      const key = this.form.querySelector(`label[for= "${input.name}"]`)
+      this.options[key.textContent] = input.value
+    });
   }
 }
-//-----move to header-----
-// this.loginform = new LoginForm("Welcome")
-// this.loginBtn.addEventListener("click", () => loginform.show())
+
 
 export default LoginForm
