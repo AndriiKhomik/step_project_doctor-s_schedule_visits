@@ -1,9 +1,12 @@
 .card__field {
-  background-color: lightblue;
+  background-color: #d9e6ef;
+  max-width: 1160px;
   min-height: 500px;
-  width: 90%;
   margin: 0 auto;
-  padding: 40px 10px;
+  margin-top: 10px;
+  border: 2px solid #949494;
+  border-radius: 10px;
+  padding: 20px 10px;
 }
 .card__list {
   display: grid;
