@@ -29,7 +29,7 @@ class Visit {
     getValue() {
         this.form = document.getElementById("visit-form");
         const options = {}
-        const pressureValue = this.form.querySelector(".visit-form-select").value
+        const urgencyValue = this.form.querySelector(".visit-form-select").value
         const inputs = this.form.querySelectorAll('input')
         inputs.forEach(input => {
             //to remove empty not required input fields from obj
@@ -41,7 +41,7 @@ class Visit {
         });
 
         this.changeOptionsKey(options, 'Enter your name:', 'full name:')
-        options["Pressure:"] = pressureValue
+        options["Urgency:"] = urgencyValue
         return options
     }
 

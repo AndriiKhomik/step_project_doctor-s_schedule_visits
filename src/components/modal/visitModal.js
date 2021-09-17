@@ -96,6 +96,7 @@ class VisitModal extends Modal {
         //to create card
         this.card = new Card()
         this.card.renderCard(result)
+        console.log(result);
         //to remove modal
         this.hide()
     }

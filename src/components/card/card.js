@@ -21,7 +21,7 @@ class Card extends Element {
     this.cardData = cardObj;
     const doctor = cardObj['Doctor:'].toLowerCase();
     console.log(this.cardData);
-    this.cardEl.classList.add(`card__item--${this.cardData['Pressure:'].toLowerCase()}`);
+    this.cardEl.classList.add(`card__item--${this.cardData['Urgency:'].toLowerCase()}`);
     this.cardEl.innerHTML = `
         <img class="card__img card-img-top" src=${this.doctorsPhoto[doctor]} alt="Card image">
         <div class="card-body">
