@@ -104,6 +104,7 @@ class VisitModal extends Modal {
         if (this.btn.textContent === 'Save') {
             this.options = this.visit.getValue()
             if (Object.values(this.options).some(v => v === '')) return
+            this.options["Doctor:"] = this.doctor
             this.btn.removeEventListener("click", this.onCreateBtnClick)
             const result = await updateVisit(this.options, this.id)
             console.log(result);
@@ -119,6 +120,7 @@ class VisitModal extends Modal {
         this.selector.classList.add("visit-select--hidden")
         this.visit.setValue(obj)
         this.id = obj.id
+        this.doctor = obj['Doctor:']
     }
 }
 
