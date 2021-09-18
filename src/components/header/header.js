@@ -3,7 +3,7 @@ import logo from './logo.png';
 import Visit from "../modal/visit";
 import VisitModal from "../modal/visitModal";
 import LoginForm from '../modal/loginForm'
-import {deleteVisitById, getData } from "../api/api";
+import { deleteVisitById, getData } from "../api/api";
 import Card from "../card/card";
 
 export default class Header extends Element {
@@ -19,7 +19,7 @@ export default class Header extends Element {
       event.preventDefault();
 
       if (event.target.textContent === 'Login' &&
-          localStorage.getItem('isLogged')) {
+        localStorage.getItem('isLogged')) {
         this.loginform = new LoginForm("Welcome");
         this.loginform.show();
         this.checkEmailAndPassword();
@@ -83,11 +83,14 @@ export default class Header extends Element {
 
   checkItemsOnPage(items) {
     const title = this.createElement('h2', ['visit__title', 'hide'], 'Please add your first visit');
-    document.querySelector('.card__field').append(title);
+
     if (items.length === 0) {
-      title.classList.remove('hide')
+      document.querySelector('.card__field').append(title);
+      console.log(title);
+      console.log('нет карточек')
     } else {
-      title.classList.add('hide')
+      console.log('есть карточки');
+      title.remove();
     }
   }
 
@@ -103,4 +106,5 @@ export default class Header extends Element {
   }
 }
 
-new Header();
+const header = new Header();
+export { header };
