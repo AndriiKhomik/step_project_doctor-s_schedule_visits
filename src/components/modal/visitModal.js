@@ -81,6 +81,7 @@ class VisitModal extends Modal {
         this.removeVisitForm()
         this.selectVisitForm(this.selector.value)
         this.addVisitForm()
+        this.modalContainer.classList.add("visit-modal--selected")
     }
 
     async onCreateBtnClick(e) {
@@ -107,6 +108,7 @@ class VisitModal extends Modal {
         this.selectVisitForm(obj['Doctor:'])
         this.show()
         this.addVisitForm('Save')
+        this.modalContainer.classList.add("visit-modal--selected")
         this.selector.remove()
         this.visit.setValue(obj)
         this.id = obj.id

@@ -1,19 +1,19 @@
 class Visit {
     rendeInputFields() {
-        const html = `<label for="fullName" class="form-label">Enter your name:</label>
+        const html = `<label for="fullName" class="form-label">Full name of the patient:</label>
         <input required type="text" name="fullName" id="fullName"/>
         <label for="target" class="form-label">Target of visit:</label>
         <input required type="text" name="target" id="target"/>
-        <label for="description" class="form-label">Brief description of the visit:</label>
+        <label for="description" class="form-label">Brief description of visit:</label>
         <input type="text" name="description" id="description"/>
-        <label for="urgency" class="form-label">Choose urgency of the visit:</label>
+        <label for="urgency" class="form-label">Urgency of visit:</label>
         <select required name="urgency" class="visit-form-select form-select">
             <option value="Ordinary">Ordinary</option>
             <option value="Priority">Priority</option>
             <option value="Urgent">Urgent</option>
         </select>
         <label for="date-visit" class="form-label">Date of visit:</label>
-       <input required type="date" name="date-visit" id="date-visit"/>`
+       <input required type="date" name="date-visit" id="date-visit" class="visit-form-date"/>`
         return html
     }
 
@@ -38,7 +38,7 @@ class Visit {
             this.options[key.textContent] = input.value
         });
 
-        this.changeOptionsKey(this.options, 'Enter your name:', 'full name:')
+        this.changeOptionsKey(this.options, 'Full name of the patient:', 'full name:')
         this.options["Urgency:"] = urgencyValue
         return this.options
     }

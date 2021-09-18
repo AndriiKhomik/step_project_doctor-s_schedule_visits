@@ -18,7 +18,7 @@ class LoginForm extends Modal {
     const html = `<div class="mb-3">
     ${this.renderEmailSvg()}
     <label for="email" class="form-label">Email address:</label>
-    <input name="email" type="email" class="form-control" id="email">
+    <input name="email" type="email" class="form-control card-login-input" id="email">
     <div required id="emailHelp" class="form-text">We'll never share your email with anyone else.</div>
   </div>`
     return html
@@ -35,7 +35,7 @@ class LoginForm extends Modal {
     const html = `<div class="mb-3">
     ${this.renderPasswordSvg()}
     <label for="password" class="form-label">Password:</label>
-    <input required name="password" type="password" class="form-control" id="password">
+    <input required name="password" type="password" class="form-control card-login-input" id="password">
   </div>`
     return html
   }
