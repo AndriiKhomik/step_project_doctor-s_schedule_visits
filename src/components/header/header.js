@@ -12,7 +12,6 @@ export default class Header extends Element {
     this.render();
     this.authorization();
     this.addVisit();
-    // localStorage.getItem('isLogged');
   }
 
   authorization() {
@@ -23,14 +22,15 @@ export default class Header extends Element {
         this.loginform = new LoginForm("Welcome");
         this.loginform.show();
         this.checkEmailAndPassword();
-        localStorage.setItem('isLogged', true)
-      } else {
 
-        // after successfully logout
-        localStorage.setItem('isLogged', false);
+      } else {
+        document.querySelector('.card__list').innerText = '';
+        localStorage.removeItem('isLogged');
         this.loginBtn.innerText = 'Login';
         this.addVisitBnt.classList.add('hide');
-        // this.greeting.classList.add('hide');
+        if (this.greeting) {
+          this.greeting.remove()
+        }
       }
     })
   }
@@ -63,7 +63,30 @@ export default class Header extends Element {
       this.loginBtn = this.createElement('button', ['btn', 'btn-secondary', 'login-btn'], 'Logout');
       btnContainer.append(this.loginBtn);
       this.renderPageAfterLogin();
+      this.greetingText(localStorage.getItem('user'))
     }
+    if (!localStorage.getItem('isLogged') || (localStorage.getItem('isLogged') === 'false')) {
+      this.header = this.createElement('header', ['header']);
+      document.querySelector('#root').prepend(this.header);
+      this.header.insertAdjacentHTML('afterbegin',
+        `
+              <a href="https://med.sumdu.edu.ua/en/" target="_blank">
+                <img src=${logo} alt="logo" class="logo">
+              </a>`);
+      const btnContainer = this.createElement('div', ['btn__group']);
+      this.header.append(btnContainer);
+      this.addVisitBnt = this.createElement('button', ['btn', 'btn-success', 'add-visit-btn', 'hide'], 'Add new visit');
+      btnContainer.append(this.addVisitBnt);
+      this.loginBtn = this.createElement('button', ['btn', 'btn-secondary', 'login-btn'], 'Login');
+      btnContainer.append(this.loginBtn);
+    }
+  }
+
+  renderUserName(name) {
+    let userName = name.split('@');
+    this.userName = userName[0].toString();
+    localStorage.setItem('user', this.userName)
+    return this.userName;
   }
 
   checkEmailAndPassword() {
@@ -71,34 +94,32 @@ export default class Header extends Element {
     const password = document.querySelector('#password');
     const submitAuthorizationBtn = document.querySelector('#login-submit-btn');
     submitAuthorizationBtn.addEventListener('click', () => {
-      // if (mail.value === 'andr@gmail.com' && password.value === 'admin111') {
-      if (this.mail.value === '1' && password.value === '1') {
+      if (this.mail.value === 'andr@gmail.com' && password.value === 'admin111') {
         this.renderPageAfterLogin();
-
+        this.renderUserName(this.mail.value);
         this.loginBtn.innerText = 'Logout';
         this.addVisitBnt.classList.remove('hide');
-
+        localStorage.setItem('isLogged', true);
         localStorage.setItem('token', 'e8f8357e-bd0c-40b1-8074-b37d5a74b6f6');
-        this.greetingText(this.mail.value);
+        this.greetingText(this.userName);
       }
     })
   }
 
-  checkItemsOnPage(items) {
-    const title = this.createElement('h2', ['visit__title', 'hide'], 'Please add your first visit');
-    document.querySelector('.card__field').append(title);
-    if (items.length === 0) {
-      title.classList.remove('hide')
-    } else {
-      title.classList.add('hide')
-    }
+  renderAddVisitTitle() {
+    this.addVisitTitle = this.createElement('h2', ['visit__title'], 'Please add your first visit');
+    document.querySelector('.card__field').append(this.addVisitTitle);
   }
 
   renderPageAfterLogin() {
+    this.renderAddVisitTitle();
     getData()
       .then(data => {
-        this.checkItemsOnPage(data);
+        if (data.length === 0) {
+          this.addVisitTitle.classList.remove('hide');
+        }
         data.map(item => {
+          this.addVisitTitle.classList.add('hide');
           const card = new Card();
           card.renderCard(item)
         })
