@@ -85,39 +85,29 @@ class VisitModal extends Modal {
 
     async onCreateBtnClick(e) {
         e.preventDefault()
+        this.options = this.visit.getValue()
+        if (Object.values(this.options).some(v => v === '')) return
+        // Create card
         if (this.btn.textContent === 'Create card') {
-            this.options = this.visit.getValue()
-            // to check empty required input fields
-            if (Object.values(this.options).some(v => v === '')) return
-            //to create card value 'doctor'
             this.options["Doctor:"] = this.selector.value
-            //to prevent creating additional same card on double click
-            this.btn.removeEventListener("click", this.onCreateBtnClick)
-            //to post fetch
             const result = await addVisit(this.options)
-            //to create card
             this.card = new Card()
             this.card.renderCard(result)
-            //to remove modal
-            this.hide()
         }
+        // Edit card
         if (this.btn.textContent === 'Save') {
-            this.options = this.visit.getValue()
-            if (Object.values(this.options).some(v => v === '')) return
             this.options["Doctor:"] = this.doctor
-            this.btn.removeEventListener("click", this.onCreateBtnClick)
             const result = await updateVisit(this.options, this.id)
-            console.log(result);
-            this.hide()
         }
-
+        this.btn.removeEventListener("click", this.onCreateBtnClick)
+        this.hide()
     }
 
     editCard(obj) {
         this.selectVisitForm(obj['Doctor:'])
         this.show()
         this.addVisitForm('Save')
-        this.selector.classList.add("visit-select--hidden")
+        this.selector.remove()
         this.visit.setValue(obj)
         this.id = obj.id
         this.doctor = obj['Doctor:']

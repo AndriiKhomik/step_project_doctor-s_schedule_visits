@@ -19,9 +19,6 @@
 }
 .visit-select {
     margin-bottom: 20px;
-    &--hidden {
-        display: none;
-    }
 }
 .visit-form {
     display: grid;
@@ -43,4 +40,7 @@
 
 .visit-btn--hidden {
     display: none;
+}
+.visit-input--invalid {
+    border: 1px solid red;
 }

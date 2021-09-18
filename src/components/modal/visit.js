@@ -13,7 +13,7 @@ class Visit {
             <option value="Urgent">Urgent</option>
         </select>
         <label for="date-visit" class="form-label">Date of visit:</label>
-       <input required type="datetime-local" name="date-visit" id="date-visit"/>`
+       <input required type="date" name="date-visit" id="date-visit"/>`
         return html
     }
 
@@ -24,25 +24,23 @@ class Visit {
         return html
     }
 
-
-
     getValue() {
-        const form = document.querySelector("#visit-form")
-        const options = {}
-        const urgencyValue = form.querySelector(".visit-form-select").value
-        const inputs = form.querySelectorAll('input')
+        this.form = document.querySelector("#visit-form")
+        const inputs = this.form.querySelectorAll('input')
+        this.options = {}
+        const urgencyValue = this.form.querySelector(".visit-form-select").value
         inputs.forEach(input => {
             //to remove empty not required input fields from obj
             if (!input.hasAttribute("required")) {
                 if (input.value === "") return
             }
-            const key = form.querySelector(`label[for= "${input.name}"]`)
-            options[key.textContent] = input.value
+            const key = this.form.querySelector(`label[for= "${input.name}"]`)
+            this.options[key.textContent] = input.value
         });
 
-        this.changeOptionsKey(options, 'Enter your name:', 'full name:')
-        options["Urgency:"] = urgencyValue
-        return options
+        this.changeOptionsKey(this.options, 'Enter your name:', 'full name:')
+        this.options["Urgency:"] = urgencyValue
+        return this.options
     }
 
     setValue(obj) {

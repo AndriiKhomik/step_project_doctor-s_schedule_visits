@@ -17,7 +17,7 @@ class LoginForm extends Modal {
   renderEmailInput() {
     const html = `<div class="mb-3">
     ${this.renderEmailSvg()}
-    <label for="email" class="form-label">Email address</label>
+    <label for="email" class="form-label">Email address:</label>
     <input name="email" type="email" class="form-control" id="email">
     <div required id="emailHelp" class="form-text">We'll never share your email with anyone else.</div>
   </div>`
@@ -34,7 +34,7 @@ class LoginForm extends Modal {
   renderPasswordInput() {
     const html = `<div class="mb-3">
     ${this.renderPasswordSvg()}
-    <label for="password" class="form-label">Password</label>
+    <label for="password" class="form-label">Password:</label>
     <input required name="password" type="password" class="form-control" id="password">
   </div>`
     return html
@@ -73,11 +73,21 @@ class LoginForm extends Modal {
 
   getValue() {
     this.form = document.getElementById("card-login-form");
+    //review valid email
+    const email = this.form.elements.email.value
+    console.log(this.isEmail(email));
+    //----------
     const inputs = this.form.querySelectorAll('input')
     inputs.forEach(input => {
       const key = this.form.querySelector(`label[for= "${input.name}"]`)
       this.options[key.textContent] = input.value
     });
+  }
+
+  isEmail(value) {
+    const email =
+      /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-z\-0-9]+\.)+[a-z]{2,}))$/
+    return email.test(value)
   }
 }
 
