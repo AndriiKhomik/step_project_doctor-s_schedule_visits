@@ -1,6 +1,6 @@
 import Element from '../element/element'
 import Sortable from 'sortablejs';
-
+import VisitModal from '../modal/visitModal';
 import cardiologist from './cardiologist.jpeg'
 import dentist from './dentist.jpeg'
 import therapist from './therapist.jpeg'
@@ -27,7 +27,7 @@ class Card extends Element {
 
     const doctor = cardObj['Doctor:'].toLowerCase();
     console.log(this.cardData);
-    this.cardEl.classList.add(`card__item--${this.cardData['Urgency:'].toLowerCase()}`);
+    // this.cardEl.classList.add(`card__item--${this.cardData["Urgency:"].toLowerCase()}`);
     this.cardEl.innerHTML = `
         <img class="card__img card-img-top" src=${this.doctorsPhoto[doctor]} alt="Card image">
         <div class="card-body">
@@ -97,8 +97,27 @@ class Card extends Element {
       // returns object with new data  
       // const newData =  await modal.method; 
       // const newData = { 'full name': 'Dan', doctor: 'Logoped', age: 5, temerature: 36, id: 3 };
-      this.cardInfoEl.innerHTML = '';
-      this.renderCardInfo(newData, this.cardInfoEl);
+      //create edit modal
+      const visitModal = new VisitModal("Edit card")
+      visitModal.selectVisitForm(this.fullData['Doctor:'])
+      visitModal.show()
+      visitModal.addVisitForm('Save')
+      visitModal.selector.remove()
+      //add cards value to inputs
+      const inputs = visitModal.form.querySelectorAll('input')
+      inputs.forEach(input => {
+        const key = visitModal.form.querySelector(`label[for= "${input.name}"]`)
+        Object.keys(this.fullData).forEach((dataKey) => {
+          if (dataKey === key.textContent) {
+            input.value = this.fullData[dataKey]
+          }
+        })
+      });
+      const fullNameInput = visitModal.form.querySelector(`input[name="fullName"]`)
+      fullNameInput.value = this.fullData['full name:']
+
+      // this.cardInfoEl.innerHTML = '';
+      // this.renderCardInfo(newData, this.cardInfoEl);
     })
   }
 

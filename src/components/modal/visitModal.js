@@ -23,7 +23,7 @@ class VisitModal extends Modal {
     renderBtn() {
         const html = `<button type="submit" 
         id="card-create-btn" class="btn btn-primary mx-auto visit-btn--hidden">
-        Create card</button>`
+        </button>`
         return html
     }
 
@@ -48,20 +48,21 @@ class VisitModal extends Modal {
         this.selector.removeEventListener("change", this.onSelectChange)
     }
 
-    addVisitForm() {
+    addVisitForm(value = "Create card") {
         this.selector.insertAdjacentHTML('afterend', this.visit.renderFields())
+        this.form = this.modalContainer.querySelector("#visit-form")
         this.btn.classList.remove("visit-btn--hidden")
+        this.btn.textContent = value
     }
 
     removeVisitForm() {
-        this.form = this.modalContainer.querySelector("#visit-form")
         if (this.form) {
             this.form.remove()
         }
     }
 
-    selectVisitForm() {
-        switch (this.selector.value.toLowerCase()) {
+    selectVisitForm(value) {
+        switch (value.toLowerCase()) {
             case "therapist":
                 this.visit = new VisitTherapist()
                 break;
@@ -76,29 +77,34 @@ class VisitModal extends Modal {
         }
     }
 
-    onSelectChange(e) {
+    onSelectChange() {
         this.removeVisitForm()
-        this.selectVisitForm()
+        this.selectVisitForm(this.selector.value)
         this.addVisitForm()
     }
 
     async onCreateBtnClick(e) {
         e.preventDefault()
-        this.options = this.visit.getValue()
-        // to check empty required input fields
-        if (Object.values(this.options).some(v => v === '')) return
-        //to create card value 'doctor'
-        this.options["Doctor:"] = this.selector.value
-        //to prevent creating additional same card on double click
-        this.btn.removeEventListener("click", this.onCreateBtnClick)
-        //to post fetch
-        const result = await addVisit(this.options)
-        //to create card
-        this.card = new Card()
-        this.card.renderCard(result)
-        console.log(result);
-        //to remove modal
-        this.hide()
+        if (this.btn.textContent === 'Create card') {
+            this.options = this.visit.getValue()
+            // to check empty required input fields
+            if (Object.values(this.options).some(v => v === '')) return
+            //to create card value 'doctor'
+            this.options["Doctor:"] = this.selector.value
+            //to prevent creating additional same card on double click
+            this.btn.removeEventListener("click", this.onCreateBtnClick)
+            //to post fetch
+            const result = await addVisit(this.options)
+            //to create card
+            this.card = new Card()
+            this.card.renderCard(result)
+            //to remove modal
+            this.hide()
+        }
+        if (this.btn.textContent === 'Save') {
+            console.log("clicked");
+        }
+
     }
 }
 
