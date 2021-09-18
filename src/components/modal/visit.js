@@ -1,5 +1,3 @@
-// import LoginForm from "./loginForm";
-
 class Visit {
     rendeInputFields() {
         const html = `<label for="fullName" class="form-label">Enter your name:</label>
@@ -26,23 +24,40 @@ class Visit {
         return html
     }
 
+
+
     getValue() {
-        this.form = document.getElementById("visit-form");
+        const form = document.querySelector("#visit-form")
         const options = {}
-        const urgencyValue = this.form.querySelector(".visit-form-select").value
-        const inputs = this.form.querySelectorAll('input')
+        const urgencyValue = form.querySelector(".visit-form-select").value
+        const inputs = form.querySelectorAll('input')
         inputs.forEach(input => {
             //to remove empty not required input fields from obj
             if (!input.hasAttribute("required")) {
                 if (input.value === "") return
             }
-            const key = this.form.querySelector(`label[for= "${input.name}"]`)
+            const key = form.querySelector(`label[for= "${input.name}"]`)
             options[key.textContent] = input.value
         });
 
         this.changeOptionsKey(options, 'Enter your name:', 'full name:')
         options["Urgency:"] = urgencyValue
         return options
+    }
+
+    setValue(obj) {
+        const form = document.querySelector("#visit-form")
+        const inputs = form.querySelectorAll('input')
+        inputs.forEach(input => {
+            const key = form.querySelector(`label[for= "${input.name}"]`)
+            Object.keys(obj).forEach((dataKey) => {
+                if (dataKey === key.textContent) {
+                    input.value = obj[dataKey]
+                }
+            })
+        });
+        const fullNameInput = form.querySelector(`input[name="fullName"]`)
+        fullNameInput.value = obj['full name:']
     }
 
     changeOptionsKey(obj, oldKey, newKey) {
