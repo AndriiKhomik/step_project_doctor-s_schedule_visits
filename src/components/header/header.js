@@ -3,7 +3,7 @@ import logo from './logo.png';
 import Visit from "../modal/visit";
 import VisitModal from "../modal/visitModal";
 import LoginForm from '../modal/loginForm'
-import {deleteVisitById, getData } from "../api/api";
+import { getData } from "../api/api";
 import Card from "../card/card";
 
 export default class Header extends Element {
@@ -47,15 +47,20 @@ export default class Header extends Element {
     document.querySelector('.btn__group').before(this.greeting)
   }
 
-  render() {
-    if (localStorage.getItem('isLogged')) {
-      this.header = this.createElement('header', ['header']);
-      document.querySelector('#root').prepend(this.header);
-      this.header.insertAdjacentHTML('afterbegin',
-        `
+  renderHeader() {
+    this.header = this.createElement('header', ['header']);
+    document.querySelector('#root').prepend(this.header);
+    this.header.insertAdjacentHTML('afterbegin',
+      `
               <a href="https://med.sumdu.edu.ua/en/" target="_blank">
                 <img src=${logo} alt="logo" class="logo">
               </a>`);
+
+  }
+
+  render() {
+    if (localStorage.getItem('isLogged')) {
+      this.renderHeader();
       const btnContainer = this.createElement('div', ['btn__group']);
       this.header.append(btnContainer);
       this.addVisitBnt = this.createElement('button', ['btn', 'btn-success', 'add-visit-btn'], 'Add new visit');
@@ -66,13 +71,7 @@ export default class Header extends Element {
       this.greetingText(localStorage.getItem('user'))
     }
     if (!localStorage.getItem('isLogged') || (localStorage.getItem('isLogged') === 'false')) {
-      this.header = this.createElement('header', ['header']);
-      document.querySelector('#root').prepend(this.header);
-      this.header.insertAdjacentHTML('afterbegin',
-        `
-              <a href="https://med.sumdu.edu.ua/en/" target="_blank">
-                <img src=${logo} alt="logo" class="logo">
-              </a>`);
+      this.renderHeader();
       const btnContainer = this.createElement('div', ['btn__group']);
       this.header.append(btnContainer);
       this.addVisitBnt = this.createElement('button', ['btn', 'btn-success', 'add-visit-btn', 'hide'], 'Add new visit');
@@ -85,7 +84,7 @@ export default class Header extends Element {
   renderUserName(name) {
     let userName = name.split('@');
     this.userName = userName[0].toString();
-    localStorage.setItem('user', this.userName)
+    localStorage.setItem('user', this.userName);
     return this.userName;
   }
 
@@ -95,12 +94,12 @@ export default class Header extends Element {
     const submitAuthorizationBtn = document.querySelector('#login-submit-btn');
     submitAuthorizationBtn.addEventListener('click', () => {
       if (this.mail.value === 'andr@gmail.com' && password.value === 'admin111') {
+        localStorage.setItem('token', 'e8f8357e-bd0c-40b1-8074-b37d5a74b6f6');
         this.renderPageAfterLogin();
         this.renderUserName(this.mail.value);
         this.loginBtn.innerText = 'Logout';
         this.addVisitBnt.classList.remove('hide');
         localStorage.setItem('isLogged', true);
-        localStorage.setItem('token', 'e8f8357e-bd0c-40b1-8074-b37d5a74b6f6');
         this.greetingText(this.userName);
       }
     })
