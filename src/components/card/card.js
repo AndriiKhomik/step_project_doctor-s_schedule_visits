@@ -5,6 +5,11 @@ import cardiologist from './cardiologist.jpeg'
 import dentist from './dentist.jpeg'
 import therapist from './therapist.jpeg'
 import { deleteVisitById } from "../api/api";
+import Header from '../header/header'
+import CardsContainer from './cardsContainer'
+
+const cardsContainer = new CardsContainer();
+// cardsContainer.createCardsContainer();
 
 class Card extends Element {
   constructor() {
@@ -24,6 +29,8 @@ class Card extends Element {
     // short info for show less btn
     this.shortData['Full name:'] = cardObj['full name:'];
     this.shortData['Doctor:'] = cardObj['Doctor:'];
+
+    console.log('объект который передали в рендер карточки', this.fullData, 'поле врач - ', this.fullData['Doctor:']);
 
     const doctor = cardObj['Doctor:'].toLowerCase();
     this.cardEl.classList.add(`card__item--${this.fullData["Urgency:"].toLowerCase()}`);
@@ -52,6 +59,7 @@ class Card extends Element {
     this.deleteBtn.addEventListener('click', async (e) => {
       await deleteVisitById(this.fullData.id);
       e.target.closest('.card__item').remove();
+      cardsContainer.checkItemsOnPage();
     })
   }
 
@@ -126,13 +134,13 @@ class Card extends Element {
 }
 
 
-createCardContainer();
+// createCardContainer();
 
-function createCardContainer() {
-  const root = document.querySelector('#root');
-  root.insertAdjacentHTML('beforeend',
-    '<div class="card__field"><ul class="card__list"></ul></div>')
-}
+// function createCardContainer() {
+//   const root = document.querySelector('#root');
+//   root.insertAdjacentHTML('beforeend',
+//     '<div class="card__field"><ul class="card__list"></ul></div>')
+// }
 
 
-export default Card
+export default Card;
