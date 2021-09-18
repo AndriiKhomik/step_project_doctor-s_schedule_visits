@@ -92,26 +92,8 @@ class Card extends Element {
 
   editCard() {
     this.editBtn.addEventListener('click', async () => {
-
-      //create edit modal
       const visitModal = new VisitModal("Edit card")
-      visitModal.selectVisitForm(this.fullData['Doctor:'])
-      visitModal.show()
-      visitModal.addVisitForm('Save')
-      visitModal.selector.remove()
-      //add cards value to inputs
-      const inputs = visitModal.form.querySelectorAll('input')
-      inputs.forEach(input => {
-        const key = visitModal.form.querySelector(`label[for= "${input.name}"]`)
-        Object.keys(this.fullData).forEach((dataKey) => {
-          if (dataKey === key.textContent) {
-            input.value = this.fullData[dataKey]
-          }
-        })
-      });
-      const fullNameInput = visitModal.form.querySelector(`input[name="fullName"]`)
-      fullNameInput.value = this.fullData['full name:']
-
+      visitModal.editCard(this.fullData)
       // this.cardInfoEl.innerHTML = '';
       // this.renderCardInfo(newData, this.cardInfoEl);
     })

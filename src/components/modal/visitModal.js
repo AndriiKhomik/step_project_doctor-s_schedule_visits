@@ -1,7 +1,7 @@
 import Modal from "./modal";
 import { VisitDentist, VisitCardiologist, VisitTherapist } from './visitComponents.js';
 import Card from '../card/card.js';
-import { addVisit } from '../api/api.js'
+import { addVisit, updateVisit } from '../api/api.js'
 class VisitModal extends Modal {
     constructor(title) {
         super(title)
@@ -102,9 +102,23 @@ class VisitModal extends Modal {
             this.hide()
         }
         if (this.btn.textContent === 'Save') {
-            console.log("clicked");
+            this.options = this.visit.getValue()
+            if (Object.values(this.options).some(v => v === '')) return
+            this.btn.removeEventListener("click", this.onCreateBtnClick)
+            const result = await updateVisit(this.options, this.id)
+            console.log(result);
+            this.hide()
         }
 
+    }
+
+    editCard(obj) {
+        this.selectVisitForm(obj['Doctor:'])
+        this.show()
+        this.addVisitForm('Save')
+        this.selector.classList.add("visit-select--hidden")
+        this.visit.setValue(obj)
+        this.id = obj.id
     }
 }
 

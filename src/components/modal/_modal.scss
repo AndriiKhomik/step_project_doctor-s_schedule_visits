@@ -19,6 +19,9 @@
 }
 .visit-select {
     margin-bottom: 20px;
+    &--hidden {
+        display: none;
+    }
 }
 .visit-form {
     display: grid;
