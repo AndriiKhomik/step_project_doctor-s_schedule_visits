@@ -26,10 +26,9 @@ class Card extends Element {
     this.shortData['Doctor:'] = cardObj['Doctor:'];
 
     const doctor = cardObj['Doctor:'].toLowerCase();
-    console.log(this.cardData);
-    // this.cardEl.classList.add(`card__item--${this.cardData["Urgency:"].toLowerCase()}`);
+    this.cardEl.classList.add(`card__item--${this.fullData["Urgency:"].toLowerCase()}`);
     this.cardEl.innerHTML = `
-        <img class="card__img card-img-top" src=${this.doctorsPhoto[doctor]} alt="Card image">
+        <img class="card__img card-img-top" src=${this.doctorsPhoto[doctor]} alt="doctor's photo">
         <div class="card-body">
           <div class="card__info">
             <p class="card__text card-text"><span class="card__title">Full name:</span><span class="card__value"> ${cardObj['full name:']}</span></p>
@@ -93,10 +92,7 @@ class Card extends Element {
 
   editCard() {
     this.editBtn.addEventListener('click', async () => {
-      // here will call async modal editing card method, which  makes PATCH request and 
-      // returns object with new data  
-      // const newData =  await modal.method; 
-      // const newData = { 'full name': 'Dan', doctor: 'Logoped', age: 5, temerature: 36, id: 3 };
+
       //create edit modal
       const visitModal = new VisitModal("Edit card")
       visitModal.selectVisitForm(this.fullData['Doctor:'])
