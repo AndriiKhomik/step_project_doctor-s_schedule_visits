@@ -12,24 +12,25 @@ export default class Header extends Element {
     this.render();
     this.authorization();
     this.addVisit();
+    // localStorage.getItem('isLogged');
   }
 
   authorization() {
     this.loginBtn.addEventListener('click', event => {
       event.preventDefault();
 
-      if (event.target.textContent === 'Login' &&
-          localStorage.getItem('isLogged')) {
+      if (event.target.textContent === 'Login') {
         this.loginform = new LoginForm("Welcome");
         this.loginform.show();
         this.checkEmailAndPassword();
+        localStorage.setItem('isLogged', true)
       } else {
 
         // after successfully logout
         localStorage.setItem('isLogged', false);
         this.loginBtn.innerText = 'Login';
         this.addVisitBnt.classList.add('hide');
-        this.greeting.classList.add('hide');
+        // this.greeting.classList.add('hide');
       }
     })
   }
@@ -47,19 +48,22 @@ export default class Header extends Element {
   }
 
   render() {
-    this.header = this.createElement('header', ['header']);
-    document.querySelector('#root').prepend(this.header);
-    this.header.insertAdjacentHTML('afterbegin',
-      `
+    if (localStorage.getItem('isLogged')) {
+      this.header = this.createElement('header', ['header']);
+      document.querySelector('#root').prepend(this.header);
+      this.header.insertAdjacentHTML('afterbegin',
+        `
               <a href="https://med.sumdu.edu.ua/en/" target="_blank">
                 <img src=${logo} alt="logo" class="logo">
               </a>`);
-    const btnContainer = this.createElement('div', ['btn__group']);
-    this.header.append(btnContainer);
-    this.addVisitBnt = this.createElement('button', ['btn', 'btn-success', 'add-visit-btn', 'hide'], 'Add new visit');
-    btnContainer.append(this.addVisitBnt);
-    this.loginBtn = this.createElement('button', ['btn', 'btn-secondary', 'login-btn'], 'Login');
-    btnContainer.append(this.loginBtn);
+      const btnContainer = this.createElement('div', ['btn__group']);
+      this.header.append(btnContainer);
+      this.addVisitBnt = this.createElement('button', ['btn', 'btn-success', 'add-visit-btn'], 'Add new visit');
+      btnContainer.append(this.addVisitBnt);
+      this.loginBtn = this.createElement('button', ['btn', 'btn-secondary', 'login-btn'], 'Logout');
+      btnContainer.append(this.loginBtn);
+      this.renderPageAfterLogin();
+    }
   }
 
   checkEmailAndPassword() {
@@ -74,7 +78,6 @@ export default class Header extends Element {
         this.loginBtn.innerText = 'Logout';
         this.addVisitBnt.classList.remove('hide');
 
-        localStorage.setItem('isLogged', true);
         localStorage.setItem('token', 'e8f8357e-bd0c-40b1-8074-b37d5a74b6f6');
         this.greetingText(this.mail.value);
       }
