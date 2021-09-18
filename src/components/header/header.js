@@ -17,18 +17,16 @@ export default class Header extends Element {
   authorization() {
     this.loginBtn.addEventListener('click', event => {
       event.preventDefault();
-      if (event.target.textContent === 'Login') {
+
+      if (event.target.textContent === 'Login' &&
+          localStorage.getItem('isLogged')) {
         this.loginform = new LoginForm("Welcome");
         this.loginform.show();
-
         this.checkEmailAndPassword();
-
-        // after successfully authorization
-        this.loginBtn.innerText = 'Logout';
-        this.addVisitBnt.classList.remove('hide');
       } else {
 
         // after successfully logout
+        localStorage.setItem('isLogged', false);
         this.loginBtn.innerText = 'Login';
         this.addVisitBnt.classList.add('hide');
         this.greeting.classList.add('hide');
@@ -46,8 +44,6 @@ export default class Header extends Element {
   greetingText(name) {
     this.greeting = this.createElement('h3', ['title'], `Welcome ${name}`);
     document.querySelector('.btn__group').before(this.greeting)
-    // this.header.after(this.greeting)
-
   }
 
   render() {
@@ -70,10 +66,15 @@ export default class Header extends Element {
     this.mail = document.querySelector('#email');
     const password = document.querySelector('#password');
     const submitAuthorizationBtn = document.querySelector('#login-submit-btn');
-    submitAuthorizationBtn.addEventListener('click', event => {
+    submitAuthorizationBtn.addEventListener('click', () => {
       // if (mail.value === 'andr@gmail.com' && password.value === 'admin111') {
       if (this.mail.value === '1' && password.value === '1') {
         this.renderPageAfterLogin();
+
+        this.loginBtn.innerText = 'Logout';
+        this.addVisitBnt.classList.remove('hide');
+
+        localStorage.setItem('isLogged', true);
         localStorage.setItem('token', 'e8f8357e-bd0c-40b1-8074-b37d5a74b6f6');
         this.greetingText(this.mail.value);
       }
