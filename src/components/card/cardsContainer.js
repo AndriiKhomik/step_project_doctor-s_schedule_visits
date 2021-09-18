@@ -17,8 +17,8 @@ class CardsContainer extends Element {
       '<div class="card__field"><ul class="card__list"></ul></div>');
   }
 
-  checkItemsOnPage() {
-    getData()
+  async checkItemsOnPage() {
+    await getData()
       .then(data => {
         header.checkItemsOnPage(data);
       });

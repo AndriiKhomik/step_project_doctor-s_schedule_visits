@@ -82,21 +82,21 @@ export default class Header extends Element {
   }
 
   checkItemsOnPage(items) {
-    const title = this.createElement('h2', ['visit__title', 'hide'], 'Please add your first visit');
+    const cardField = document.querySelector('.card__field');
 
     if (items.length === 0) {
-      document.querySelector('.card__field').append(title);
-      console.log(title);
-      console.log('нет карточек')
+      const title = this.createElement('h2', ['visit__title'], 'Please add your first visit');
+      cardField.append(title);
     } else {
-      console.log('есть карточки');
-      title.remove();
+      const visitTitle = cardField.querySelector('.visit__title');
+      if (visitTitle) visitTitle.remove();
     }
   }
 
   renderPageAfterLogin() {
     getData()
       .then(data => {
+        console.log('все карточки которые с гет запроса', data);
         this.checkItemsOnPage(data);
         data.map(item => {
           const card = new Card();

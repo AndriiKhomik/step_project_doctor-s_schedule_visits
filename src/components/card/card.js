@@ -4,7 +4,7 @@ import VisitModal from '../modal/visitModal';
 import cardiologist from './cardiologist.jpeg'
 import dentist from './dentist.jpeg'
 import therapist from './therapist.jpeg'
-import { deleteVisitById } from "../api/api";
+import { deleteVisitById, getData } from "../api/api";
 import Header from '../header/header'
 import CardsContainer from './cardsContainer'
 
@@ -23,32 +23,29 @@ class Card extends Element {
     this.shortData = {};
   }
 
-  renderCard(cardObj) {
+  async renderCard(cardObj) {
     this.fullData = cardObj;
+
+    await cardsContainer.checkItemsOnPage();
 
     // short info for show less btn
     this.shortData['Full name:'] = cardObj['full name:'];
     this.shortData['Doctor:'] = cardObj['Doctor:'];
-
     console.log('объект который передали в рендер карточки', this.fullData, 'поле врач - ', this.fullData['Doctor:']);
-
     const doctor = cardObj['Doctor:'].toLowerCase();
     this.cardEl.classList.add(`card__item--${this.fullData["Urgency:"].toLowerCase()}`);
     this.cardEl.innerHTML = `
-        <img class="card__img card-img-top" src=${this.doctorsPhoto[doctor]} alt="doctor's photo">
-        <div class="card-body">
-          <div class="card__info">
-            <p class="card__text card-text"><span class="card__title">Full name:</span><span class="card__value"> ${cardObj['full name:']}</span></p>
-            <p class="card__text card-text"><span class="card__title">Doctor:</span><span class="card__value"> ${cardObj['Doctor:']}</span></p>
-          </div>
-        </div>`;
-
+            <img class="card__img card-img-top" src=${this.doctorsPhoto[doctor]} alt="doctor's photo">
+            <div class="card-body">
+              <div class="card__info">
+                <p class="card__text card-text"><span class="card__title">Full name:</span><span class="card__value"> ${cardObj['full name:']}</span></p>
+                <p class="card__text card-text"><span class="card__title">Doctor:</span><span class="card__value"> ${cardObj['Doctor:']}</span></p>
+              </div>
+            </div>`;
     this.deleteBtn.innerHTML = '<span class="card__delete-icon" aria-hidden="true">&times;</span>';
-
     const cardBody = this.cardEl.querySelector('.card-body');
     cardBody.append(this.showMoreBtn, this.editBtn, this.deleteBtn);
-    this.cardContainer.append(this.cardEl)
-
+    this.cardContainer.append(this.cardEl);
     this.showMoreData();
     this.removeCard();
     this.editCard();
@@ -126,3 +123,4 @@ class Card extends Element {
 
 
 export default Card;
+
