@@ -130,13 +130,13 @@ class Card extends Element {
 }
 
 
-// createCardContainer();
+createCardContainer();
 
-// function createCardContainer() {
-//   const root = document.querySelector('#root');
-//   root.insertAdjacentHTML('beforeend',
-//     '<div class="card__field"><ul class="card__list"></ul></div>')
-// }
+function createCardContainer() {
+  const root = document.querySelector('#root');
+  root.insertAdjacentHTML('beforeend',
+    '<div class="card__field"><ul class="card__list"></ul></div>')
+}
 
 
 export default Card;
