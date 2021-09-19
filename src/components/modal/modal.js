@@ -9,15 +9,16 @@ class Modal extends Element {
     }
     createMarkup() {
         this.html = `<div class="modal-dialog modal-dialog-centered">
-              <div class="modal-content">
-                <div class="modal-header">
-                  <h5 class="modal-title">${this.title}</h5>
-                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+              <div class="modal-content card-modal-content">
+                <div class="modal-header card-modal-header">
+                  <h5 class="modal-title card-modal-title">${this.title}</h5>
+                  <button type="button" data-bs-dismiss="modal" class="btn close modal-close-btn" aria-label="Close">
+                  <span class="modal-close-icon">X</span aria-hidden="true"></button>
                 </div>
                 <div class="modal-body">
                 ${this.renderBody()}
                 </div>
-                <div class="modal-footer">
+                <div class="modal-footer card-modal-footer">
                 ${this.renderBtn()}
                 </div>
               </div>
@@ -56,7 +57,7 @@ class Modal extends Element {
         this.modalContainer.removeEventListener("click", this.onModalClick)
     }
     onModalClick(e) {
-        if (e.target === this.modalContainer || e.target === this.modalContainer.querySelector(".btn-close"))
+        if (e.target === this.modalContainer || e.target === this.modalContainer.querySelector(".modal-close-icon"))
             this.hide()
     }
 }
