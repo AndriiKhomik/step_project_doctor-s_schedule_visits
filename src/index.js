@@ -15,7 +15,6 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 
 import "@/scss/style.scss";
 
-import CardsContainer from "@/components/card/cardsContainer"
 import Card from "@/components/card/card";
 
 

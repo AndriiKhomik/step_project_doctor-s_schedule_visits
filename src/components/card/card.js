@@ -5,13 +5,10 @@ import cardiologist from './cardiologist.jpeg'
 import dentist from './dentist.jpeg'
 import therapist from './therapist.jpeg'
 import { deleteVisitById, getData } from "../api/api";
-// import Header from '../header/header'
-import CardsContainer from './cardsContainer'
+import { cardsContainer } from './cardsContainer'
 
-const cardsContainer = new CardsContainer();
-// cardsContainer.createCardsContainer();
 
-class Card extends Element {
+export default class Card extends Element {
   constructor() {
     super();
     this.showMoreBtn = this.createElement('button', ['card__show-more-btn', 'btn', 'btn-primary', 'card__show-more-btn--closed'], 'Show more');
@@ -130,14 +127,5 @@ class Card extends Element {
 }
 
 
-createCardContainer();
 
-function createCardContainer() {
-  const root = document.querySelector('#root');
-  root.insertAdjacentHTML('beforeend',
-    '<div class="card__field"><ul class="card__list"></ul></div>')
-}
-
-
-export default Card;
 

@@ -1,8 +1,6 @@
 import Element from '../element/element'
-import Card from "../card/card";
-import Header from '../header/header'
-// import { header } from '../header/header'
-import { deleteVisitById, getData } from "../api/api";
+import { header } from '../header/header'
+import { getData } from "../api/api";
 
 class CardsContainer extends Element {
   constructor() {
@@ -20,11 +18,15 @@ class CardsContainer extends Element {
   async checkItemsOnPage() {
     await getData()
       .then(data => {
-        header.checkItemsOnPage(data);
+
+        header.renderAddVisitTitle(data);
       });
   }
 
 
 }
 
-export default CardsContainer;
+
+const cardsContainer = new CardsContainer();
+
+export { cardsContainer };
