@@ -11,17 +11,18 @@
 }
 .card__list {
     display: grid;
-    grid-template-columns: repeat(auto-fit, 280px);
+    grid-template-columns: repeat(auto-fit, 260px);
     align-items: start;
     justify-content: center;
     column-gap: 20px;
     row-gap: 20px;
     margin: 0;
     padding-left: 0;
+    font-size: 14px;
 }
 .card__img {
-    height: 140px;
-    width: 140px;
+    height: 120px;
+    width: 120px;
     display: block;
     margin: 0 auto;
     margin-top: 16px;
@@ -58,35 +59,64 @@
     &--ordinary {
         border: 2px solid #006196;
     }
+
+    &--done {
+        background-color: #9eb3ce66;
+        img {
+            opacity: 0.6;
+        }
+    }
+}
+
+.card__status {
+    position: absolute;
+    top: 15px;
+    left: 10px;
+    border-radius: 10px;
+    border: 1px solid #006399;
+    color: #006399;
+    background-color: #d9e6ef;
+    padding: 3px;
+    font-size: 14px;
 }
 
 .card__show-more-btn {
     margin-right: 10px;
     position: relative;
     padding-right: 35px;
-
+    // background-image: url(../components/card/arrow-down.svg);
+    // background-repeat: no-repeat;
+    // background-size: 11px;
+    // background-position: top 14px right 14px;
     &::after {
-        content: "\02C4";
+        content: "";
         position: absolute;
-        line-height: 0;
-        top: 22px;
-        right: 17px;
-        font-size: 30px;
+        width: 12px;
+        height: 12px;
+        right: 14px;
+        top: 12px;
+
+        background-image: url(../components/card/arrow-down.svg);
+        background-repeat: no-repeat;
+        background-size: 11px;
+        transform: rotate(180deg);
     }
 
     &--closed {
         &::after {
-            content: "\02C5";
+            top: 14px;
+            transform: rotate(0deg);
         }
     }
 }
 
 .card__delete-btn {
     position: absolute;
-    top: 12px;
-    right: 10px;
+    top: 7px;
+    right: 15px;
     padding: 5px;
 }
+
 .card__delete-icon {
     color: red;
     font-size: 40px;
@@ -106,7 +136,7 @@
 }
 
 .sortable-chosen {
-    border: 2px solid pink;
+    border: 2px solid rgb(74, 123, 150);
     opacity: 0.6;
 }
 .sortable-ghost {

@@ -125,7 +125,8 @@ export default class Header extends Element {
 
         data.map(item => {
           const card = new Card();
-          card.renderCard(item)
+          card.renderCard(item);
+          card.checkCardDate();
         })
       });
   }
