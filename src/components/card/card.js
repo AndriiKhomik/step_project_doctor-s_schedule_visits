@@ -17,7 +17,6 @@ export default class Card extends Element {
     this.cardEl = this.createElement('li', ['card__item', 'card']);
     this.cardContainer = document.querySelector('.card__list');
     this.doctorsPhoto = { cardiologist, dentist, therapist };
-    this.shortData = {};
   }
 
   async renderCard(cardObj) {
@@ -25,10 +24,6 @@ export default class Card extends Element {
 
     await cardsContainer.checkItemsOnPage();
 
-    // short info for show less btn
-    this.shortData['Full name:'] = cardObj['Full name:'];
-    this.shortData['Doctor:'] = cardObj['Doctor:'];
-    console.log('объект который передали в рендер карточки', this.fullData, 'поле врач - ', this.fullData['Doctor:']);
     const doctor = cardObj['Doctor:'].toLowerCase();
     this.cardEl.classList.add(`card__item--${this.fullData["Urgency:"].toLowerCase()}`);
     this.cardEl.innerHTML = `
@@ -57,23 +52,15 @@ export default class Card extends Element {
     })
   }
 
-  renderExtraData(cardObj, parentEl) {
-    const { ['Full name:']: fullname, ['Doctor:']: doctor, ...restData } = cardObj;
-
-    this.renderCardInfo(restData, parentEl, false);
-    return;
-  }
-
   renderCardInfo(obj, parentEl, isShort) {
     this.fullData = obj;
-    const { id, ...restObj } = obj;
-
     let cardInfo;
 
     if (isShort) {
-      cardInfo = { 'Full name:': obj['Full name:'], 'Doctor:': obj['Doctor:'] }
+      cardInfo = { 'Full name:': obj['Full name:'], 'Doctor:': obj['Doctor:'] };
+
     } else {
-      const { ['Full name:']: fullname, ['Doctor:']: doctor, ...restData } = this.fullData;
+      const { ['Full name:']: fullname, ['Doctor:']: doctor, id, ...restData } = this.fullData;
       cardInfo = restData;
     }
 
@@ -85,22 +72,26 @@ export default class Card extends Element {
   }
 
   showMoreData() {
+
     this.cardInfoEl = this.cardEl.querySelector('.card__info');
 
-    this.showMoreBtn.addEventListener('click', (e) => {
+    this.showMoreBtn.addEventListener('click', async (e) => {
+
+      const newCardObj = await getData(this.fullData.id);
+
       e.target.classList.toggle('card__show-more-btn--closed');
 
       if (e.target.classList.contains('card__show-more-btn--closed')) {
         this.cardInfoEl.innerText = "";
-        this.renderCardInfo(this.fullData, this.cardInfoEl, true);
-        console.log(this.fullData);
+        this.renderCardInfo(newCardObj, this.cardInfoEl, true);
+
         e.target.innerText = 'Show more';
       } else {
 
-        this.renderCardInfo(this.fullData, this.cardInfoEl, false);
-        console.log(this.fullData);
+        this.renderCardInfo(newCardObj, this.cardInfoEl, false);
         e.target.innerText = 'Show less';
       }
+      return;
 
     })
   }
@@ -109,14 +100,17 @@ export default class Card extends Element {
     this.editBtn.addEventListener('click', async () => {
       const newCardObj = await getData(this.fullData.id);
       this.fullData = newCardObj;
-      console.log(newCardObj);
 
       const visitModal = new VisitModal("Edit card");
       visitModal.editCard(newCardObj, this.cardInfoEl);
 
+      // сворачивает карточку в краткую версию
+      this.showMoreBtn.classList.add('card__show-more-btn--closed');
+      this.showMoreBtn.innerText = 'Show more';
+
+      this.cardInfoEl.innerText = "";
     })
   }
-
 
   dragAndDropCard() {
     new Sortable(this.cardContainer, {
