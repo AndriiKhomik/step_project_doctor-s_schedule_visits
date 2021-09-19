@@ -1,3 +1,7 @@
+.btn-primary {
+    background-color: hsl(216deg, 85%, 58%);
+    border-radius: 10px;
+}
 @import "../components/header/header";
 @import "../components/card/card.scss";
 @import "../components/modal/modal";

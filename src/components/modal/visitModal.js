@@ -94,6 +94,7 @@ class VisitModal extends Modal {
             const result = await addVisit(this.options)
             this.card = new Card()
             this.card.renderCard(result)
+            this.card.checkCardDate();
         }
         // Edit card
         if (this.btn.textContent === 'Save') {

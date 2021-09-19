@@ -30,8 +30,7 @@ export default class Card extends Element {
             <img class="card__img card-img-top" src=${this.doctorsPhoto[doctor]} alt="doctor's photo">
             <div class="card-body">
               <select class="card__status">
-                <option selected disabled>Status</option>
-                <option value="open">Open</option>
+                <option selected value="open">Open</option>
                 <option value="done">Done</option>
               </select>
               <div class="card__info">
@@ -46,7 +45,42 @@ export default class Card extends Element {
     this.showMoreData();
     this.removeCard();
     this.editCard();
+    this.cardStatusHandler();
+    this.checkCardDate();
     this.dragAndDropCard();
+
+  }
+
+  changeCardStatus(statusValue) {
+
+    if (statusValue === 'done') {
+      this.cardEl.classList.add('card__item--done');
+      this.editBtn.disabled = true;
+    } else {
+      this.cardEl.classList.remove('card__item--done');
+      this.editBtn.disabled = false;
+    }
+
+  }
+
+  cardStatusHandler() {
+    this.statusSelect = this.cardEl.querySelector('.card__status');
+
+    this.statusSelect.addEventListener('change', (e) => {
+      this.changeCardStatus(e.target.value);
+    })
+  }
+
+  checkCardDate() {
+    const statusSelect = this.cardEl.querySelector('.card__status');
+    const visitDateStr = this.fullData['Date of visit:'].split('-').join(',');
+    const visitDate = new Date(visitDateStr);
+    const currentDate = new Date();
+
+    if (visitDate - currentDate < 0) {
+      if (statusSelect) statusSelect.disabled = true;
+      this.changeCardStatus('done')
+    }
   }
 
   removeCard() {
