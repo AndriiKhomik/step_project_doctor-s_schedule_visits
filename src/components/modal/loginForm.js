@@ -50,7 +50,7 @@ class LoginForm extends Modal {
 
   renderBtn() {
     const html = `<button type="submit" id="login-submit-btn" class="btn btn-primary d-grid gap-2 col-6 mx-auto">
-    Submit</button>`
+    Login</button>`
     return html
   }
   show() {

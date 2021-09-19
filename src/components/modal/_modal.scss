@@ -1,6 +1,13 @@
 .modal-open {
     overflow: hidden;
 }
+.card-modal-content {
+    padding: 10px 50px;
+    border: 2px solid #006196;
+    border-radius: 10px;
+    font-weight: 500;
+    color: #006399;
+}
 .card-modal-header,
 .card-modal-footer {
     border: none;
@@ -35,13 +42,7 @@
 .visit-modal--selected .modal-dialog {
     max-width: 800px;
 }
-.visit-modal .modal-content {
-    padding: 10px 50px;
-    border: 2px solid #006196;
-    border-radius: 10px;
-    font-weight: 500;
-    color: #006399;
-}
+
 .visit-select {
     margin: 0 auto;
     margin-bottom: 40px;
@@ -74,6 +75,8 @@
 
 .card-login-input {
     border: 2px solid #006196;
+    border-radius: 10px;
+    background-color: #d9e6ef;
 }
 .visit-form-select {
     background-color: #d9e6ef;

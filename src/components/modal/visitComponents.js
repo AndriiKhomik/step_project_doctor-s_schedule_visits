@@ -13,7 +13,7 @@ class VisitDentist extends Visit {
     }
     renderAdditionalFields() {
         const html = `<label for="last-visit" class="form-label">Date of last visit:</label>
-           <input required type="date" name="last-visit" id="last-visit"/>`
+           <input required type="date" name="last-visit" id="last-visit" class="visit-form-date"/>`
         return html
     }
 }
@@ -39,30 +39,6 @@ class VisitCardiologist extends Visit {
         <label for="age" class="form-label">Age:</label> 
         <input required type="number" name="age" id="age"/>`
         return html
-    }
-
-    isValidAge(value) {
-        if (value >= 0 && age <= 200) return true
-        return false
-    }
-
-    invalidData(el) {
-        el.classList.add("visit-input--invalid")
-        this.options["Age:"] = ''
-    }
-    validData(el) {
-        if (el.classList.contains("visit-input--invalid")) {
-            el.classList.remove("visit-input--invalid")
-        }
-        this.options["Age:"] = el.value
-        return
-    }
-    getValue() {
-        super.getValue()
-        const ageInputEl = this.form.elements.age
-        const validAge = this.isValidAge(ageInputEl.value);
-        validAge ? this.validData(ageInputEl) : this.invalidData(ageInputEl)
-        return this.options
     }
 }
 class VisitTherapist extends Visit {

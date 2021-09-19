@@ -9,7 +9,7 @@ class Modal extends Element {
     }
     createMarkup() {
         this.html = `<div class="modal-dialog modal-dialog-centered">
-              <div class="modal-content">
+              <div class="modal-content card-modal-content">
                 <div class="modal-header card-modal-header">
                   <h5 class="modal-title card-modal-title">${this.title}</h5>
                   <button type="button" data-bs-dismiss="modal" class="btn close modal-close-btn" aria-label="Close">
@@ -62,5 +62,4 @@ class Modal extends Element {
     }
 }
 
-document.addEventListener("click", (e) => console.log(e.target))
 export default Modal
