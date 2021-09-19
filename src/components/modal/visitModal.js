@@ -96,14 +96,18 @@ class VisitModal extends Modal {
       this.card.renderCard(result)
     }
     // Edit card
-    if (this.btn.textContent === 'Save') {
-      this.options["Doctor:"] = this.doctor
-      const result = await updateVisit(this.options, this.id)
+    if (this.btn.textContent === 'Save' && e.target === this.btn) {
+
       const card = new Card();
+      await card.removeCardInfo(this.currentCard);
+      this.options["Doctor:"] = this.doctor;
+      const result = await updateVisit(this.options, this.id);
       card.renderCardInfo(result, this.currentCard, true);
+      this.btn.removeEventListener("click", this.onCreateBtnClick);
+      this.hide();
+
     }
-    this.btn.removeEventListener("click", this.onCreateBtnClick)
-    this.hide()
+
   }
 
 
