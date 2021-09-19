@@ -38,7 +38,7 @@ class Visit {
             this.options[key.textContent] = input.value
         });
 
-        this.changeOptionsKey(this.options, 'Full name of the patient:', 'full name:')
+        this.changeOptionsKey(this.options, 'Full name of the patient:', 'Full name:')
         this.options["Urgency:"] = urgencyValue
         return this.options
     }
@@ -55,7 +55,7 @@ class Visit {
             })
         });
         const fullNameInput = form.querySelector(`input[name="fullName"]`)
-        fullNameInput.value = obj['full name:']
+        fullNameInput.value = obj['Full name:']
     }
 
     changeOptionsKey(obj, oldKey, newKey) {
