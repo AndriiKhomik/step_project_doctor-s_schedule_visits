@@ -1,8 +1,8 @@
 const _apiBase = 'https://ajax.test-danit.com/api/v2';
 const _token = 'e8f8357e-bd0c-40b1-8074-b37d5a74b6f6';
 
-export const getData = async () => {
-  const res = await fetch(`${_apiBase}/cards`, {
+export const getData = async (id = '') => {
+  const res = await fetch(`${_apiBase}/cards/${id}`, {
     method: 'GET',
     headers: {
       'Authorization': `Bearer ${_token}`

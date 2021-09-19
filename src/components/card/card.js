@@ -4,9 +4,11 @@ import VisitModal from '../modal/visitModal';
 import cardiologist from './cardiologist.jpeg'
 import dentist from './dentist.jpeg'
 import therapist from './therapist.jpeg'
-import { deleteVisitById } from "../api/api";
+import { deleteVisitById, getData } from "../api/api";
+import { cardsContainer } from './cardsContainer'
 
-class Card extends Element {
+
+export default class Card extends Element {
   constructor() {
     super();
     this.showMoreBtn = this.createElement('button', ['card__show-more-btn', 'btn', 'btn-primary', 'card__show-more-btn--closed'], 'Show more');
@@ -15,33 +17,27 @@ class Card extends Element {
     this.cardEl = this.createElement('li', ['card__item', 'card']);
     this.cardContainer = document.querySelector('.card__list');
     this.doctorsPhoto = { cardiologist, dentist, therapist };
-    this.shortData = {};
   }
 
-  renderCard(cardObj) {
+  async renderCard(cardObj) {
     this.fullData = cardObj;
 
-    // short info for show less btn
-    this.shortData['Full name:'] = cardObj['full name:'];
-    this.shortData['Doctor:'] = cardObj['Doctor:'];
+    await cardsContainer.checkItemsOnPage();
 
     const doctor = cardObj['Doctor:'].toLowerCase();
     this.cardEl.classList.add(`card__item--${this.fullData["Urgency:"].toLowerCase()}`);
     this.cardEl.innerHTML = `
-        <img class="card__img card-img-top" src=${this.doctorsPhoto[doctor]} alt="doctor's photo">
-        <div class="card-body">
-          <div class="card__info">
-            <p class="card__text card-text"><span class="card__title">Full name:</span><span class="card__value"> ${cardObj['full name:']}</span></p>
-            <p class="card__text card-text"><span class="card__title">Doctor:</span><span class="card__value"> ${cardObj['Doctor:']}</span></p>
-          </div>
-        </div>`;
-
+            <img class="card__img card-img-top" src=${this.doctorsPhoto[doctor]} alt="doctor's photo">
+            <div class="card-body">
+              <div class="card__info">
+                <p class="card__text card-text"><span class="card__title">Full name:</span><span class="card__value"> ${cardObj['Full name:']}</span></p>
+                <p class="card__text card-text"><span class="card__title">Doctor:</span><span class="card__value"> ${cardObj['Doctor:']}</span></p>
+              </div>
+            </div>`;
     this.deleteBtn.innerHTML = '<span class="card__delete-icon" aria-hidden="true">&times;</span>';
-
     const cardBody = this.cardEl.querySelector('.card-body');
     cardBody.append(this.showMoreBtn, this.editBtn, this.deleteBtn);
-    this.cardContainer.append(this.cardEl)
-
+    this.cardContainer.append(this.cardEl);
     this.showMoreData();
     this.removeCard();
     this.editCard();
@@ -52,20 +48,23 @@ class Card extends Element {
     this.deleteBtn.addEventListener('click', async (e) => {
       await deleteVisitById(this.fullData.id);
       e.target.closest('.card__item').remove();
+      cardsContainer.checkItemsOnPage();
     })
   }
 
-  renderExtraData(cardObj, parentEl) {
-    const { ['full name:']: fullname, ['Doctor:']: doctor, ...restData } = cardObj;
+  renderCardInfo(obj, parentEl, isShort) {
+    this.fullData = obj;
+    let cardInfo;
 
-    this.renderCardInfo(restData, parentEl);
-    return;
-  }
+    if (isShort) {
+      cardInfo = { 'Full name:': obj['Full name:'], 'Doctor:': obj['Doctor:'] };
 
-  renderCardInfo(obj, parentEl) {
-    const { id, ...restObj } = obj;
+    } else {
+      const { ['Full name:']: fullname, ['Doctor:']: doctor, id, ...restData } = this.fullData;
+      cardInfo = restData;
+    }
 
-    Object.keys(restObj).forEach(prop => {
+    Object.keys(cardInfo).forEach(prop => {
       const cardDataEl = this.createElement('p', ['card__text', 'card-text']);
       cardDataEl.insertAdjacentHTML('beforeend', `<span class="card__title">${prop}</span><span class="card__value"> ${obj[prop]}</span>`)
       parentEl.append(cardDataEl);
@@ -73,29 +72,43 @@ class Card extends Element {
   }
 
   showMoreData() {
+
     this.cardInfoEl = this.cardEl.querySelector('.card__info');
 
-    this.showMoreBtn.addEventListener('click', (e) => {
+    this.showMoreBtn.addEventListener('click', async (e) => {
+
+      const newCardObj = await getData(this.fullData.id);
+
       e.target.classList.toggle('card__show-more-btn--closed');
 
       if (e.target.classList.contains('card__show-more-btn--closed')) {
         this.cardInfoEl.innerText = "";
-        this.renderCardInfo(this.shortData, this.cardInfoEl);
+        this.renderCardInfo(newCardObj, this.cardInfoEl, true);
+
         e.target.innerText = 'Show more';
       } else {
-        this.renderExtraData(this.fullData, this.cardInfoEl);
+
+        this.renderCardInfo(newCardObj, this.cardInfoEl, false);
         e.target.innerText = 'Show less';
       }
+      return;
 
     })
   }
 
-  editCard() {
+  async editCard() {
     this.editBtn.addEventListener('click', async () => {
-      const visitModal = new VisitModal("Edit card")
-      visitModal.editCard(this.fullData)
-      // this.cardInfoEl.innerHTML = '';
-      // this.renderCardInfo(newData, this.cardInfoEl);
+      const newCardObj = await getData(this.fullData.id);
+      this.fullData = newCardObj;
+
+      const visitModal = new VisitModal("Edit card");
+      visitModal.editCard(newCardObj, this.cardInfoEl);
+
+      // сворачивает карточку в краткую версию
+      this.showMoreBtn.classList.add('card__show-more-btn--closed');
+      this.showMoreBtn.innerText = 'Show more';
+
+      this.cardInfoEl.innerText = "";
     })
   }
 
@@ -108,13 +121,5 @@ class Card extends Element {
 }
 
 
-createCardContainer();
-
-function createCardContainer() {
-  const root = document.querySelector('#root');
-  root.insertAdjacentHTML('beforeend',
-    '<div class="card__field"><ul class="card__list"></ul></div>')
-}
 
 
-export default Card

@@ -3,7 +3,7 @@ import logo from './logo.png';
 import Visit from "../modal/visit";
 import VisitModal from "../modal/visitModal";
 import LoginForm from '../modal/loginForm'
-import {deleteVisitById, getData } from "../api/api";
+import { deleteVisitById, getData } from "../api/api";
 import Card from "../card/card";
 
 export default class Header extends Element {
@@ -106,20 +106,24 @@ export default class Header extends Element {
     })
   }
 
-  renderAddVisitTitle() {
-    this.addVisitTitle = this.createElement('h2', ['visit__title'], 'Please add your first visit');
-    document.querySelector('.card__field').append(this.addVisitTitle);
+  renderAddVisitTitle(items) {
+    const cardField = document.querySelector('.card__field');
+
+    if (items.length === 0) {
+      const title = this.createElement('h2', ['visit__title'], 'Please add your first visit');
+      cardField.append(title);
+    } else {
+      const visitTitle = cardField.querySelector('.visit__title');
+      if (visitTitle) visitTitle.remove();
+    }
   }
 
   renderPageAfterLogin() {
-    this.renderAddVisitTitle();
     getData()
       .then(data => {
-        if (data.length === 0) {
-          this.addVisitTitle.classList.remove('hide');
-        }
+        this.renderAddVisitTitle(data);
+
         data.map(item => {
-          this.addVisitTitle.classList.add('hide');
           const card = new Card();
           card.renderCard(item)
         })
@@ -127,4 +131,5 @@ export default class Header extends Element {
   }
 }
 
-new Header();
+const header = new Header();
+export { header };
