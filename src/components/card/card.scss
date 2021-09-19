@@ -60,6 +60,18 @@
     }
 }
 
+.card__status {
+    position: absolute;
+    top: 15px;
+    left: 10px;
+    border-radius: 8px;
+    border: 1px solid #006399;
+    color: #006399;
+    padding: 3px;
+    font-size: 14px;
+    font-weight: 500;
+}
+
 .card__show-more-btn {
     margin-right: 10px;
     position: relative;
@@ -83,10 +95,11 @@
 
 .card__delete-btn {
     position: absolute;
-    top: 12px;
-    right: 10px;
+    top: 7px;
+    right: 15px;
     padding: 5px;
 }
+
 .card__delete-icon {
     color: red;
     font-size: 40px;

@@ -29,6 +29,11 @@ export default class Card extends Element {
     this.cardEl.innerHTML = `
             <img class="card__img card-img-top" src=${this.doctorsPhoto[doctor]} alt="doctor's photo">
             <div class="card-body">
+              <select class="card__status">
+                <option selected disabled>Status</option>
+                <option value="open">Open</option>
+                <option value="done">Done</option>
+              </select>
               <div class="card__info">
                 <p class="card__text card-text"><span class="card__title">Full name:</span><span class="card__value"> ${cardObj['Full name:']}</span></p>
                 <p class="card__text card-text"><span class="card__title">Doctor:</span><span class="card__value"> ${cardObj['Doctor:']}</span></p>
@@ -58,7 +63,6 @@ export default class Card extends Element {
 
     if (isShort) {
       cardInfo = { 'Full name:': obj['Full name:'], 'Doctor:': obj['Doctor:'] };
-
     } else {
       const { ['Full name:']: fullname, ['Doctor:']: doctor, id, ...restData } = this.fullData;
       cardInfo = restData;
@@ -78,7 +82,6 @@ export default class Card extends Element {
     this.showMoreBtn.addEventListener('click', async (e) => {
 
       const newCardObj = await getData(this.fullData.id);
-
       e.target.classList.toggle('card__show-more-btn--closed');
 
       if (e.target.classList.contains('card__show-more-btn--closed')) {
@@ -114,7 +117,6 @@ export default class Card extends Element {
   async removeCardInfo(infoBlockEl) {
     return await new Promise(resolve => {
       infoBlockEl.innerText = '';
-      console.log('удалить содержимое');
       resolve();
     })
   }

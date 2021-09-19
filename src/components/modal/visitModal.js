@@ -96,7 +96,7 @@ class VisitModal extends Modal {
       this.card.renderCard(result)
     }
     // Edit card
-    if (this.btn.textContent === 'Save' && e.target === this.btn) {
+    if (this.btn.textContent === 'Save') {
 
       const card = new Card();
       await card.removeCardInfo(this.currentCard);
