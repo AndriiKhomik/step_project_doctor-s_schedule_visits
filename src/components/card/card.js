@@ -108,7 +108,14 @@ export default class Card extends Element {
       this.showMoreBtn.classList.add('card__show-more-btn--closed');
       this.showMoreBtn.innerText = 'Show more';
 
-      this.cardInfoEl.innerText = "";
+    })
+  }
+
+  async removeCardInfo(infoBlockEl) {
+    return await new Promise(resolve => {
+      infoBlockEl.innerText = '';
+      console.log('удалить содержимое');
+      resolve();
     })
   }
 
