@@ -1,7 +1,7 @@
 import Element from '../element/element'
 import Card from "../card/card";
 import Header from '../header/header'
-import { header } from '../header/header'
+// import { header } from '../header/header'
 import { deleteVisitById, getData } from "../api/api";
 
 class CardsContainer extends Element {

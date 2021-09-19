@@ -5,7 +5,7 @@ import cardiologist from './cardiologist.jpeg'
 import dentist from './dentist.jpeg'
 import therapist from './therapist.jpeg'
 import { deleteVisitById, getData } from "../api/api";
-import Header from '../header/header'
+// import Header from '../header/header'
 import CardsContainer from './cardsContainer'
 
 const cardsContainer = new CardsContainer();
