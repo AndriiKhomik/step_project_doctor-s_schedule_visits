@@ -107,13 +107,18 @@ class VisitModal extends Modal {
             this.options["Doctor:"] = this.doctor
             this.btn.removeEventListener("click", this.onCreateBtnClick)
             const result = await updateVisit(this.options, this.id)
-            console.log(result);
+
+            const card = new Card();
+            this.currentCard.innerHTML = '';
+            card.renderCardInfo(result, this.currentCard, true)
             this.hide()
         }
 
     }
 
-    editCard(obj) {
+
+    editCard(obj, currentCardInfo) {
+        this.currentCard = currentCardInfo;
         this.selectVisitForm(obj['Doctor:'])
         this.show()
         this.addVisitForm('Save')

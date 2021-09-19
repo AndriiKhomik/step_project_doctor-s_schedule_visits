@@ -29,7 +29,7 @@ class Card extends Element {
     await cardsContainer.checkItemsOnPage();
 
     // short info for show less btn
-    this.shortData['Full name:'] = cardObj['full name:'];
+    this.shortData['Full name:'] = cardObj['Full name:'];
     this.shortData['Doctor:'] = cardObj['Doctor:'];
     console.log('объект который передали в рендер карточки', this.fullData, 'поле врач - ', this.fullData['Doctor:']);
     const doctor = cardObj['Doctor:'].toLowerCase();
@@ -38,7 +38,7 @@ class Card extends Element {
             <img class="card__img card-img-top" src=${this.doctorsPhoto[doctor]} alt="doctor's photo">
             <div class="card-body">
               <div class="card__info">
-                <p class="card__text card-text"><span class="card__title">Full name:</span><span class="card__value"> ${cardObj['full name:']}</span></p>
+                <p class="card__text card-text"><span class="card__title">Full name:</span><span class="card__value"> ${cardObj['Full name:']}</span></p>
                 <p class="card__text card-text"><span class="card__title">Doctor:</span><span class="card__value"> ${cardObj['Doctor:']}</span></p>
               </div>
             </div>`;
@@ -61,16 +61,26 @@ class Card extends Element {
   }
 
   renderExtraData(cardObj, parentEl) {
-    const { ['full name:']: fullname, ['Doctor:']: doctor, ...restData } = cardObj;
+    const { ['Full name:']: fullname, ['Doctor:']: doctor, ...restData } = cardObj;
 
-    this.renderCardInfo(restData, parentEl);
+    this.renderCardInfo(restData, parentEl, false);
     return;
   }
 
-  renderCardInfo(obj, parentEl) {
+  renderCardInfo(obj, parentEl, isShort) {
+    this.fullData = obj;
     const { id, ...restObj } = obj;
 
-    Object.keys(restObj).forEach(prop => {
+    let cardInfo;
+
+    if (isShort) {
+      cardInfo = { 'Full name:': obj['Full name:'], 'Doctor:': obj['Doctor:'] }
+    } else {
+      const { ['Full name:']: fullname, ['Doctor:']: doctor, ...restData } = this.fullData;
+      cardInfo = restData;
+    }
+
+    Object.keys(cardInfo).forEach(prop => {
       const cardDataEl = this.createElement('p', ['card__text', 'card-text']);
       cardDataEl.insertAdjacentHTML('beforeend', `<span class="card__title">${prop}</span><span class="card__value"> ${obj[prop]}</span>`)
       parentEl.append(cardDataEl);
@@ -85,24 +95,31 @@ class Card extends Element {
 
       if (e.target.classList.contains('card__show-more-btn--closed')) {
         this.cardInfoEl.innerText = "";
-        this.renderCardInfo(this.shortData, this.cardInfoEl);
+        this.renderCardInfo(this.fullData, this.cardInfoEl, true);
+        console.log(this.fullData);
         e.target.innerText = 'Show more';
       } else {
-        this.renderExtraData(this.fullData, this.cardInfoEl);
+
+        this.renderCardInfo(this.fullData, this.cardInfoEl, false);
+        console.log(this.fullData);
         e.target.innerText = 'Show less';
       }
 
     })
   }
 
-  editCard() {
+  async editCard() {
     this.editBtn.addEventListener('click', async () => {
-      const visitModal = new VisitModal("Edit card")
-      visitModal.editCard(this.fullData)
-      // this.cardInfoEl.innerHTML = '';
-      // this.renderCardInfo(newData, this.cardInfoEl);
+      const newCardObj = await getData(this.fullData.id);
+      this.fullData = newCardObj;
+      console.log(newCardObj);
+
+      const visitModal = new VisitModal("Edit card");
+      visitModal.editCard(newCardObj, this.cardInfoEl);
+
     })
   }
+
 
   dragAndDropCard() {
     new Sortable(this.cardContainer, {
