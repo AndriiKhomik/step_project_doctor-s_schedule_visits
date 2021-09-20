@@ -41,7 +41,7 @@ module.exports = merge(commonConfig, {
     new PurgecssPlugin({
       paths: glob.sync([
         paths.purgecss + "/index.html",
-        paths.purgecss + "/js/*.js",
+        paths.purgecss + "/components/*/*.js",
       ]),
     }),
     new ImageMinimizerPlugin({

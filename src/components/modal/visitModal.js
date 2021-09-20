@@ -1,7 +1,7 @@
 import Modal from "./modal";
 import { VisitDentist, VisitCardiologist, VisitTherapist } from './visitComponents.js';
 import Card from '../card/card.js';
-import { addVisit } from '../api/api.js'
+import { addVisit, updateVisit } from '../api/api.js'
 class VisitModal extends Modal {
     constructor(title) {
         super(title)
@@ -81,30 +81,44 @@ class VisitModal extends Modal {
         this.removeVisitForm()
         this.selectVisitForm(this.selector.value)
         this.addVisitForm()
+        this.modalContainer.classList.add("visit-modal--selected")
     }
 
     async onCreateBtnClick(e) {
         e.preventDefault()
+        this.options = this.visit.getValue()
+        if (Object.values(this.options).some(v => v === '')) return
+        // Create card
         if (this.btn.textContent === 'Create card') {
-            this.options = this.visit.getValue()
-            // to check empty required input fields
-            if (Object.values(this.options).some(v => v === '')) return
-            //to create card value 'doctor'
             this.options["Doctor:"] = this.selector.value
-            //to prevent creating additional same card on double click
-            this.btn.removeEventListener("click", this.onCreateBtnClick)
-            //to post fetch
             const result = await addVisit(this.options)
-            //to create card
             this.card = new Card()
             this.card.renderCard(result)
-            //to remove modal
-            this.hide()
+            this.card.checkCardDate();
         }
+        // Edit card
         if (this.btn.textContent === 'Save') {
-            console.log("clicked");
+            const card = new Card();
+            await card.removeCardInfo(this.currentCard);
+            this.options["Doctor:"] = this.doctor;
+            const result = await updateVisit(this.options, this.id);
+            card.renderCardInfo(result, this.currentCard, true);
         }
+        this.btn.removeEventListener("click", this.onCreateBtnClick);
+        this.hide();
+    }
 
+
+    editCard(obj, currentCardInfo) {
+        this.currentCard = currentCardInfo;
+        this.selectVisitForm(obj['Doctor:'])
+        this.show()
+        this.addVisitForm('Save')
+        this.modalContainer.classList.add("visit-modal--selected")
+        this.selector.remove()
+        this.visit.setValue(obj)
+        this.id = obj.id
+        this.doctor = obj['Doctor:']
     }
 }
 

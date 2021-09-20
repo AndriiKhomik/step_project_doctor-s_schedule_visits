@@ -4,8 +4,8 @@ const getToken = () => {
   return localStorage.getItem('token')
 };
 
-export const getData = async () => {
-  const res = await fetch(`${_apiBase}/cards`, {
+export const getData = async (id = '') => {
+  const res = await fetch(`${_apiBase}/cards/${id}`, {
     method: 'GET',
     headers: {
       'Authorization': `Bearer ${getToken()}`

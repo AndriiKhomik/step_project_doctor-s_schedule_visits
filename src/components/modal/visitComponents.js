@@ -13,7 +13,7 @@ class VisitDentist extends Visit {
     }
     renderAdditionalFields() {
         const html = `<label for="last-visit" class="form-label">Date of last visit:</label>
-           <input required type="datetime-local" name="last-visit" id="last-visit"/>`
+           <input required type="date" name="last-visit" id="last-visit" class="visit-form-date"/>`
         return html
     }
 }
