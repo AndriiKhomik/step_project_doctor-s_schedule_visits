@@ -1,3 +1,4 @@
+import { getDateTimeString } from './validationIFormInputs'
 class Visit {
     rendeInputFields() {
         const html = `<label for="fullName" class="form-label">Full name of the patient:</label>
@@ -13,7 +14,7 @@ class Visit {
             <option value="Urgent">Urgent</option>
         </select>
         <label for="date-visit" class="form-label">Date of visit:</label>
-       <input required type="date" name="date-visit" id="date-visit" class="visit-form-date"/>`
+       <input required type="date" name="date-visit" id="date-visit" class="visit-form-date" min="${getDateTimeString()}"/>`
         return html
     }
 

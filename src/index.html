@@ -8,6 +8,16 @@
         <h2 class="text-center">
             Welcome to the Doctor's Schedule Visits application
         </h2>
-        <div id="root"></div>
+        <div id="root">
+            <form action="probe.html" class="form">
+                <p>Пожалуйста, заполните обязательные поля.</p>
+                <p><label for="name">Имя: <input type="text" id="name" class="fields in1" name="name" required placeholder="Василий" autofocus></input><span></span></label></p>
+                <p><label for="age">Возраст: <input type="number" id="age" class="fields in2" min="1" max="100" name="age" placeholder="Полных лет"></input><span></span></label></p>
+                <p><label for="e-mail">E-mail: <input type="email" id="e-mail" class="fields in3" name="e-mail" required placeholder="example@gmail.com"></input><span></span></label></p>
+                <p><label for="url">Сайт: <input type="url" id="url" class="fields in4" name="url" placeholder="HTTP://www.example.com"></input><span></span></label></p>
+                <p><input type="submit" class="fields in5" name="Submit"></input></p>
+            </form>
+            
+        </div>
     </body>
 </html>
