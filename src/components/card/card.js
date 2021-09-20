@@ -1,11 +1,13 @@
 import Element from '../element/element'
 import Sortable from 'sortablejs';
 import VisitModal from '../modal/visitModal';
+import { cardsContainer } from './cardsContainer'
+import { deleteVisitById, getData, updateVisit } from "../api/api";
+import CardDate from './cardDate';
+// images
 import cardiologist from './cardiologist.jpeg'
 import dentist from './dentist.jpeg'
 import therapist from './therapist.jpeg'
-import { deleteVisitById, getData } from "../api/api";
-import { cardsContainer } from './cardsContainer'
 
 
 export default class Card extends Element {
@@ -30,7 +32,7 @@ export default class Card extends Element {
             <img class="card__img card-img-top" src=${this.doctorsPhoto[doctor]} alt="doctor's photo">
             <div class="card-body">
               <select class="card__status">
-                <option selected value="open">Open</option>
+                <option value="open">Open</option>
                 <option value="done">Done</option>
               </select>
               <div class="card__info">
@@ -51,12 +53,14 @@ export default class Card extends Element {
 
   }
 
-  changeCardStatus(statusValue) {
+  async changeCardStatus(statusValue) {
 
     if (statusValue === 'done') {
+      this.fullData['Status:'] = 'done';
       this.cardEl.classList.add('card__item--done');
       this.editBtn.disabled = true;
     } else {
+      this.fullData['Status:'] = 'open';
       this.cardEl.classList.remove('card__item--done');
       this.editBtn.disabled = false;
     }
@@ -66,21 +70,33 @@ export default class Card extends Element {
   cardStatusHandler() {
     this.statusSelect = this.cardEl.querySelector('.card__status');
 
-    this.statusSelect.addEventListener('change', (e) => {
+    this.statusSelect.addEventListener('change', async (e) => {
       this.changeCardStatus(e.target.value);
+      await updateVisit(this.fullData, this.fullData.id);
     })
   }
 
   checkCardDate() {
     const statusSelect = this.cardEl.querySelector('.card__status');
-    const visitDateStr = this.fullData['Date of visit:'].split('-').join(',');
+    const visitDateStr = this.fullData['Date of visit:'];
     const visitDate = new Date(visitDateStr);
     const currentDate = new Date();
+    if (statusSelect) statusSelect.value = this.fullData['Status:'];
+    if (this.checkDateForSameDay(visitDate, currentDate)) return;
+    this.changeCardStatus(this.fullData['Status:'])
 
     if (visitDate - currentDate < 0) {
+      console.log(visitDate - currentDate);
       if (statusSelect) statusSelect.disabled = true;
-      this.changeCardStatus('done')
+
     }
+
+  }
+
+  checkDateForSameDay(date1, date2) {
+    return date1.getFullYear() === date2.getFullYear() &&
+      date1.getMonth() === date2.getMonth() &&
+      date1.getDate() === date2.getDate();
   }
 
   removeCard() {
@@ -98,7 +114,8 @@ export default class Card extends Element {
     if (isShort) {
       cardInfo = { 'Full name:': obj['Full name:'], 'Doctor:': obj['Doctor:'] };
     } else {
-      const { ['Full name:']: fullname, ['Doctor:']: doctor, id, ...restData } = this.fullData;
+
+      const { ['Full name:']: fullname, ['Doctor:']: doctor, id, ['Status:']: status, ...restData } = this.fullData;
       cardInfo = restData;
     }
 

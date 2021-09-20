@@ -127,6 +127,7 @@ export default class Header extends Element {
           const card = new Card();
           card.renderCard(item);
           card.checkCardDate();
+          card.changeCardStatus(item['Status:']);
         })
       });
   }
