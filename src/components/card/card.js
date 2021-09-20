@@ -3,7 +3,6 @@ import Sortable from 'sortablejs';
 import VisitModal from '../modal/visitModal';
 import { cardsContainer } from './cardsContainer'
 import { deleteVisitById, getData, updateVisit } from "../api/api";
-import CardDate from './cardDate';
 // images
 import cardiologist from './cardiologist.jpeg'
 import dentist from './dentist.jpeg'
@@ -53,6 +52,12 @@ export default class Card extends Element {
 
   }
 
+  renderCardWitchCheck(cardObj) {
+    this.renderCard(cardObj);
+    this.checkCardDate();
+    this.changeCardStatus(cardObj['Status:']);
+  }
+
   async changeCardStatus(statusValue) {
 
     if (statusValue === 'done') {
@@ -82,7 +87,7 @@ export default class Card extends Element {
     const visitDate = new Date(visitDateStr);
     const currentDate = new Date();
     if (statusSelect) statusSelect.value = this.fullData['Status:'];
-    if (this.checkDateForSameDay(visitDate, currentDate)) return;
+    if (this.checkDatesForSameDay(visitDate, currentDate)) return;
     this.changeCardStatus(this.fullData['Status:'])
 
     if (visitDate - currentDate < 0) {
@@ -93,7 +98,7 @@ export default class Card extends Element {
 
   }
 
-  checkDateForSameDay(date1, date2) {
+  checkDatesForSameDay(date1, date2) {
     return date1.getFullYear() === date2.getFullYear() &&
       date1.getMonth() === date2.getMonth() &&
       date1.getDate() === date2.getDate();
