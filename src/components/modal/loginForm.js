@@ -4,10 +4,7 @@ class LoginForm extends Modal {
   constructor(title) {
     super(title)
     this.onSubmitBtnClick = this.onSubmitBtnClick.bind(this)
-    this.options = {
-      email: '',
-      password: ''
-    }
+    this.options = {}
   }
 
   renderBody() {
@@ -57,6 +54,7 @@ class LoginForm extends Modal {
     Login</button>`
     return html
   }
+
   show() {
     super.show()
     this.addListeners()
