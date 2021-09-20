@@ -49,7 +49,9 @@ class Visit {
 
     setValue(obj) {
         const form = document.querySelector("#visit-form")
+        const urgencySelector = form.querySelector(".visit-form-select")
         const inputs = form.querySelectorAll('input')
+        const fullNameInput = form.querySelector(`input[name="fullName"]`)
         inputs.forEach(input => {
             const key = form.querySelector(`label[for= "${input.name}"]`)
             Object.keys(obj).forEach((dataKey) => {
@@ -58,7 +60,8 @@ class Visit {
                 }
             })
         });
-        const fullNameInput = form.querySelector(`input[name="fullName"]`)
+
+        urgencySelector.value = obj["Urgency:"]
         fullNameInput.value = obj['Full name:']
     }
 
