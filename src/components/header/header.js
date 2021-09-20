@@ -9,9 +9,7 @@ import Card from "../card/card";
 export default class Header extends Element {
   constructor() {
     super();
-    this.render();
-    this.authorization();
-    this.addVisit();
+    this.init();
   }
 
   authorization() {
@@ -85,7 +83,7 @@ export default class Header extends Element {
   renderUserName(name) {
     let userName = name.split('@');
     this.userName = userName[0].toString();
-    localStorage.setItem('user', this.userName)
+    localStorage.setItem('user', this.userName);
     return this.userName;
   }
 
@@ -125,10 +123,45 @@ export default class Header extends Element {
 
         data.map(item => {
           const card = new Card();
-          card.renderCard(item);
-          card.checkCardDate();
+          card.renderCardWitchCheck(item);
         })
       });
+  }
+
+  // filter
+  filterItems() {
+    const input = document.querySelector('.filter__item');
+    const searchBtn = document.querySelector('.search-btn');
+    const isDoneSelectBtn = document.querySelector('.form-select__filter');
+    const isDoneSelectors = document.querySelectorAll('.card__status');
+
+    searchBtn.addEventListener('click', event => {
+      event.preventDefault();
+
+      const filteredItems = document.querySelectorAll('.card__item');
+      filteredItems.forEach(item => {
+        item.closest('.card__item').classList.remove('hide');
+
+        if (item.textContent.toLowerCase().indexOf(input.value.toLowerCase()) === -1) {
+          item.closest('.card__item').classList.add('hide');
+        }
+        // if(isDoneSelectBtn.value === 'All') {
+        //   console.log('all')
+        // }
+        // if (isDoneSelectBtn.value === '1') {
+        //   console.log('open')
+        // }
+        // if (isDoneSelectBtn.value === '2') {
+        //   console.log('done')
+        // }
+      })
+    })
+  }
+
+  init() {
+    this.render();
+    this.authorization();
+    this.addVisit();
   }
 }
 
