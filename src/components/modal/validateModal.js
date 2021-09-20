@@ -1,3 +1,4 @@
+
 export const getDateTimeString = () => {
     const now = new Date()
     const yearNow = now.getFullYear();
@@ -17,3 +18,17 @@ export const checkLoginValue = (el, data) => {
         return ''
     }
 }
+
+export const checkVisitValue = (el, minValue, maxValue) => {
+    if (+el.value < minValue || +el.value > maxValue || el.value === "") {
+        el.style.borderColor = "red"
+        return ''
+    }
+    else {
+        el.style.borderColor = "#006196"
+        return el.value
+    }
+
+}
+
+
