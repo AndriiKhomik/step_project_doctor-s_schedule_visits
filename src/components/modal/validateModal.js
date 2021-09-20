@@ -7,3 +7,13 @@ export const getDateTimeString = () => {
     return nowDateTimeString;
 }
 
+export const checkLoginValue = (el, data) => {
+    if (el.value === data) {
+        el.style.borderColor = "#006196"
+        return el.value
+    }
+    else {
+        el.style.borderColor = "red"
+        return ''
+    }
+}

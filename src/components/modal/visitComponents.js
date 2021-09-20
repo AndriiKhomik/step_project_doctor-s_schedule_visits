@@ -1,5 +1,5 @@
 import Visit from "./visit";
-import { getDateTimeString } from './validationIFormInputs';
+import { getDateTimeString } from './validateModal';
 
 class VisitDentist extends Visit {
     constructor() {
@@ -32,7 +32,7 @@ class VisitCardiologist extends Visit {
     }
     renderAdditionalFields() {
         const html = `<label for="pressure" class="form-label">Normal pressure:</label>
-        <input required type="text" name="pressure" id="pressure"/>
+        <input required type="text" name="pressure" id="pressure" min="50" max="160"/>
         <label for="body-mass-index" class="form-label">Body mass index:</label>
         <input required type="number" name="body-mass-index" id="body-mass-index" min="16" max="40"/>
         <label for="cardiovascular-diseases" class="form-label"
@@ -56,7 +56,7 @@ class VisitTherapist extends Visit {
     }
     renderAdditionalFields() {
         const html = `<label for="age" class="form-label">Age:</label> 
-       <input required type="number" name="age" id="age" min="0"/>`
+       <input required type="number" name="age" id="age" min="0" max="200"/>`
         return html
     }
 }

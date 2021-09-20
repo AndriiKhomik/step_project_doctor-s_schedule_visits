@@ -1,4 +1,4 @@
-import { getDateTimeString } from './validationIFormInputs'
+import { getDateTimeString } from './validateModal'
 class Visit {
     rendeInputFields() {
         const html = `<label for="fullName" class="form-label">Full name of the patient:</label>
