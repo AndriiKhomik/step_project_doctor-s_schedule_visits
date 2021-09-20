@@ -1,10 +1,11 @@
 import Element from "../element/element";
+import { header } from "../header/header";
 
 export default class Filter extends Element {
   constructor() {
     super();
     this.render();
-    this.filterItems();
+    header.filterItems();
   }
 
   renderInput() {
@@ -52,37 +53,27 @@ export default class Filter extends Element {
     this.renderIsDoneSelect();
     this.renderPrioritySelect();
     this.renderSearchButton();
-    this.filterByInput();
-  }
-
-  filterItems() {
-    const input = document.querySelector('.filter__item');
-    const filteredItems = document.querySelectorAll('.card__text');
-    const searchBtn = document.querySelector('.search-btn');
-    searchBtn.addEventListener('click', event => {
-      event.preventDefault();
-
-      filteredItems.forEach(item => {
-        // console.log(item.textContent)
-        if (input.value.contains('ris')) {
-          console.log('works')
-        }
-        // console.log(item.textContent.toLowerCase())
-      })
-    })
-  }
-
-  filterByInput() {
 
   }
 
-  filterByIsDoneSelector() {
-
-  }
-
-  filterByPrioritySelector() {
-
-  }
+  // filterItems() {
+  //   const input = document.querySelector('.filter__item');
+  //   const searchBtn = document.querySelector('.search-btn');
+  //   searchBtn.addEventListener('click', event => {
+  //     event.preventDefault();
+  //
+  //   });
+  //   input.addEventListener('keyup', () => {
+  //
+  //     const filteredItems = document.querySelectorAll('.card__value');
+  //     filteredItems.forEach(item => {
+  //
+  //       if (item.textContent.toLowerCase().indexOf(input.value.toLowerCase()) > 0) {
+  //         console.log(item.closest('.card__item'))
+  //       }
+  //     })
+  //   })
+  // }
 }
 
 new Filter();
