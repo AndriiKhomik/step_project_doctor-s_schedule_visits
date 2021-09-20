@@ -1,11 +1,14 @@
 const _apiBase = 'https://ajax.test-danit.com/api/v2';
-const _token = 'e8f8357e-bd0c-40b1-8074-b37d5a74b6f6';
+
+const getToken = () => {
+  return localStorage.getItem('token')
+};
 
 export const getData = async (id = '') => {
   const res = await fetch(`${_apiBase}/cards/${id}`, {
     method: 'GET',
     headers: {
-      'Authorization': `Bearer ${_token}`
+      'Authorization': `Bearer ${getToken()}`
     }
   });
   if (!res.ok) {
@@ -19,7 +22,7 @@ export const addVisit = async (obj) => {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
-      'Authorization': `Bearer ${_token}`
+      'Authorization': `Bearer ${getToken()}`
     },
     body: JSON.stringify(obj)
   });
@@ -33,7 +36,7 @@ export const deleteVisitById = async (id) => {
   const res = await fetch(`${_apiBase}/cards/${id}`, {
     method: 'DELETE',
     headers: {
-      'Authorization': `Bearer ${_token}`
+      'Authorization': `Bearer ${getToken()}`
     }
   });
   if (!res.ok) {
@@ -46,7 +49,7 @@ export const updateVisit = async (obj, id) => {
     method: 'PUT',
     headers: {
       'Content-Type': 'application/json',
-      'Authorization': `Bearer ${_token}`
+      'Authorization': `Bearer ${getToken()}`
     },
     body: JSON.stringify(obj)
   });
