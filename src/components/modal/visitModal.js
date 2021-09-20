@@ -88,16 +88,16 @@ class VisitModal extends Modal {
     e.preventDefault()
     this.options = this.visit.getValue()
     if (Object.values(this.options).some(v => v === '')) return
-    console.log(this.options);
     // Create card
     if (this.btn.textContent === 'Create card') {
       this.options["Doctor:"] = this.selector.value
       const result = await addVisit(this.options)
       this.card = new Card()
       this.card.renderCard(result)
+      this.card.checkCardDate();
     }
     // Edit card
-    if (this.btn.textContent === 'Save' && e.target === this.btn) {
+    if (this.btn.textContent === 'Save') {
       const card = new Card();
       await card.removeCardInfo(this.currentCard);
       this.options["Doctor:"] = this.doctor;
