@@ -32,8 +32,11 @@ class Visit {
         inputs.forEach(input => {
             //to remove empty not required input fields from obj
             if (!input.hasAttribute("required")) {
-                if (input.value === "") return
+                if (input.value === "") {
+                    return
+                }
             }
+            input.value === "" ? input.style.borderColor = "red" : input.style.borderColor = "#006196"
             const key = this.form.querySelector(`label[for= "${input.name}"]`)
             this.options[key.textContent] = input.value
         });

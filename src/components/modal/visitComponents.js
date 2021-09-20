@@ -35,7 +35,7 @@ class VisitCardiologist extends Visit {
         <input required type="number" name="body-mass-index" id="body-mass-index"/>
         <label for="cardiovascular-diseases" class="form-label"
             >Transferred diseases of the cardiovascular system:</label>
-        <input type="text" name="cardiovascular-diseases" id="cardiovascular-diseases"/>
+        <input required type="text" name="cardiovascular-diseases" id="cardiovascular-diseases"/>
         <label for="age" class="form-label">Age:</label> 
         <input required type="number" name="age" id="age"/>`
         return html
