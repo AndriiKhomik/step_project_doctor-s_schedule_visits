@@ -157,11 +157,9 @@ export default class Card extends Element {
 
   async editCard() {
     this.editBtn.addEventListener('click', async () => {
-      const newCardObj = await getData(this.fullData.id);
-      this.fullData = newCardObj;
 
       const visitModal = new VisitModal("Edit card");
-      visitModal.editCard(newCardObj, this.cardInfoEl);
+      visitModal.editCard(this.fullData, this.cardInfoEl);
 
       // сворачивает карточку в краткую версию
       this.showMoreBtn.classList.add('card__show-more-btn--closed');
