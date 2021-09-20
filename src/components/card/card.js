@@ -29,6 +29,10 @@ export default class Card extends Element {
     this.cardEl.innerHTML = `
             <img class="card__img card-img-top" src=${this.doctorsPhoto[doctor]} alt="doctor's photo">
             <div class="card-body">
+              <select class="card__status">
+                <option selected value="open">Open</option>
+                <option value="done">Done</option>
+              </select>
               <div class="card__info">
                 <p class="card__text card-text"><span class="card__title">Full name:</span><span class="card__value"> ${cardObj['Full name:']}</span></p>
                 <p class="card__text card-text"><span class="card__title">Doctor:</span><span class="card__value"> ${cardObj['Doctor:']}</span></p>
@@ -41,7 +45,42 @@ export default class Card extends Element {
     this.showMoreData();
     this.removeCard();
     this.editCard();
+    this.cardStatusHandler();
+    this.checkCardDate();
     this.dragAndDropCard();
+
+  }
+
+  changeCardStatus(statusValue) {
+
+    if (statusValue === 'done') {
+      this.cardEl.classList.add('card__item--done');
+      this.editBtn.disabled = true;
+    } else {
+      this.cardEl.classList.remove('card__item--done');
+      this.editBtn.disabled = false;
+    }
+
+  }
+
+  cardStatusHandler() {
+    this.statusSelect = this.cardEl.querySelector('.card__status');
+
+    this.statusSelect.addEventListener('change', (e) => {
+      this.changeCardStatus(e.target.value);
+    })
+  }
+
+  checkCardDate() {
+    const statusSelect = this.cardEl.querySelector('.card__status');
+    const visitDateStr = this.fullData['Date of visit:'].split('-').join(',');
+    const visitDate = new Date(visitDateStr);
+    const currentDate = new Date();
+
+    if (visitDate - currentDate < 0) {
+      if (statusSelect) statusSelect.disabled = true;
+      this.changeCardStatus('done')
+    }
   }
 
   removeCard() {
@@ -58,7 +97,6 @@ export default class Card extends Element {
 
     if (isShort) {
       cardInfo = { 'Full name:': obj['Full name:'], 'Doctor:': obj['Doctor:'] };
-
     } else {
       const { ['Full name:']: fullname, ['Doctor:']: doctor, id, ...restData } = this.fullData;
       cardInfo = restData;
@@ -78,7 +116,6 @@ export default class Card extends Element {
     this.showMoreBtn.addEventListener('click', async (e) => {
 
       const newCardObj = await getData(this.fullData.id);
-
       e.target.classList.toggle('card__show-more-btn--closed');
 
       if (e.target.classList.contains('card__show-more-btn--closed')) {
@@ -108,7 +145,13 @@ export default class Card extends Element {
       this.showMoreBtn.classList.add('card__show-more-btn--closed');
       this.showMoreBtn.innerText = 'Show more';
 
-      this.cardInfoEl.innerText = "";
+    })
+  }
+
+  async removeCardInfo(infoBlockEl) {
+    return await new Promise(resolve => {
+      infoBlockEl.innerText = '';
+      resolve();
     })
   }
 
