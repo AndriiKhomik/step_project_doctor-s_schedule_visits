@@ -7,10 +7,3 @@ export const getDateTimeString = () => {
     return nowDateTimeString;
 }
 
-export const isValidNumber = (obj, key, minValue, maxValue) => {
-    if (+obj[key] < minValue || +obj[key] > maxValue || obj[key] === '') {
-        alert(`${key.substring(0, key.length - 1)} must be in field from ${minValue} to ${maxValue}`)
-        obj[key] = ''
-        return obj[key]
-    }
-}

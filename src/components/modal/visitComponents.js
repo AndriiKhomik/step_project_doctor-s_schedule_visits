@@ -1,5 +1,5 @@
 import Visit from "./visit";
-import { getDateTimeString, isValidNumber } from './validationIFormInputs';
+import { getDateTimeString } from './validationIFormInputs';
 
 class VisitDentist extends Visit {
     constructor() {
@@ -42,12 +42,6 @@ class VisitCardiologist extends Visit {
         <input required type="number" name="age" id="age" min="0" max="200"/>`
         return html
     }
-
-    // getValue() {
-    //     super.getValue()
-    //     this.options["Age:"] = isValidNumber(this.options["Age:"], 0, 200)
-    //     return this.options
-    // }
 }
 class VisitTherapist extends Visit {
     constructor() {
@@ -65,12 +59,6 @@ class VisitTherapist extends Visit {
        <input required type="number" name="age" id="age" min="0"/>`
         return html
     }
-
-    // getValue() {
-    //     super.getValue()
-    //     this.options["Age:"] = isValidNumber(this.options, "Age:", 0, 200)
-    //     return this.options
-    // }
 }
 
 export { VisitDentist, VisitCardiologist, VisitTherapist }

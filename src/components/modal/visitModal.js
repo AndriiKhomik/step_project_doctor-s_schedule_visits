@@ -87,6 +87,7 @@ class VisitModal extends Modal {
   async onCreateBtnClick(e) {
     e.preventDefault()
     this.options = this.visit.getValue()
+    this.options['Status:'] = "open"
     if (Object.values(this.options).some(v => v === '')) return
     // Create card
     if (this.btn.textContent === 'Create card') {
