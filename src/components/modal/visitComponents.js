@@ -1,5 +1,5 @@
 import Visit from "./visit";
-import { getDateTimeString } from './validationIFormInputs';
+import { getDateTimeString, checkVisitValue } from './validateModal';
 
 class VisitDentist extends Visit {
     constructor() {
@@ -32,15 +32,23 @@ class VisitCardiologist extends Visit {
     }
     renderAdditionalFields() {
         const html = `<label for="pressure" class="form-label">Normal pressure:</label>
-        <input required type="text" name="pressure" id="pressure"/>
+        <input required type="text" name="pressure" id="pressure" min="50" max="160" title="Add value from 50 till 160"/>
         <label for="body-mass-index" class="form-label">Body mass index:</label>
-        <input required type="number" name="body-mass-index" id="body-mass-index" min="16" max="40"/>
+        <input required type="number" name="body-mass-index" id="body-mass-index" min="16" max="40" title="Add value from 16 till 40"/>
         <label for="cardiovascular-diseases" class="form-label"
             >Transferred diseases of the cardiovascular system:</label>
         <input required type="text" name="cardiovascular-diseases" id="cardiovascular-diseases"/>
         <label for="age" class="form-label">Age:</label> 
-        <input required type="number" name="age" id="age" min="0" max="200"/>`
+        <input required type="number" name="age" id="age" min="0" max="200" title="Add value from 0 till 200"/>`
         return html
+    }
+    getValue() {
+        super.getValue()
+        const form = document.querySelector("#visit-form")
+        this.options["Normal pressure:"] = checkVisitValue(form.elements.pressure, 50, 160)
+        this.options["Body mass index:"] = checkVisitValue(form.elements['body-mass-index'], 16, 40)
+        this.options["Age:"] = checkVisitValue(form.elements.age, 0, 200)
+        return this.options
     }
 }
 class VisitTherapist extends Visit {
@@ -56,8 +64,15 @@ class VisitTherapist extends Visit {
     }
     renderAdditionalFields() {
         const html = `<label for="age" class="form-label">Age:</label> 
-       <input required type="number" name="age" id="age" min="0"/>`
+       <input required type="number" name="age" id="age" min="0" max="200" title="Add value from 0 till 200"/>`
         return html
+    }
+
+    getValue() {
+        super.getValue()
+        const form = document.querySelector("#visit-form")
+        this.options["Age:"] = checkVisitValue(form.elements.age, 0, 200)
+        return this.options
     }
 }
 

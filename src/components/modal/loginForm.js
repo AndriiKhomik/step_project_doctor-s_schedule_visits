@@ -1,4 +1,5 @@
 import Modal from "./modal";
+import { checkLoginValue } from './validateModal'
 class LoginForm extends Modal {
   constructor(title) {
     super(title)
@@ -53,6 +54,7 @@ class LoginForm extends Modal {
     Login</button>`
     return html
   }
+
   show() {
     super.show()
     this.addListeners()
@@ -73,21 +75,9 @@ class LoginForm extends Modal {
 
   getValue() {
     this.form = document.getElementById("card-login-form");
-    //review valid email
-    const email = this.form.elements.email.value
-    console.log(this.isEmail(email));
-    //----------
-    const inputs = this.form.querySelectorAll('input')
-    inputs.forEach(input => {
-      const key = this.form.querySelector(`label[for= "${input.name}"]`)
-      this.options[key.textContent] = input.value
-    });
-  }
-
-  isEmail(value) {
-    const email =
-      /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-z\-0-9]+\.)+[a-z]{2,}))$/
-    return email.test(value)
+    this.options.email = checkLoginValue(this.form.elements.email, "andr@gmail.com")
+    this.options.password = checkLoginValue(this.form.elements.password, "admin111")
+    return this.options
   }
 }
 
