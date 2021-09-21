@@ -66,6 +66,13 @@
             opacity: 0.6;
         }
     }
+
+    &--overdue {
+        background-color: rgba(0, 0, 0, 0.2);
+        img {
+            opacity: 0.6;
+        }
+    }
 }
 
 .card__status {
