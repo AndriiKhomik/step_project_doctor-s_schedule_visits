@@ -133,8 +133,8 @@ export default class Header extends Element {
   filterItems() {
     const input = document.querySelector('.filter__item');
     const searchBtn = document.querySelector('.search-btn');
-    const isDoneSelectBtn = document.querySelector('.form-select__filter');
-    const isDoneSelectors = document.querySelectorAll('.card__status');
+    const isDoneSelectBtn = document.querySelector('.form-select__filter--done');
+    const priorityBtn = document.querySelector('.form-select__filter--priority');
 
     searchBtn.addEventListener('click', event => {
       event.preventDefault();
@@ -142,19 +142,37 @@ export default class Header extends Element {
       const filteredItems = document.querySelectorAll('.card__item');
       filteredItems.forEach(item => {
         item.closest('.card__item').classList.remove('hide');
-
+        // filter by input
         if (item.textContent.toLowerCase().indexOf(input.value.toLowerCase()) === -1) {
           item.closest('.card__item').classList.add('hide');
         }
-        // if(isDoneSelectBtn.value === 'All') {
-        //   console.log('all')
-        // }
-        // if (isDoneSelectBtn.value === '1') {
-        //   console.log('open')
-        // }
-        // if (isDoneSelectBtn.value === '2') {
-        //   console.log('done')
-        // }
+        // selector isDone
+        if (isDoneSelectBtn.value === 'open') {
+          if (item.classList.contains('card__item--done')) {
+            item.closest('.card__item').classList.add('hide');
+          }
+        }
+        if (isDoneSelectBtn.value === 'done') {
+          if (!item.classList.contains('card__item--done')) {
+            item.closest('.card__item').classList.add('hide');
+          }
+        }
+        // priority select
+        if (priorityBtn.value === 'high') {
+          if (!item.classList.contains('card__item--urgent')) {
+            item.closest('.card__item').classList.add('hide');
+          }
+        }
+        if (priorityBtn.value === 'normal') {
+          if (!item.classList.contains('card__item--priority')) {
+            item.closest('.card__item').classList.add('hide');
+          }
+        }
+        if (priorityBtn.value === 'low') {
+          if (!item.classList.contains('card__item--ordinary')) {
+            item.closest('.card__item').classList.add('hide');
+          }
+        }
       })
     })
   }
