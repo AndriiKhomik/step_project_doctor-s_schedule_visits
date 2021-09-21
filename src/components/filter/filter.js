@@ -21,21 +21,21 @@ export default class Filter extends Element {
 
   renderIsDoneSelect() {
     this.filter.insertAdjacentHTML('beforeend', `
-      <select class="form-select form-select__filter" aria-label="Default select example">
+      <select class="form-select form-select__filter form-select__filter--done" aria-label="Default select example">
         <option selected>All</option>
-        <option value="1">Open</option>
-        <option value="2">Done</option>
+        <option value="open">Open</option>
+        <option value="done">Done</option>
       </select>
     `)
   }
 
   renderPrioritySelect() {
     this.filter.insertAdjacentHTML('beforeend', `
-      <select class="form-select form-select__filter" aria-label="Default select example">
+      <select class="form-select form-select__filter form-select__filter--priority" aria-label="Default select example">
         <option selected>All</option>
-        <option value="1">high</option>
-        <option value="2">normal</option>
-        <option value="2">low</option>
+        <option value="high">high</option>
+        <option value="normal">normal</option>
+        <option value="low">low</option>
       </select>
     `)
   }
