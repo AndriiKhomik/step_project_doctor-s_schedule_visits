@@ -1,9 +1,8 @@
 import Element from '../element/element';
 import logo from './logo.png';
-import Visit from "../modal/visit";
 import VisitModal from "../modal/visitModal";
 import LoginForm from '../modal/loginForm'
-import { deleteVisitById, getData } from "../api/api";
+import { getData } from "../api/api";
 import Card from "../card/card";
 
 export default class Header extends Element {
@@ -185,3 +184,4 @@ export default class Header extends Element {
 
 const header = new Header();
 export { header };
+
