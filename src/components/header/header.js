@@ -128,17 +128,11 @@ export default class Header extends Element {
       });
   }
 
-  // filter
   filterItems() {
     const input = document.querySelector('.filter__item');
     const searchBtn = document.querySelector('.search-btn');
-
     const isDoneSelectBtn = document.querySelector('.form-select__filter--done');
     const priorityBtn = document.querySelector('.form-select__filter--priority');
-
-    const isDoneSelectBtn = document.querySelector('.form-select__filter');
-    const isDoneSelectors = document.querySelectorAll('.card__status');
-
 
     searchBtn.addEventListener('click', event => {
       event.preventDefault();
