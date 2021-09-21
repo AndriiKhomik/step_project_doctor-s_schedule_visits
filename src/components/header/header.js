@@ -123,7 +123,7 @@ export default class Header extends Element {
 
         data.map(item => {
           const card = new Card();
-          card.renderCardWitchCheck(item);
+          card.renderCardWithCheck(item);
         })
       });
   }
