@@ -123,8 +123,7 @@ export default class Header extends Element {
 
         data.map(item => {
           const card = new Card();
-          card.renderCard(item);
-          card.checkCardDate();
+          card.renderCardWitchCheck(item);
         })
       });
   }
@@ -133,8 +132,13 @@ export default class Header extends Element {
   filterItems() {
     const input = document.querySelector('.filter__item');
     const searchBtn = document.querySelector('.search-btn');
+
     const isDoneSelectBtn = document.querySelector('.form-select__filter--done');
     const priorityBtn = document.querySelector('.form-select__filter--priority');
+
+    const isDoneSelectBtn = document.querySelector('.form-select__filter');
+    const isDoneSelectors = document.querySelectorAll('.card__status');
+
 
     searchBtn.addEventListener('click', event => {
       event.preventDefault();
@@ -142,6 +146,7 @@ export default class Header extends Element {
       const filteredItems = document.querySelectorAll('.card__item');
       filteredItems.forEach(item => {
         item.closest('.card__item').classList.remove('hide');
+
         // filter by input
         if (item.textContent.toLowerCase().indexOf(input.value.toLowerCase()) === -1) {
           item.closest('.card__item').classList.add('hide');
