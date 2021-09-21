@@ -12,7 +12,6 @@ export default class Filter extends Element {
     this.filter.insertAdjacentHTML('afterbegin', `
       <div class="input-group ">
         <div class="input-group-prepend">
-<!--          <span class="input-group-text" id="basic-addon1">@</span>-->
         </div>
         <input type="text" class="form-control filter__item" placeholder="Type to search visit" aria-label="Username" aria-describedby="basic-addon1">
       </div>
@@ -21,21 +20,21 @@ export default class Filter extends Element {
 
   renderIsDoneSelect() {
     this.filter.insertAdjacentHTML('beforeend', `
-      <select class="form-select form-select__filter" aria-label="Default select example">
+      <select class="form-select form-select__filter form-select__filter--done" aria-label="Default select example">
         <option selected>All</option>
-        <option value="1">Open</option>
-        <option value="2">Done</option>
+        <option value="open">Open</option>
+        <option value="done">Done</option>
       </select>
     `)
   }
 
   renderPrioritySelect() {
     this.filter.insertAdjacentHTML('beforeend', `
-      <select class="form-select form-select__filter" aria-label="Default select example">
+      <select class="form-select form-select__filter form-select__filter--priority" aria-label="Default select example">
         <option selected>All</option>
-        <option value="1">high</option>
-        <option value="2">normal</option>
-        <option value="2">low</option>
+        <option value="high">high</option>
+        <option value="normal">normal</option>
+        <option value="low">low</option>
       </select>
     `)
   }
@@ -55,25 +54,6 @@ export default class Filter extends Element {
     this.renderSearchButton();
 
   }
-
-  // filterItems() {
-  //   const input = document.querySelector('.filter__item');
-  //   const searchBtn = document.querySelector('.search-btn');
-  //   searchBtn.addEventListener('click', event => {
-  //     event.preventDefault();
-  //
-  //   });
-  //   input.addEventListener('keyup', () => {
-  //
-  //     const filteredItems = document.querySelectorAll('.card__value');
-  //     filteredItems.forEach(item => {
-  //
-  //       if (item.textContent.toLowerCase().indexOf(input.value.toLowerCase()) > 0) {
-  //         console.log(item.closest('.card__item'))
-  //       }
-  //     })
-  //   })
-  // }
 }
 
 new Filter();
