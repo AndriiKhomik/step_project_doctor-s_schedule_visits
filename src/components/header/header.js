@@ -1,9 +1,8 @@
 import Element from '../element/element';
 import logo from './logo.png';
-import Visit from "../modal/visit";
 import VisitModal from "../modal/visitModal";
 import LoginForm from '../modal/loginForm'
-import { deleteVisitById, getData } from "../api/api";
+import { getData } from "../api/api";
 import Card from "../card/card";
 
 export default class Header extends Element {
@@ -128,17 +127,11 @@ export default class Header extends Element {
       });
   }
 
-  // filter
   filterItems() {
     const input = document.querySelector('.filter__item');
     const searchBtn = document.querySelector('.search-btn');
-
     const isDoneSelectBtn = document.querySelector('.form-select__filter--done');
     const priorityBtn = document.querySelector('.form-select__filter--priority');
-
-    const isDoneSelectBtn = document.querySelector('.form-select__filter');
-    const isDoneSelectors = document.querySelectorAll('.card__status');
-
 
     searchBtn.addEventListener('click', event => {
       event.preventDefault();

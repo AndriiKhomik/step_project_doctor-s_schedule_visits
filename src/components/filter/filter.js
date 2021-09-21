@@ -12,7 +12,6 @@ export default class Filter extends Element {
     this.filter.insertAdjacentHTML('afterbegin', `
       <div class="input-group ">
         <div class="input-group-prepend">
-<!--          <span class="input-group-text" id="basic-addon1">@</span>-->
         </div>
         <input type="text" class="form-control filter__item" placeholder="Type to search visit" aria-label="Username" aria-describedby="basic-addon1">
       </div>
@@ -55,25 +54,6 @@ export default class Filter extends Element {
     this.renderSearchButton();
 
   }
-
-  // filterItems() {
-  //   const input = document.querySelector('.filter__item');
-  //   const searchBtn = document.querySelector('.search-btn');
-  //   searchBtn.addEventListener('click', event => {
-  //     event.preventDefault();
-  //
-  //   });
-  //   input.addEventListener('keyup', () => {
-  //
-  //     const filteredItems = document.querySelectorAll('.card__value');
-  //     filteredItems.forEach(item => {
-  //
-  //       if (item.textContent.toLowerCase().indexOf(input.value.toLowerCase()) > 0) {
-  //         console.log(item.closest('.card__item'))
-  //       }
-  //     })
-  //   })
-  // }
 }
 
 new Filter();
