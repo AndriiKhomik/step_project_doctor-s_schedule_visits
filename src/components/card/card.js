@@ -75,7 +75,6 @@ export default class Card extends Element {
       this.fullData['Status:'] = 'done';
       if (this.statusSelect) this.statusSelect.disabled = true;
       this.editBtn.disabled = true;
-      console.log(this.statusSelect);
     }
 
   }
@@ -121,18 +120,33 @@ export default class Card extends Element {
     })
   }
 
-  renderCardInfo(obj, parentEl, isShort) {
-    this.fullData = obj;
-    console.log(obj);
-
+  setUrgencyClasses(obj) {
     if (obj['Urgency:'] === 'Urgent') {
-      console.log(obj['Urgency:']);
-      console.log(this.cardEl);
       this.cardEl.classList.add('card__item--urgent');
     } else {
       this.cardEl.classList.remove('card__item--urgent');
-
     }
+
+    if (obj['Urgency:'] === 'Priority') {
+      this.cardEl.classList.add('card__item--priority');
+    } else {
+      this.cardEl.classList.remove('card__item--priority');
+    }
+
+    if (obj['Urgency:'] === 'Ordinary') {
+      this.cardEl.classList.add('card__item--ordinary');
+    } else {
+      this.cardEl.classList.remove('card__item--ordinary');
+    }
+
+  }
+
+
+  renderCardInfo(obj, parentEl, isShort) {
+    this.fullData = obj;
+
+    this.setUrgencyClasses(obj);
+
     let cardInfo;
 
     if (isShort) {
@@ -177,7 +191,7 @@ export default class Card extends Element {
     this.editBtn.addEventListener('click', async () => {
 
       const visitModal = new VisitModal("Edit card");
-      visitModal.editCard(this.fullData, this.cardInfoEl);
+      visitModal.editCard(this.fullData, this.cardInfoEl, this);
 
       // сворачивает карточку в краткую версию
       this.showMoreBtn.classList.add('card__show-more-btn--closed');
