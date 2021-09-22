@@ -9,6 +9,7 @@
     border-radius: 10px;
     padding: 20px 10px;
 }
+
 .card__list {
     display: grid;
     grid-template-columns: repeat(auto-fit, 260px);
@@ -20,6 +21,7 @@
     padding-left: 0;
     font-size: 14px;
 }
+
 .card__img {
     height: 120px;
     width: 120px;
@@ -49,18 +51,22 @@
         background-repeat: no-repeat;
         background-size: contain;
     }
+
     &--urgent {
         border: 2px solid #f44336;
     }
+
     &--priority {
         border: 2px solid #ffc107;
     }
+
     &--ordinary {
         border: 2px solid #006196;
     }
 
     &--done {
         background-color: #9eb3ce66;
+
         img {
             opacity: 0.6;
         }
@@ -68,6 +74,7 @@
 
     &--overdue {
         background-color: rgba(0, 0, 0, 0.2);
+
         img {
             opacity: 0.6;
         }
@@ -90,10 +97,7 @@
     margin-right: 10px;
     position: relative;
     padding-right: 35px;
-    // background-image: url(../components/card/arrow-down.svg);
-    // background-repeat: no-repeat;
-    // background-size: 11px;
-    // background-position: top 14px right 14px;
+
     &::after {
         content: "";
         position: absolute;
@@ -141,10 +145,12 @@
     color: hsl(201deg, 100%, 30%);
 }
 
+// drag & drop
 .sortable-chosen {
     border: 2px solid rgb(74, 123, 150);
     opacity: 0.6;
 }
+
 .sortable-ghost {
     opacity: 0;
 }
