@@ -1,5 +1,5 @@
 import Element from "../element/element";
-import { header } from "../header/header";
+import { header } from "../../index";
 
 export default class Filter extends Element {
   constructor() {
@@ -32,9 +32,9 @@ export default class Filter extends Element {
     this.filter.insertAdjacentHTML('beforeend', `
       <select class="form-select form-select__filter form-select__filter--priority" aria-label="Default select example">
         <option selected>All</option>
-        <option value="high">high</option>
-        <option value="normal">normal</option>
-        <option value="low">low</option>
+        <option value="high">High</option>
+        <option value="normal">Normal</option>
+        <option value="low">Low</option>
       </select>
     `)
   }
@@ -55,5 +55,3 @@ export default class Filter extends Element {
 
   }
 }
-
-new Filter();
