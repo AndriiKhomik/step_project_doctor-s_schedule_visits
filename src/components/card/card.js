@@ -8,7 +8,6 @@ import cardiologist from './cardiologist.jpeg'
 import dentist from './dentist.jpeg'
 import therapist from './therapist.jpeg'
 
-
 export default class Card extends Element {
   constructor() {
     super();
@@ -213,7 +212,6 @@ export default class Card extends Element {
       animation: 450
     })
   }
-
 }
 
 

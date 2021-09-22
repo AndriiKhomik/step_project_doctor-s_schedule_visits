@@ -1,5 +1,5 @@
 import Element from '../element/element'
-import { header } from '../header/header'
+import { header } from '../../index'
 import { getData } from "../api/api";
 
 class CardsContainer extends Element {
@@ -22,11 +22,7 @@ class CardsContainer extends Element {
         header.renderAddVisitTitle(data);
       });
   }
-
-
 }
 
-
 const cardsContainer = new CardsContainer();
-
 export { cardsContainer };
