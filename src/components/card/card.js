@@ -171,18 +171,16 @@ export default class Card extends Element {
 
     this.showMoreBtn.addEventListener('click', async (e) => {
 
-      const newCardObj = await getData(this.fullData.id);
       e.target.classList.toggle('card__show-more-btn--closed');
 
       if (e.target.classList.contains('card__show-more-btn--closed')) {
         this.cardInfoEl.innerText = "";
-        this.renderCardInfo(newCardObj, this.cardInfoEl, true);
+        this.renderCardInfo(this.fullData, this.cardInfoEl, true);
         e.target.innerText = 'Show more';
       } else {
-        this.renderCardInfo(newCardObj, this.cardInfoEl, false);
+        this.renderCardInfo(this.fullData, this.cardInfoEl, false);
         e.target.innerText = 'Show less';
       }
-      return;
 
     })
   }
@@ -193,10 +191,9 @@ export default class Card extends Element {
       const visitModal = new VisitModal("Edit card");
       visitModal.editCard(this.fullData, this.cardInfoEl, this);
 
-      // сворачивает карточку в краткую версию
+      // collapse the card into a short version
       this.showMoreBtn.classList.add('card__show-more-btn--closed');
       this.showMoreBtn.innerText = 'Show more';
-
     })
   }
 
