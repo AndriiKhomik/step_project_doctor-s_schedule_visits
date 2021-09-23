@@ -91,7 +91,7 @@ export default class Header extends Element {
     const password = document.querySelector('#password');
     const submitAuthorizationBtn = document.querySelector('#login-submit-btn');
     submitAuthorizationBtn.addEventListener('click', () => {
-      if (this.mail.value === 'andr@gmail.com' && password.value === 'admin111') {
+      if (this.mail.value === 'marina@gmail.com' && password.value === 'admin111') {
         this.renderPageAfterLogin();
         this.renderUserName(this.mail.value);
         this.loginBtn.innerText = 'Logout';

@@ -1,7 +1,7 @@
 .header {
   max-width: 1160px;
   margin: 0 auto;
-  border: 2px solid #949494;
+  border: 2px solid $primary-color;
   border-radius: 10px;
   display: flex;
   align-items: center;
@@ -20,10 +20,6 @@
   margin-left: 10px;
 }
 
-.hide {
-  display: none;
-}
-
 .visit__title {
   text-align: center;
   position: absolute;
@@ -31,3 +27,16 @@
   left: 50%;
   transform: translate(-50%, -50%);
 }
+
+.add-visit-btn {
+  background-color: #1f7a1f;
+}
+
+.add-visit-btn:hover {
+  background-color: #196619;
+}
+
+.login-btn {
+  background-color: #778899;
+}
+
