@@ -44,15 +44,20 @@ export default class Header extends Element {
     document.querySelector('.btn__group').before(this.greeting)
   }
 
+  renderHeader() {
+    this.header = this.createElement('header', ['header']);
+    document.querySelector('#root').prepend(this.header);
+    this.header.insertAdjacentHTML('afterbegin',
+  `
+        <a href="https://med.sumdu.edu.ua/en/" target="_blank">
+          <img src=${logo} alt="logo" class="logo">
+        </a>`
+    );
+  }
+
   render() {
     if (localStorage.getItem('isLogged')) {
-      this.header = this.createElement('header', ['header']);
-      document.querySelector('#root').prepend(this.header);
-      this.header.insertAdjacentHTML('afterbegin',
-        `
-              <a href="https://med.sumdu.edu.ua/en/" target="_blank">
-                <img src=${logo} alt="logo" class="logo">
-              </a>`);
+      this.renderHeader();
       const btnContainer = this.createElement('div', ['btn__group']);
       this.header.append(btnContainer);
       this.addVisitBnt = this.createElement('button', ['btn', 'btn-success', 'add-visit-btn'], 'Add new visit');
@@ -63,13 +68,7 @@ export default class Header extends Element {
       this.greetingText(localStorage.getItem('user'))
     }
     if (!localStorage.getItem('isLogged') || (localStorage.getItem('isLogged') === 'false')) {
-      this.header = this.createElement('header', ['header']);
-      document.querySelector('#root').prepend(this.header);
-      this.header.insertAdjacentHTML('afterbegin',
-        `
-              <a href="https://med.sumdu.edu.ua/en/" target="_blank">
-                <img src=${logo} alt="logo" class="logo">
-              </a>`);
+      this.renderHeader();
       const btnContainer = this.createElement('div', ['btn__group']);
       this.header.append(btnContainer);
       this.addVisitBnt = this.createElement('button', ['btn', 'btn-success', 'add-visit-btn', 'hide'], 'Add new visit');

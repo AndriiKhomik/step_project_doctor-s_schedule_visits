@@ -13,7 +13,7 @@ class Modal extends Element {
                 <div class="modal-header card-modal-header">
                   <h5 class="modal-title card-modal-title">${this.title}</h5>
                   <button type="button" data-bs-dismiss="modal" class="btn close modal-close-btn" aria-label="Close">
-                  <span class="modal-close-icon">X</span aria-hidden="true"></button>
+                  <span class="modal-close-icon">&times;</span aria-hidden="true"></button>
                 </div>
                 <div class="modal-body">
                 ${this.renderBody()}

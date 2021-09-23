@@ -5,6 +5,7 @@
   margin-bottom: 20px;
   @media(max-width: 768px) {
     flex-direction: column;
+    margin-left: 0;
   }
 }
 
@@ -14,12 +15,19 @@
 
 .filter__item {
   border-radius: 10px !important;
+  @media(max-width: 768px) {
+    margin-bottom: 4px;
+  }
 }
 
 .form-select__filter,
 .search-btn {
   height: 40px;
   margin-left: 4px;
+  @media(max-width: 768px) {
+    margin-left: 0;
+    margin-bottom: 4px;
+  }
 }
 
 .filter__item,
