@@ -1,8 +1,8 @@
 import Element from '../element/element'
-import Sortable from 'sortablejs';
 import VisitModal from '../modal/visitModal';
+import Sortable from 'sortablejs';
 import { cardsContainer } from './cardsContainer'
-import { deleteVisitById, getData, updateVisit } from "../api/api";
+import { deleteVisitById, updateVisit } from "../api/api";
 // images
 import cardiologist from './cardiologist.jpeg'
 import dentist from './dentist.jpeg'
@@ -25,7 +25,8 @@ export default class Card extends Element {
     await cardsContainer.checkItemsOnPage();
 
     const doctor = cardObj['Doctor:'].toLowerCase();
-    this.cardEl.classList.add(`card__item--${this.fullData["Urgency:"].toLowerCase()}`);
+    this.cardEl.classList.add(`card__item--${this.fullData['Urgency:'].toLowerCase()}`);
+    this.cardEl.classList.add(`card__item--${this.fullData['Status:']}`)
     this.cardEl.innerHTML = `
             <img class="card__img card-img-top" src=${this.doctorsPhoto[doctor]} alt="doctor's photo">
             <div class="card-body">
@@ -42,6 +43,8 @@ export default class Card extends Element {
     const cardBody = this.cardEl.querySelector('.card-body');
     cardBody.append(this.showMoreBtn, this.editBtn, this.deleteBtn);
     this.cardContainer.append(this.cardEl);
+    this.statusSelect = this.cardEl.querySelector('.card__status');
+
     this.showMoreData();
     this.removeCard();
     this.editCard();
@@ -51,22 +54,27 @@ export default class Card extends Element {
 
   }
 
-  renderCardWitchCheck(cardObj) {
+  renderCardWithCheck(cardObj) {
     this.renderCard(cardObj);
     this.checkCardDate();
-    this.changeCardStatus(cardObj['Status:']);
   }
 
   async changeCardStatus(statusValue) {
-
     if (statusValue === 'done') {
-      this.fullData['Status:'] = 'done';
       this.cardEl.classList.add('card__item--done');
+      this.fullData['Status:'] = 'done';
       this.editBtn.disabled = true;
-    } else {
-      this.fullData['Status:'] = 'open';
+
+    } else if (statusValue === 'open') {
       this.cardEl.classList.remove('card__item--done');
+      this.fullData['Status:'] = 'open';
       this.editBtn.disabled = false;
+
+    } else if (statusValue === 'overdue') {
+      this.cardEl.classList.add('card__item--overdue');
+      this.fullData['Status:'] = 'done';
+      this.editBtn.disabled = true;
+      if (this.statusSelect) this.statusSelect.disabled = true;
     }
 
   }
@@ -81,20 +89,18 @@ export default class Card extends Element {
   }
 
   checkCardDate() {
-    const statusSelect = this.cardEl.querySelector('.card__status');
-    const visitDateStr = this.fullData['Date of visit:'];
-    const visitDate = new Date(visitDateStr);
+    const visitDate = new Date(this.fullData['Date of visit:']);
     const currentDate = new Date();
-    if (statusSelect) statusSelect.value = this.fullData['Status:'];
+
+    if (this.statusSelect) this.statusSelect.value = this.fullData['Status:'];
     if (this.checkDatesForSameDay(visitDate, currentDate)) return;
-    this.changeCardStatus(this.fullData['Status:'])
 
     if (visitDate - currentDate < 0) {
-      console.log(visitDate - currentDate);
-      if (statusSelect) statusSelect.disabled = true;
-
+      this.changeCardStatus('overdue');
+    } else {
+      if (this.statusSelect) this.statusSelect.disabled = false;
+      this.changeCardStatus('open');
     }
-
   }
 
   checkDatesForSameDay(date1, date2) {
@@ -111,65 +117,79 @@ export default class Card extends Element {
     })
   }
 
-  renderCardInfo(obj, parentEl, isShort) {
+  setUrgencyClass(obj) {
+    if (obj['Urgency:'] === 'Urgent') {
+      this.cardEl.classList.add('card__item--urgent');
+    } else {
+      this.cardEl.classList.remove('card__item--urgent');
+    }
+
+    if (obj['Urgency:'] === 'Priority') {
+      this.cardEl.classList.add('card__item--priority');
+    } else {
+      this.cardEl.classList.remove('card__item--priority');
+    }
+
+    if (obj['Urgency:'] === 'Ordinary') {
+      this.cardEl.classList.add('card__item--ordinary');
+    } else {
+      this.cardEl.classList.remove('card__item--ordinary');
+    }
+
+  }
+
+  renderCardInfo(obj, isShort) {
     this.fullData = obj;
+    this.setUrgencyClass(obj);
     let cardInfo;
 
     if (isShort) {
       cardInfo = { 'Full name:': obj['Full name:'], 'Doctor:': obj['Doctor:'] };
     } else {
-
       const { ['Full name:']: fullname, ['Doctor:']: doctor, id, ['Status:']: status, ...restData } = this.fullData;
       cardInfo = restData;
     }
 
     Object.keys(cardInfo).forEach(prop => {
       const cardDataEl = this.createElement('p', ['card__text', 'card-text']);
+      cardDataEl.dataset.parametr = 'additional'
       cardDataEl.insertAdjacentHTML('beforeend', `<span class="card__title">${prop}</span><span class="card__value"> ${obj[prop]}</span>`)
-      parentEl.append(cardDataEl);
+      this.cardInfoEl.append(cardDataEl);
     })
   }
 
   showMoreData() {
-
     this.cardInfoEl = this.cardEl.querySelector('.card__info');
 
     this.showMoreBtn.addEventListener('click', async (e) => {
-
-      const newCardObj = await getData(this.fullData.id);
       e.target.classList.toggle('card__show-more-btn--closed');
 
       if (e.target.classList.contains('card__show-more-btn--closed')) {
         this.cardInfoEl.innerText = "";
-        this.renderCardInfo(newCardObj, this.cardInfoEl, true);
-
+        this.renderCardInfo(this.fullData, true);
         e.target.innerText = 'Show more';
       } else {
-
-        this.renderCardInfo(newCardObj, this.cardInfoEl, false);
+        this.renderCardInfo(this.fullData, false);
         e.target.innerText = 'Show less';
       }
-      return;
 
     })
   }
 
   async editCard() {
     this.editBtn.addEventListener('click', async () => {
-      const newCardObj = await getData(this.fullData.id);
-      this.fullData = newCardObj;
 
       const visitModal = new VisitModal("Edit card");
-      visitModal.editCard(newCardObj, this.cardInfoEl);
+      visitModal.editCard(this.fullData, this.cardInfoEl, this);
 
-      // сворачивает карточку в краткую версию
+      // collapse the card into a short version
       this.showMoreBtn.classList.add('card__show-more-btn--closed');
       this.showMoreBtn.innerText = 'Show more';
-
     })
   }
 
   async removeCardInfo(infoBlockEl) {
+
     return await new Promise(resolve => {
       infoBlockEl.innerText = '';
       resolve();

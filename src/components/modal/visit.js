@@ -2,9 +2,9 @@ import { getDateTimeString } from './validateModal'
 class Visit {
     rendeInputFields() {
         const html = `<label for="fullName" class="form-label">Full name of the patient:</label>
-        <input required type="text" name="fullName" id="fullName"/>
+        <input required type="text" name="fullName" id="fullName" title="Fill this field"/>
         <label for="target" class="form-label">Target of visit:</label>
-        <input required type="text" name="target" id="target"/>
+        <input required type="text" name="target" id="target" title="Fill this field"/>
         <label for="description" class="form-label">Brief description of visit:</label>
         <input type="text" name="description" id="description"/>
         <label for="urgency" class="form-label">Urgency of visit:</label>
@@ -14,7 +14,7 @@ class Visit {
             <option value="Urgent">Urgent</option>
         </select>
         <label for="date-visit" class="form-label">Date of visit:</label>
-       <input required type="date" name="date-visit" id="date-visit" class="visit-form-date" min="${getDateTimeString()}"/>`
+       <input required type="date" name="date-visit" id="date-visit" class="visit-form-date" min="${getDateTimeString()}" title="Choose date of visit"/>`
         return html
     }
 

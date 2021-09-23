@@ -98,19 +98,18 @@ class VisitModal extends Modal {
     }
     // Edit card
     if (this.btn.textContent === 'Save') {
-      const card = new Card();
-      await card.removeCardInfo(this.currentCard);
       this.options["Doctor:"] = this.doctor;
       const result = await updateVisit(this.options, this.id);
-      card.renderCardInfo(result, this.currentCard, true);
+      const card = this.cardInstance;
+      await card.removeCardInfo(this.currentCard);
+      card.renderCardInfo(result, true);
     }
     this.btn.removeEventListener("click", this.onCreateBtnClick);
     this.hide();
   }
 
 
-  editCard(obj, currentCardInfo) {
-    this.currentCard = currentCardInfo;
+  editCard(obj, currentCardInfo, cardInstance) {
     this.selectVisitForm(obj['Doctor:'])
     this.show()
     this.addVisitForm('Save')
@@ -118,7 +117,9 @@ class VisitModal extends Modal {
     this.selector.remove()
     this.visit.setValue(obj)
     this.id = obj.id
-    this.doctor = obj['Doctor:']
+    this.doctor = obj['Doctor:'];
+    this.cardInstance = cardInstance;
+    this.currentCard = currentCardInfo;
   }
 }
 
