@@ -1,13 +1,13 @@
 .card__field {
-  background-image: linear-gradient(to right, #e0eafc, #cfdef3);
-  position: relative;
-  max-width: 1160px;
-  min-height: 500px;
-  margin: 0 auto;
-  margin-top: 10px;
-  border: 2px solid #949494;
-  border-radius: 10px;
-  padding: 20px 10px;
+    background-image: linear-gradient(to right, #e0eafc, #cfdef3);
+    position: relative;
+    max-width: 1160px;
+    min-height: 500px;
+    margin: 0 auto;
+    margin-top: 10px;
+    border: 2px solid $primary-color;
+    border-radius: 10px;
+    padding: 20px 10px;
 }
 
 .card__list {
@@ -37,32 +37,28 @@
 }
 
 .card__item {
-  position: relative;
-  cursor: move;
-  border-radius: 10px;
+    position: relative;
+    cursor: move;
+    border-radius: 10px;
 
-  &::before {
-    content: "";
-    position: absolute;
-    width: 20px;
-    height: 20px;
-    top: 16px;
-    left: 10px;
-    background-repeat: no-repeat;
-    background-size: contain;
-  }
-
-  &--urgent {
-    border: 2px solid #f44336;
-  }
-
-  &--priority {
-    border: 2px solid #ffc107;
-  }
-
-  &--ordinary {
-    border: 2px solid #006196;
-  }
+    &::before {
+        content: "";
+        position: absolute;
+        width: 20px;
+        height: 20px;
+        top: 16px;
+        left: 10px;
+        background-repeat: no-repeat;
+        background-size: contain;
+    }
+    &--urgent {
+        border: 2px solid #f44336;
+    }
+    &--priority {
+        border: 2px solid $primary-color;
+    }
+    &--ordinary {
+        border: 2px solid $primary-color;
 
   &--done {
     background-color: #9eb3ce66;
@@ -99,9 +95,27 @@
 }
 
 .card__show-more-btn {
-  margin-right: 10px;
-  position: relative;
-  padding-right: 35px;
+    margin-right: 10px;
+    position: relative;
+    padding-right: 35px;
+    background-color: #4169e1;
+    // background-image: url(../components/card/arrow-down.svg);
+    // background-repeat: no-repeat;
+    // background-size: 11px;
+    // background-position: top 14px right 14px;
+    &::after {
+        content: "";
+        position: absolute;
+        width: 12px;
+        height: 12px;
+        right: 14px;
+        top: 12px;
+
+        background-image: url('../components/card/arrow-down.svg');
+        background-repeat: no-repeat;
+        background-size: 11px;
+        transform: rotate(180deg);
+    }
 
   &::after {
     content: "";
@@ -123,6 +137,10 @@
       transform: rotate(0deg);
     }
   }
+}
+
+.card__edit-btn {
+    background-color: #4169e1;
 }
 
 .card__delete-btn {
