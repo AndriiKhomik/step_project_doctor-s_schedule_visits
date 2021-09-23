@@ -6,7 +6,6 @@ class CardsContainer extends Element {
   constructor() {
     super();
     this.createCardsContainer();
-
   }
 
   createCardsContainer() {
@@ -18,7 +17,6 @@ class CardsContainer extends Element {
   async checkItemsOnPage() {
     await getData()
       .then(data => {
-
         header.renderAddVisitTitle(data);
       });
   }
