@@ -75,7 +75,7 @@ class LoginForm extends Modal {
 
   getValue() {
     this.form = document.getElementById("card-login-form");
-    this.options.email = checkLoginValue(this.form.elements.email, "andr@gmail.com")
+    this.options.email = checkLoginValue(this.form.elements.email, "marina@gmail.com")
     this.options.password = checkLoginValue(this.form.elements.password, "admin111")
     return this.options
   }
