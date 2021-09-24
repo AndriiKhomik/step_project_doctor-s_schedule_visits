@@ -3,6 +3,7 @@
 #### HTML5, CSS3, JS(ES6), WEBPACK
 [Live Demo]()
 
+### About the project 💻
 The best Doctor's Schedule Visits application - it's application for secretary to manage visits in the clinic. 
 You can schedule your visit for one of 3 available doctors: 
 - Therapist
@@ -12,6 +13,12 @@ You can schedule your visit for one of 3 available doctors:
 
 
 <img width="900" alt="doctors-cards" src="https://user-images.githubusercontent.com/68449997/134741939-6c159f80-d8cc-4d8b-888c-89c6ef51e0cc.png">
+
+#### Card states
+- 3 urgency state: Ordinary, Priority, Urgent.(differ in border color)
+- Open, Done (differ in card background color)
+- Overdue, normal(overdue is dark grey)
+![image](https://user-images.githubusercontent.com/68449997/134747348-b5d674b3-a0a4-4d79-8acb-86f9c75d6b3f.png)
 
 
 ### Functionality ⚙️
