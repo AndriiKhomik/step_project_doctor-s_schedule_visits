@@ -4,9 +4,9 @@ import Sortable from 'sortablejs';
 import { cardsContainer } from './cardsContainer'
 import { deleteVisitById, updateVisit } from "../api/api";
 // images
-import cardiologist from './cardiologist.jpeg'
-import dentist from './dentist.jpeg'
-import therapist from './therapist.jpeg'
+import cardiologist from './img/cardiologist.jpeg'
+import dentist from './img/dentist.jpeg'
+import therapist from './img/therapist.jpeg'
 
 export default class Card extends Element {
   constructor() {
