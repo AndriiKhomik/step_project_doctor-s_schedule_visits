@@ -181,10 +181,6 @@ export default class Card extends Element {
 
       const visitModal = new VisitModal("Edit card");
       visitModal.editCard(this.fullData, this.cardInfoEl, this);
-
-      // collapse the card into a short version
-      this.showMoreBtn.classList.add('card__show-more-btn--closed');
-      this.showMoreBtn.innerText = 'Show more';
     })
   }
 
@@ -192,6 +188,9 @@ export default class Card extends Element {
 
     return await new Promise(resolve => {
       infoBlockEl.innerText = '';
+      // collapse the card into a short version
+      this.showMoreBtn.classList.add('card__show-more-btn--closed');
+      this.showMoreBtn.innerText = 'Show more';
       resolve();
     })
   }
