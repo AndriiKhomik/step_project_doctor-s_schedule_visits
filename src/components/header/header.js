@@ -40,7 +40,7 @@ export default class Header extends Element {
   }
 
   greetingText(name) {
-    this.greeting = this.createElement('h3', ['title'], `Welcome ${name}`);
+    this.greeting = this.createElement('h3', ['title'], `Welcome ${name[0].toUpperCase() + name.slice(1)}`);
     document.querySelector('.btn__group').before(this.greeting)
   }
 
@@ -118,7 +118,6 @@ export default class Header extends Element {
     getData()
       .then(data => {
         this.renderAddVisitTitle(data);
-
         data.map(item => {
           const card = new Card();
           card.renderCardWithCheck(item);
