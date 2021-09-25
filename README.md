@@ -1,7 +1,7 @@
 ### The best Doctor's Schedule Visits application 👩‍⚕🗓
 
 #### HTML5, CSS3, JS(ES6), WEBPACK
-[Live Demo]()
+[Live Demo](https://andriikhomik.github.io/step_project_doctor-s_schedule_visits/)
 
 ### About the project 💻
 The best Doctor's Schedule Visits application - it's application for secretary to manage visits in the clinic. 
