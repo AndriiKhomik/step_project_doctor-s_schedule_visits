@@ -99,7 +99,6 @@ export default class Card extends Element {
       this.changeCardStatus('overdue');
     } else {
       if (this.statusSelect) this.statusSelect.disabled = false;
-      this.changeCardStatus('open');
     }
   }
 
