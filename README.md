@@ -10,6 +10,10 @@ You can schedule your visit for one of 3 available doctors:
 - Dentist
 - Cardiologist
 
+### For testing all possibilities of app, please login 🔑:
+Login: marina@gmail.com
+
+Password: admin111
 
 
 <img width="900" alt="doctors-cards" src="https://user-images.githubusercontent.com/68449997/134741939-6c159f80-d8cc-4d8b-888c-89c6ef51e0cc.png">
@@ -28,7 +32,11 @@ You can schedule your visit for one of 3 available doctors:
 - Application has been protected by password and each user has his own token.
 - This app works with real server and by click you can change data in database.
 
-<!-- https://user-images.githubusercontent.com/68449997/134742445-c6ba476a-eee6-4776-8058-a44f306b10c2.mov -->
+
+
+https://user-images.githubusercontent.com/68449997/134768435-2c2426f3-48a1-4770-97e5-dee831c582c4.mp4
+
+
 
 ### Team 👩‍💻👨‍💻👩‍💻
 
