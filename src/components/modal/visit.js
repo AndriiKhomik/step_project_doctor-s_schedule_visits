@@ -14,22 +14,22 @@ class Visit {
             <option value="Urgent">Urgent</option>
         </select>
         <label for="date-visit" class="form-label">Date of visit:</label>
-       <input required type="date" name="date-visit" id="date-visit" class="visit-form-date" min="${getDateTimeString()}" title="Choose date of visit"/>`
+       <input required type="date" name="date-visit" id="date-visit" class="visit-form-date" min="${getDateTimeString()}" title="Choose date of visit"/>`;
         return html
     }
 
     renderFields() {
         const html = `<form id="visit-form" class="visit-form">
         ${this.rendeInputFields()}
-        </form>`
+        </form>`;
         return html
     }
 
     getValue() {
-        this.form = document.querySelector("#visit-form")
-        const inputs = this.form.querySelectorAll('input')
-        this.options = {}
-        const urgencyValue = this.form.querySelector(".visit-form-select").value
+        this.form = document.querySelector("#visit-form");
+        const inputs = this.form.querySelectorAll('input');
+        this.options = {};
+        const urgencyValue = this.form.querySelector(".visit-form-select").value;
         inputs.forEach(input => {
             //to remove empty not required input fields from obj
             if (!input.hasAttribute("required")) {
@@ -37,23 +37,23 @@ class Visit {
                     return
                 }
             }
-            input.value === "" ? input.style.borderColor = "red" : input.style.borderColor = "#006196"
-            const key = this.form.querySelector(`label[for= "${input.name}"]`)
-            this.options[key.textContent] = input.value
+            input.value === "" ? input.style.borderColor = "red" : input.style.borderColor = "#006196";
+            const key = this.form.querySelector(`label[for= "${input.name}"]`);
+            this.options[key.textContent] = input.value;
         });
 
-        this.changeOptionsKey(this.options, 'Full name of the patient:', 'Full name:')
-        this.options["Urgency:"] = urgencyValue
+        this.changeOptionsKey(this.options, 'Full name of the patient:', 'Full name:');
+        this.options["Urgency:"] = urgencyValue;
         return this.options
     }
 
     setValue(obj) {
-        const form = document.querySelector("#visit-form")
-        const urgencySelector = form.querySelector(".visit-form-select")
-        const inputs = form.querySelectorAll('input')
-        const fullNameInput = form.querySelector(`input[name="fullName"]`)
+        const form = document.querySelector("#visit-form");
+        const urgencySelector = form.querySelector(".visit-form-select");
+        const inputs = form.querySelectorAll('input');
+        const fullNameInput = form.querySelector(`input[name="fullName"]`);
         inputs.forEach(input => {
-            const key = form.querySelector(`label[for= "${input.name}"]`)
+            const key = form.querySelector(`label[for= "${input.name}"]`);
             Object.keys(obj).forEach((dataKey) => {
                 if (dataKey === key.textContent) {
                     input.value = obj[dataKey]
@@ -61,8 +61,8 @@ class Visit {
             })
         });
 
-        urgencySelector.value = obj["Urgency:"]
-        fullNameInput.value = obj['Full name:']
+        urgencySelector.value = obj["Urgency:"];
+        fullNameInput.value = obj['Full name:'];
     }
 
     changeOptionsKey(obj, oldKey, newKey) {

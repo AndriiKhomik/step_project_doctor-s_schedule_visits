@@ -95,7 +95,7 @@ export default class Header extends Element {
         this.renderUserName(this.mail.value);
         this.loginBtn.innerText = 'Logout';
         this.addVisitBnt.classList.remove('hide');
-        localStorage.setItem('isLogged', true);
+        localStorage.setItem('isLogged', 'true');
         localStorage.setItem('token', 'e8f8357e-bd0c-40b1-8074-b37d5a74b6f6');
         this.greetingText(this.userName);
       }

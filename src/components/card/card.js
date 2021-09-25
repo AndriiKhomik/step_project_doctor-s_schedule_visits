@@ -26,7 +26,7 @@ export default class Card extends Element {
 
     const doctor = cardObj['Doctor:'].toLowerCase();
     this.cardEl.classList.add(`card__item--${this.fullData['Urgency:'].toLowerCase()}`);
-    this.cardEl.classList.add(`card__item--${this.fullData['Status:']}`)
+    this.cardEl.classList.add(`card__item--${this.fullData['Status:']}`);
     this.cardEl.innerHTML = `
             <img class="card__img card-img-top" src=${this.doctorsPhoto[doctor]} alt="doctor's photo">
             <div class="card-body">
@@ -47,7 +47,7 @@ export default class Card extends Element {
 
     this.showMoreData();
     this.removeCard();
-    this.editCard();
+    await this.editCard();
     this.cardStatusHandler();
     this.checkCardDate();
     this.dragAndDropCard();
@@ -83,7 +83,7 @@ export default class Card extends Element {
     this.statusSelect = this.cardEl.querySelector('.card__status');
 
     this.statusSelect.addEventListener('change', async (e) => {
-      this.changeCardStatus(e.target.value);
+      await this.changeCardStatus(e.target.value);
       await updateVisit(this.fullData, this.fullData.id);
     })
   }
@@ -112,7 +112,7 @@ export default class Card extends Element {
     this.deleteBtn.addEventListener('click', async (e) => {
       await deleteVisitById(this.fullData.id);
       e.target.closest('.card__item').remove();
-      cardsContainer.checkItemsOnPage();
+      await cardsContainer.checkItemsOnPage();
     })
   }
 
@@ -151,8 +151,8 @@ export default class Card extends Element {
 
     Object.keys(cardInfo).forEach(prop => {
       const cardDataEl = this.createElement('p', ['card__text', 'card-text']);
-      cardDataEl.dataset.parametr = 'additional'
-      cardDataEl.insertAdjacentHTML('beforeend', `<span class="card__title">${prop}</span><span class="card__value"> ${obj[prop]}</span>`)
+      cardDataEl.dataset.parametr = 'additional';
+      cardDataEl.insertAdjacentHTML('beforeend', `<span class="card__title">${prop}</span><span class="card__value"> ${obj[prop]}</span>`);
       this.cardInfoEl.append(cardDataEl);
     })
   }
