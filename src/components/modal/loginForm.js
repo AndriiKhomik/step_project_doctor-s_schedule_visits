@@ -58,6 +58,9 @@ class LoginForm extends Modal {
   show() {
     super.show()
     this.addListeners()
+    this.form = document.getElementById("card-login-form");
+    this.form.elements.email.value = 'marina@gmail.com'
+    this.form.elements.password.value = 'admin111'
   }
 
   addListeners() {
@@ -74,7 +77,6 @@ class LoginForm extends Modal {
   }
 
   getValue() {
-    this.form = document.getElementById("card-login-form");
     this.options.email = checkLoginValue(this.form.elements.email, "marina@gmail.com")
     this.options.password = checkLoginValue(this.form.elements.password, "admin111")
     return this.options
